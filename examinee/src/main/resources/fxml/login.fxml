@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.Login">
+  <children>
+    <Group id="Group" layoutX="214.0" layoutY="91.0">
+      <children>
+        <Group id="Group" layoutX="86.0" layoutY="220.0">
+          <children>
+            <TextField fx:id="accountField" alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" prefHeight="35.0" prefWidth="200.0" promptText="Account" />
+            <PasswordField fx:id="passwordField" layoutX="0.0" layoutY="44.0" prefHeight="35.0" prefWidth="200.0" promptText="Password" />
+            <Button layoutX="0.0" layoutY="98.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="30.0" prefWidth="90.0" text="Login" />
+            <Button layoutX="110.0" layoutY="98.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="exit" />
+          </children>
+        </Group>
+        <ImageView fitHeight="196.0" fitWidth="371.40496663411454" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../img/sm_logo.png" />
+          </image>
+        </ImageView>
+      </children>
+    </Group>
+  </children>
+  <stylesheets>
+    <URL value="@../stylesheet/login.css" />
+  </stylesheets>
+</AnchorPane>
