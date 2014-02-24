@@ -7,17 +7,7 @@ import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
 
-public class Login extends LoginViewController implements Callback {
-	private Connector connector;
-	private Director director;
-
-	@Override
-	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-		director = Director.getInstance();
-		Connector.setDelegate(this);
-		connector = Connector.getInstance();
-		connector.connect();
-	}
+public class LoginView extends LoginViewController {
 
 	@Override
 	public void onOpen(short httpStatus, String httpStatusMessage) {
@@ -66,7 +56,7 @@ public class Login extends LoginViewController implements Callback {
 			connector.login(password);
 		}
 		else {
-			System.out.println("Waiting for connection.");
+			System.err.println("Waiting for connection.");
 		}
 	}
 }

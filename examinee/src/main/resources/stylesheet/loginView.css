@@ -1,0 +1,19 @@
+.root {
+    -fx-background-image: url("../image/loginView.png");
+}
+
+#accountField, #passwordField {
+	-fx-border-radius: 2px;
+	-fx-border-color: rgba(0, 102, 153, 1);
+	-fx-background-color: rgba(255, 255, 255, 0);
+}
+
+#loginButton, #exitButton {
+	-fx-border-radius: 2px;
+    -fx-border-color: rgba(0, 102, 153, 1);
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+#loginButton:pressed, #loginButton:hover, #exitButton:pressed, #exitButton:hover {
+    -fx-background-color: rgba(0, 102, 153, 1);
+}
