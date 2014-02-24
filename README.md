@@ -1,5 +1,6 @@
 Study Master Client
 ===
+[![Build Status](https://travis-ci.org/Study-Master/Client.png)](https://travis-ci.org/Study-Master/Client)
 
 ## Build
 
