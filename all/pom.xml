@@ -27,6 +27,11 @@
       <artifactId>commons-codec</artifactId>
       <version>1.9</version>
     </dependency>
+    <dependency>
+      <groupId>studymaster</groupId>
+      <artifactId>socket</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
   
 </project>
