@@ -2,7 +2,6 @@ package studymaster.examinee.ViewController;
 
 import studymaster.all.ViewController.LoginViewController;
 import studymaster.all.ViewController.Director;
-import studymaster.socket.Callback;
 import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
@@ -37,7 +36,7 @@ public class LoginView extends LoginViewController {
   						@Override
   						public void run() {
   							try {
-  								director.pushStageWithFXML(App.class.getResource("/fxml/home.fxml"));
+  								director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
   							} catch (Exception e) {
   								System.err.println("[err] (LoginView onMessage) Error when switching scene");
   							}
