@@ -17,6 +17,7 @@ public abstract class ViewController implements Initializable, Callback {
 		javafx.scene.text.Font.loadFont(ViewController.class.getResource("/font/HelveticaLT45Light.ttf").toExternalForm(), 10);
 		System.out.println("[info] (ViewController initialize): Load fxml file from " + location);
 		Connector.setDelegate(this);
+		System.out.println("[info] (ViewController initialize): Connector delegate now is " + this.getClass());
 		director = Director.getInstance();
 		connector = Connector.getInstance();
 		
@@ -24,4 +25,6 @@ public abstract class ViewController implements Initializable, Callback {
 			connector.connect();
 		}
 	}
+
+	public abstract void nextView();
 }

@@ -37,4 +37,7 @@ public class CourseView extends HomeViewController {
 	public void onError(Exception ex) {
 		System.err.println("[err] (CourseView onError) An error has been caught.");
 	}
+
+	@Override
+	public void nextView(){}
 }

@@ -32,16 +32,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] (LoginView onMessage) Login successfully.");
-					javafx.application.Platform.runLater(new Runnable() {
-  						@Override
-  						public void run() {
-  							try {
-  								director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
-  							} catch (Exception e) {
-  								System.err.println("[err] (LoginView onMessage) Error when switching scene");
-  							}
-  						}
-					});
+					nextView();
 				}
 
 				else if(status.equals("failed")) {
@@ -60,6 +51,20 @@ public class LoginView extends LoginViewController {
 	@Override
 	public void onError(Exception ex) {
 		System.err.println("[err] (LoginView onError) An error has been caught.");
+	}
+
+	@Override
+	public void nextView() {
+		javafx.application.Platform.runLater(new Runnable() {
+  			@Override
+  			public void run() {
+  				try {
+  					director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
+  				} catch (Exception e) {
+  					System.err.println("[err] (LoginView nextView) Error when switching scene");
+  				}
+  			}
+		});
 	}
 
 	@Override
