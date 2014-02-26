@@ -13,6 +13,8 @@ public abstract class ViewController implements Initializable, Callback {
 
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+		javafx.scene.text.Font.loadFont(ViewController.class.getResource("/font/HelveticaLT25UltraLight.ttf").toExternalForm(), 10);
+		javafx.scene.text.Font.loadFont(ViewController.class.getResource("/font/HelveticaLT45Light.ttf").toExternalForm(), 10);
 		System.out.println("[info] (ViewController initialize): Load fxml file from " + location);
 		Connector.setDelegate(this);
 		director = Director.getInstance();
