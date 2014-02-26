@@ -22,11 +22,7 @@
             <Button fx:id="exitButton" layoutX="110.0" layoutY="98.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="30.0" prefWidth="90.0" text="Exit" />
           </children>
         </Group>
-        <Label fx:id="titleLabel" layoutX="100.0" layoutY="80.0" text="Study Master">
-          <font>
-            <Font name="System Bold" size="80.0" />
-          </font>
-        </Label>
+        <Label fx:id="titleLabel" layoutX="100.0" layoutY="80.0" text="Study Master" />
         <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/divider_up.png" />
