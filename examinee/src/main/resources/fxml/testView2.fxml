@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.TaskView">
+  <children>
+    <Label fx:id="TestField" alignment="CENTER" layoutX="358.0" layoutY="74.0" prefHeight="86.0" prefWidth="309.0" text="Test 2/2" textOverrun="CENTER_WORD_ELLIPSIS">
+      <font>
+        <Font size="60.0" />
+      </font>
+      <labelFor>
+        <Label fx:id="NameField" alignment="CENTER" layoutX="754.0" layoutY="32.0" minHeight="35.0" prefHeight="56.0" prefWidth="140.0" text="Name">
+          <font>
+            <Font size="40.0" />
+          </font>
+        </Label>
+      </labelFor>
+    </Label>
+    <fx:reference source="NameField" />
+    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/divider_down.png" />
+      </image>
+    </ImageView>
+    <Label layoutX="430.0" layoutY="601.0" prefHeight="43.344635009765625" prefWidth="165.0" text="©Copyright 2014 Studymaster" />
+    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/divider_up.png" />
+      </image>
+    </ImageView>
+    <Button fx:id="ExitButton" layoutX="858.0" layoutY="686.0" mnemonicParsing="false" text="EXIT">
+      <font>
+        <Font size="20.0" />
+      </font>
+    </Button>
+    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="425.0" layoutY="436.0" mnemonicParsing="false" text="WEBCAM TEST" />
+    <Label alignment="CENTER" layoutX="220.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" text="*Press start to open webcam. If you can see yourself up here, you are all set!">
+      <font>
+        <Font size="15.0" />
+      </font>
+    </Label>
+    <ImageView fitHeight="203.0" fitWidth="203.0" layoutX="407.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/User.png" />
+      </image>
+    </ImageView>
+  </children>
+  <stylesheets>
+    <URL value="@../stylesheet/testView.css" />
+  </stylesheets>
+</AnchorPane>
