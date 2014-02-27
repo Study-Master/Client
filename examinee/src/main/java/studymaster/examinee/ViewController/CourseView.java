@@ -9,16 +9,6 @@ import org.json.JSONObject;
 public class CourseView extends HomeViewController {
 
 	@Override
-	public void onOpen(short httpStatus, String httpStatusMessage) {
-		System.out.println("[info] (CourseView onOpen) Socket's connection established.");
-	}
-
-	@Override
-	public void onClose(int code, String reason, boolean remote) {
-		System.out.println("[info] (CourseView onClose) Socket's connection closed.");
-	}
-
-	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] (CourseView onMessage) Receive message: " + message);
 		try {
@@ -31,11 +21,6 @@ public class CourseView extends HomeViewController {
 		} catch (Exception e) {
 			System.err.println("[err] (CourseView onMessage) Error when decoding JSON response string.");
 		}
-	}
-
-	@Override
-	public void onError(Exception ex) {
-		System.err.println("[err] (CourseView onError) An error has been caught.");
 	}
 
 	@Override
