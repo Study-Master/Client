@@ -9,17 +9,6 @@ import org.json.JSONObject;
 public class LoginView extends LoginViewController {
 
 	@Override
-	public void onOpen(short httpStatus, String httpStatusMessage) {
-		System.out.println("[info] (LoginView onOpen) Socket's connection established.");
-	}
-
-	@Override
-	public void onClose(int code, String reason, boolean remote) {
-		System.out.println("[info] (LoginView onClose) Socket's connection closed.");
-		connector = Connector.renew();
-	}
-
-	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] (LoginView onMessage) Receive message: " + message);
 		try {
@@ -47,12 +36,6 @@ public class LoginView extends LoginViewController {
 		} catch (Exception e) {
 			System.err.println("[err] (LoginView onMessage) Error when decoding JSON response string.");
 		}
-	}
-
-	@Override
-	public void onError(Exception ex) {
-		System.err.println("[err] (LoginView onError) An error has been caught.");
-		connector = Connector.renew();
 	}
 
 	@Override
