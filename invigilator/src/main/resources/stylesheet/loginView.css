@@ -1,0 +1,31 @@
+#titleLabel {
+	-fx-alignment: center;
+	-fx-font-family: 'HelveticaNeue LT 25 UltLight';
+	-fx-font-size: 80;
+}
+
+#copyrightLabel {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+}
+
+#accountField, #passwordField {
+	-fx-border-radius: 3px;
+	-fx-border-color: rgba(0, 102, 153, 1);
+	-fx-background-color: rgba(255, 255, 255, 0);
+}
+
+#loginButton, #exitButton {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-border-radius: 3px;
+    -fx-border-color: rgba(0, 102, 153, 1);
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+#loginButton:pressed, #loginButton:hover, #exitButton:pressed, #exitButton:hover {
+    -fx-background-color: rgba(0, 102, 153, 1);
+    -fx-text-fill: white;
+}
+
+.root {
+	-fx-background-image: url('../image/loginView.png');
+}
