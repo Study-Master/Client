@@ -16,6 +16,7 @@ public class LoginView extends LoginViewController {
 	@Override
 	public void onClose(int code, String reason, boolean remote) {
 		System.out.println("[info] (LoginView onClose) Socket's connection closed.");
+		connector = Connector.renew();
 	}
 
 	@Override
@@ -51,6 +52,7 @@ public class LoginView extends LoginViewController {
 	@Override
 	public void onError(Exception ex) {
 		System.err.println("[err] (LoginView onError) An error has been caught.");
+		connector = Connector.renew();
 	}
 
 	@Override
@@ -69,12 +71,17 @@ public class LoginView extends LoginViewController {
 
 	@Override
 	public void login(String account, String password) {
-		if(connector.isOpen()) {
-			Connector.setSender(account);
-			connector.login(password);
-		}
-		else {
-			System.err.println("[info] (LoginView login) No connection. Waiting for connection.");
+		Connector.setSender(account);
+
+		try {
+			boolean connected = true;
+			if(!connector.isOpen())
+				connected = connector.connectBlocking();
+			if(connected) {
+				connector.login(password);
+			}
+		} catch(Exception e) {
+			System.err.println("[err] (LoginView login) An error is caught, no connection.");
 		}
 	}
 }

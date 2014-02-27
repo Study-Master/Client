@@ -20,10 +20,6 @@ public abstract class ViewController implements Initializable, Callback {
 		System.out.println("[info] (ViewController initialize): Connector delegate now is " + this.getClass());
 		director = Director.getInstance();
 		connector = Connector.getInstance();
-		
-		if(!connector.isOpen()) {
-			connector.connect();
-		}
 	}
 
 	public abstract void nextView();

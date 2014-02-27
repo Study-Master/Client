@@ -65,8 +65,9 @@ public final class Connector extends WebSocketClient{
         localEndpoint = endpoint;
     }
 
-    public static void destroy() {
+    public static Connector renew() {
         instance = null;
+        return getInstance();
     }
 
     @Override
