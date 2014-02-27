@@ -47,6 +47,10 @@ public final class Director {
 		stage.show();
 	}
 
+	public Scene getScene() {
+		return scene;
+	}
+
 	/**
 	 * Change current stage with a new scene
 	 * @param  newScene new scene
@@ -57,7 +61,7 @@ public final class Director {
 		showStage();
 	}
 
-	public void pushStageWithFXML(URL fxmlFile) throws java.io.IOException{
+	public void pushStageWithFXML(URL fxmlFile) throws java.io.IOException {
         FXMLLoader loader = new FXMLLoader();
         Parent rootNode = (Parent) loader.load(fxmlFile);
        	setScene(new Scene(rootNode));
