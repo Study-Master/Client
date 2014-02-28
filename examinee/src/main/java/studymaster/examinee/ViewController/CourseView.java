@@ -5,7 +5,11 @@ import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class CourseView extends HomeViewController {
 
@@ -16,7 +20,7 @@ public class CourseView extends HomeViewController {
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
         	String endpoint = msg.getString("endpoint");
-        	JSONObject content = msg.getJSONObject("content");
+        	final JSONObject content = msg.getJSONObject("content");
 
 			final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
         	
@@ -24,7 +28,20 @@ public class CourseView extends HomeViewController {
   				@Override
   				public void run() {
   					try {
-  						//add code here
+  						JSONObject profile = content.getJSONObject("profile");
+  						JSONArray courses = profile.getJSONArray("courses");
+
+  						GridPane courseList = new GridPane();
+
+  						for(int i=0; i<courses.length(); i++) {
+  							JSONObject course = courses.getJSONObject(i);
+  							Label code = new Label(course.getString("code"));
+  							Label name = new Label(course.getString("name"));
+  							courseList.add(code, 1, 1);
+  							courseList.add(name, 2, 1);
+  						}
+  						
+     					pane.getChildren().addAll(courseList);
   					} catch (Exception e) {
   						System.err.println("[err] (CourseView onMessage) Error when adding component.");
   					}
