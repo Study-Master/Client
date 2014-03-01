@@ -22,7 +22,4 @@ public class CourseView extends HomeViewController {
 			System.err.println("[err] (CourseView onMessage) Error when decoding JSON response string.");
 		}
 	}
-	
-	@Override
-	public void nextView(){}
 }
