@@ -33,9 +33,6 @@ public class CourseView extends HomeViewController {
 		}
 	}
 
-	@Override
-	public void nextView(){}
-
   private void showCourseList(final JSONObject content) {
     final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
     javafx.application.Platform.runLater(new Runnable() {
