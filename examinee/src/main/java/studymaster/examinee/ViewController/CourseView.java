@@ -37,8 +37,10 @@ public class CourseView extends HomeViewController {
   							JSONObject course = courses.getJSONObject(i);
   							Label code = new Label(course.getString("code"));
   							Label name = new Label(course.getString("name"));
-  							courseList.add(code, 1, 1);
-  							courseList.add(name, 2, 1);
+                Button button = new Button(course.getString("status"));
+  							courseList.add(code, 1, i+1);
+  							courseList.add(name, 2, i+1);
+                courseList.add(button, 3, i+1);
   						}
   						
      					pane.getChildren().addAll(courseList);
