@@ -93,7 +93,7 @@ public final class Connector extends WebSocketClient{
     /**
      * Send login request in JSON format.
      * @param  password                 user's password in md5Hex
-     * @throws NotYetConnectedException not connected.
+     * @throws NotYetConnectedException not connected
      */
     public void login(String password) throws NotYetConnectedException {
         java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -106,6 +106,24 @@ public final class Connector extends WebSocketClient{
         content.put("account", localSender);
         content.put("password", password);
         content.put("time", df.format(new java.util.Date()));
+
+        msg.put("content", content);
+
+        super.send(msg.toString());
+    }
+
+    /**
+     * Send get profile request in JSON format
+     * @throws NotYetConnectedException not connected
+     */
+    public void profile() throws NotYetConnectedException{
+        JSONObject msg = new JSONObject();
+        JSONObject content = new JSONObject();
+
+        msg.put("event", "profile");
+        msg.put("endpoint", localEndpoint);
+
+        content.put("account", localSender);
 
         msg.put("content", content);
 
