@@ -22,7 +22,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] (LoginView onMessage) Login successfully.");
-					nextView();
+					director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
 				}
 
 				else if(status.equals("failed")) {
@@ -36,20 +36,6 @@ public class LoginView extends LoginViewController {
 		} catch (Exception e) {
 			System.err.println("[err] (LoginView onMessage) Error when decoding JSON response string.");
 		}
-	}
-
-	@Override
-	public void nextView() {
-		javafx.application.Platform.runLater(new Runnable() {
-  			@Override
-  			public void run() {
-  				try {
-  					director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
-  				} catch (Exception e) {
-  					System.err.println("[err] (LoginView nextView) Error when switching scene");
-  				}
-  			}
-		});
 	}
 
 	@Override
