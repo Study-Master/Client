@@ -4,6 +4,11 @@
 	-fx-font-size: 45;
 }
 
+.label {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-font-size: 20;
+}
+
 .button {
 	-fx-font-family: 'HelveticaNeue LT 45 Light';
 	-fx-border-radius: 3px;
