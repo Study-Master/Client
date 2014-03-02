@@ -22,6 +22,7 @@ public class LoginView extends LoginViewController {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			// 	if(status.equals("success")) {
 			// 		System.out.println("[info] (LoginView onMessage) Login successfully.");
 			// 		nextView();
@@ -29,12 +30,17 @@ public class LoginView extends LoginViewController {
 =======
 =======
 >>>>>>> FETCH_HEAD
+=======
+>>>>>>> FETCH_HEAD
 				if(status.equals("success")) {
 					System.out.println("[info] (LoginView onMessage) Login successfully.");
 					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
 
@@ -52,6 +58,7 @@ public class LoginView extends LoginViewController {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	@Override
 <<<<<<< HEAD
 	public void nextView() {
@@ -66,6 +73,8 @@ public class LoginView extends LoginViewController {
   			}
 		});
 	}
+=======
+>>>>>>> FETCH_HEAD
 
 	@Override
 =======
