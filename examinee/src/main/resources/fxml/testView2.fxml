@@ -35,12 +35,12 @@
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Button fx:id="ExitButton" layoutX="858.0" layoutY="686.0" mnemonicParsing="false" text="EXIT">
+    <Button fx:id="ExitButton" layoutX="858.0" layoutY="686.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
       <font>
         <Font size="20.0" />
       </font>
     </Button>
-    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="425.0" layoutY="436.0" mnemonicParsing="false" text="WEBCAM TEST" />
+    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="425.0" layoutY="436.0" mnemonicParsing="false" onAction="#testAction" text="WEBCAM TEST" />
     <Label alignment="CENTER" layoutX="220.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" text="*Press start to open webcam. If you can see yourself up here, you are all set!">
       <font>
         <Font size="15.0" />

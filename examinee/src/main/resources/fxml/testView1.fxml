@@ -35,7 +35,7 @@
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Button fx:id="ExitButton" layoutX="858.0" layoutY="686.0" mnemonicParsing="false" text="EXIT">
+    <Button fx:id="ExitButton" layoutX="858.0" layoutY="686.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
       <font>
         <Font size="20.0" />
       </font>
@@ -45,7 +45,7 @@
         <Image url="@../image/Audio.png" />
       </image>
     </ImageView>
-    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="439.0" layoutY="436.0" mnemonicParsing="false" text="AUDIO TEST" />
+    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="439.0" layoutY="436.0" mnemonicParsing="false" onAction="#testAction" text="AUDIO TEST" />
     <Label alignment="CENTER" layoutX="220.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" text="*Press begin to start recording.Your voice will be replayed after the recording stops">
       <font>
         <Font size="15.0" />
