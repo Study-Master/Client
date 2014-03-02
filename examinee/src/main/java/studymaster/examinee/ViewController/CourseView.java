@@ -44,7 +44,7 @@ public class CourseView extends HomeViewController {
           GridPane courseList = new GridPane();
           courseList.setVgap(15);
 
-          AnchorPane.setTopAnchor(courseList, 180.0);
+          AnchorPane.setTopAnchor(courseList, 200.0);
           AnchorPane.setLeftAnchor(courseList, 70.0);
           AnchorPane.setRightAnchor(courseList, 70.0);
           ColumnConstraints col1 = new ColumnConstraints();
