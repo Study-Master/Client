@@ -37,6 +37,4 @@ public abstract class ViewController implements Initializable, Callback {
 		System.err.println("[err] ("+ getClass().getSimpleName() +" onError) An error has been caught.");
 		connector = Connector.renew();
 	}
-
-	public abstract void nextView();
 }

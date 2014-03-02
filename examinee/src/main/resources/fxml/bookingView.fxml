@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.BookingView">
   <children>
     <ImageView fitHeight="150.0" fitWidth="300.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" />
     <Group id="Group" layoutX="149.0" layoutY="123.0">
@@ -22,6 +22,6 @@
         <Group id="Group" layoutX="0.0" layoutY="0.0" />
       </children>
     </Group>
-    <Label fx:id="courseName" alignment="CENTER" layoutX="190.0" layoutY="54.0" prefHeight="44.0" prefWidth="221.0" text="Course Name" textAlignment="CENTER" wrapText="false" />
+    <Label id="courseName" fx:id="title" alignment="CENTER" layoutX="190.0" layoutY="54.0" prefHeight="44.0" prefWidth="221.0" text="Course Name" textAlignment="CENTER" wrapText="false" />
   </children>
 </AnchorPane>

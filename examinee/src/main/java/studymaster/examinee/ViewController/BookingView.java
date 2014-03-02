@@ -46,28 +46,19 @@ public class BookingView extends ViewController{
 	// 	login(account, password);
 	// }
 
-	/*The Json message we assume to used here:
-		{
-	    	"event": "booking",
-    		"endpoint": "Server",
-    		"content":  {
-            				"courseName": "*****",
-            				"examTime": [{
-											"date": "dd/mm/yyyy",
-            								"timeSlot": "**:** - **:**"
-            							}, {}, {}]//json array
-        				}
-		}
-	*/
 
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
+		
+		//just for test
 		connector.send("{'event': 'booking','endpoint': 'Server','content':{'courseName': 'CZ2006','examTime': [{'date': '11/11/1111','timeSlot': '11:11 - 11:11'}, {'date': '22/22/2222','timeSlot': '22:22 - 22:22'}, {'date': '33/33/3333','timeSlot': '33:33 - 33:33'}]}}");
+		System.out.println("initialized");
 	}
 
 	public void onOpen(String courseName) {
 		System.out.println("[info] (CourseView onOpen) Socket's connection established.");
+
 	}
 
 	public void onClose(int code, String reason, boolean remote) {
@@ -84,6 +75,20 @@ public class BookingView extends ViewController{
 		
 
 		try {
+
+			/*The Json message we assume to used here:
+			{
+	    		"event": "booking",
+    			"endpoint": "Server",
+    			"content":  {
+            					"courseName": "*****",
+            					"examTime": [{
+												"date": "dd/mm/yyyy",
+            									"timeSlot": "**:** - **:**"
+            								}, {}, {}]//json array
+        					}
+			}
+			*/
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
         	String endpoint = msg.getString("endpoint");
@@ -93,12 +98,16 @@ public class BookingView extends ViewController{
 
         	temp = new ArrayList<Label>();
         	tempButton = new ArrayList<RadioButton>();
+   
+
 
         	if(event.equals("booking")) {
+        		
         		title.setText(courseName);
         		
         		for(int i=0; i<time.length(); i++){
         			temp.add(new Label()); 
+        			System.out.println(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
         			temp.get(i).setText(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
         			tempButton.add(new RadioButton());
         		}
@@ -111,7 +120,7 @@ public class BookingView extends ViewController{
 			}
 
 			(((AnchorPane)rootNode).getChildren()).addAll(gridPane);
-       		director.showStage();
+   //     		director.showStage();
         
 
 		} catch (Exception e) {

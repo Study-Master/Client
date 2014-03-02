@@ -17,29 +17,43 @@ public class LoginView extends LoginViewController {
         	String endpoint = msg.getString("endpoint");
         	JSONObject content = msg.getJSONObject("content");
 
-			// if(event.equals("login")) {
-			// 	String status = content.getString("status");
+			if(event.equals("login")) {
+				String status = content.getString("status");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 			// 	if(status.equals("success")) {
 			// 		System.out.println("[info] (LoginView onMessage) Login successfully.");
 			// 		nextView();
 			// 	}
+=======
+=======
+>>>>>>> FETCH_HEAD
+				if(status.equals("success")) {
+					System.out.println("[info] (LoginView onMessage) Login successfully.");
+					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+				}
+<<<<<<< HEAD
+>>>>>>> master
+=======
+>>>>>>> FETCH_HEAD
 
-			// 	else if(status.equals("failed")) {
-			// 		System.out.println("[info] (LoginView onMessage) Login failed.");
-			// 	}
+				else if(status.equals("failed")) {
+					System.out.println("[info] (LoginView onMessage) Login failed.");
+				}
 
-			// 	else {
-			// 		System.err.println("[err] (LoginView onMessage) Unexpected JSON response string.");
-			// 	}
-			// }
-			nextView();
+				else {
+					System.err.println("[err] (LoginView onMessage) Unexpected JSON response string.");
+				}
+			}
 		} catch (Exception e) {
 			System.err.println("[err] (LoginView onMessage) Error when decoding JSON response string.");
 		}
 	}
 
+<<<<<<< HEAD
 	@Override
+<<<<<<< HEAD
 	public void nextView() {
 		javafx.application.Platform.runLater(new Runnable() {
   			@Override
@@ -54,6 +68,12 @@ public class LoginView extends LoginViewController {
 	}
 
 	@Override
+=======
+>>>>>>> master
+=======
+
+	@Override
+>>>>>>> FETCH_HEAD
 	public void login(String account, String password) {
 		Connector.setSender(account);
 
