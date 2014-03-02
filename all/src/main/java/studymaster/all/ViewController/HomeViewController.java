@@ -8,5 +8,14 @@ import javafx.fxml.Initializable;
  * view client login view controller and invigilator client login
  * view controller.
  */
-public abstract class HomeViewController extends ViewController{
+public abstract class HomeViewController extends ViewController {
+
+	@Override
+	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+		super.initialize(location, resources);
+
+		if(connector.isOpen()) {
+			connector.profile();
+		}
+	}
 }

@@ -17,41 +17,27 @@ public class LoginView extends LoginViewController {
         	String endpoint = msg.getString("endpoint");
         	JSONObject content = msg.getJSONObject("content");
 
-			// if(event.equals("login")) {
-			// 	String status = content.getString("status");
+			if(event.equals("login")) {
+				String status = content.getString("status");
 
-			// 	if(status.equals("success")) {
-			// 		System.out.println("[info] (LoginView onMessage) Login successfully.");
-			// 		nextView();
-			// 	}
+				if(status.equals("success")) {
+					System.out.println("[info] (LoginView onMessage) Login successfully.");
+					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+				}
 
-			// 	else if(status.equals("failed")) {
-			// 		System.out.println("[info] (LoginView onMessage) Login failed.");
-			// 	}
+				else if(status.equals("failed")) {
+					System.out.println("[info] (LoginView onMessage) Login failed.");
+				}
 
-			// 	else {
-			// 		System.err.println("[err] (LoginView onMessage) Unexpected JSON response string.");
-			// 	}
-			// }
-			nextView();
+				else {
+					System.err.println("[err] (LoginView onMessage) Unexpected JSON response string.");
+				}
+			}
 		} catch (Exception e) {
 			System.err.println("[err] (LoginView onMessage) Error when decoding JSON response string.");
 		}
 	}
 
-	@Override
-	public void nextView() {
-		javafx.application.Platform.runLater(new Runnable() {
-  			@Override
-  			public void run() {
-  				try {
-  					director.pushStageWithFXML(App.class.getResource("/fxml/bookingView.fxml"));
-  				} catch (Exception e) {
-  					System.err.println("[err] (LoginView nextView) Error when switching scene");
-  				}
-  			}
-		});
-	}
 
 	@Override
 	public void login(String account, String password) {
