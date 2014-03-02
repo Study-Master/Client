@@ -9,6 +9,7 @@ import org.json.JSONArray;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
@@ -23,13 +24,13 @@ import javafx.fxml.Initializable;
 import studymaster.socket.Connector;
 import studymaster.socket.Callback;
 
+
 public class BookingView extends ViewController{
 
-	protected Scene bookingScene;
-	protected GridPane gridPane;
-	protected TextField text;
-	protected ArrayList<Label> temp;
-	protected ArrayList<RadioButton> tempButton;
+	
+	
+
+ 
 
 	
 
@@ -68,27 +69,7 @@ public class BookingView extends ViewController{
 	public void onMessage(String message) {
 		System.out.println("[info] (BookingView onMessage) Receive message: " + message);
 		
-		gridPane = new GridPane();
-
-		bookingScene = director.getScene();
-		Parent rootNode = bookingScene.getRoot();
-		
-
 		try {
-
-			/*The Json message we assume to used here:
-			{
-	    		"event": "booking",
-    			"endpoint": "Server",
-    			"content":  {
-            					"courseName": "*****",
-            					"examTime": [{
-												"date": "dd/mm/yyyy",
-            									"timeSlot": "**:** - **:**"
-            								}, {}, {}]//json array
-        					}
-			}
-			*/
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
         	String endpoint = msg.getString("endpoint");
@@ -96,31 +77,11 @@ public class BookingView extends ViewController{
         	String courseName = content.getString("courseName");
         	JSONArray time = content.getJSONArray("examTime");
 
-        	temp = new ArrayList<Label>();
-        	tempButton = new ArrayList<RadioButton>();
-   
-
-
         	if(event.equals("booking")) {
         		
         		title.setText(courseName);
-        		
-        		for(int i=0; i<time.length(); i++){
-        			temp.add(new Label()); 
-        			System.out.println(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
-        			temp.get(i).setText(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
-        			tempButton.add(new RadioButton());
-        		}
-
-        		for(int i=0; i<time.length(); i++){
-        			gridPane.setConstraints(temp.get(i), 1, 1);
-        			gridPane.setConstraints(tempButton.get(i), 2, 1);
-        		}
-
+        		showTimeTable(time);
 			}
-
-			(((AnchorPane)rootNode).getChildren()).addAll(gridPane);
-   //     		director.showStage();
         
 
 		} catch (Exception e) {
@@ -142,6 +103,51 @@ public class BookingView extends ViewController{
   					System.err.println("[err] (LoginView nextView) Error when switching scene");
   				}
   			}
+		});
+	}
+
+	private void showTimeTable(final JSONArray time){
+		
+		final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+		
+       	/*The Json message we assume to used here:
+			{
+	    		"event": "booking",
+    			"endpoint": "Server",
+    			"content":  {
+            					"courseName": "*****",
+            					"examTime": [{
+												"date": "dd/mm/yyyy",
+            									"timeSlot": "**:** - **:**"
+            								}, {}, {}]//json array
+        					}
+			}
+		*/
+		
+		javafx.application.Platform.runLater(new Runnable() {
+      		@Override
+      		public void run() {
+      			try{
+      				GridPane timeTable = new GridPane();
+					ArrayList<Label> temp = new ArrayList<Label>();
+       				ArrayList<RadioButton> tempButton = new ArrayList<RadioButton>();
+
+					for(int i=0; i<time.length(); i++){
+						temp.add(new Label()); 
+						System.out.println(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
+   						temp.get(i).setText(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
+       					tempButton.add(new RadioButton());
+					}
+
+					for(int i=0; i<time.length(); i++){
+						timeTable.add(temp.get(i), 0, i);
+						timeTable.add(tempButton.get(i), 1, i);
+					}
+					pane.getChildren().addAll(timeTable);
+				}catch (Exception e) {
+          			System.err.println("[err] (CourseView onMessage) Error when adding component.");
+        		}
+			}
 		});
 	}
 }
