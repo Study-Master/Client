@@ -9,20 +9,7 @@ import org.json.JSONObject;
 public class LoginView extends LoginViewController {
 
 	@Override
-<<<<<<< HEAD
-	public void onOpen(short httpStatus, String httpStatusMessage) {
-		System.out.println("[info] (LoginView onOpen) Socket's connection established.");
-	}
 
-	@Override
-	public void onClose(int code, String reason, boolean remote) {
-		System.out.println("[info] (LoginView onClose) Socket's connection closed.");
-		connector = Connector.renew();
-	}
-
-	@Override
-=======
->>>>>>> origin/master
 	public void onMessage(String message) {
 		System.out.println("[info] (LoginView onMessage) Receive message: " + message);
 		try {
@@ -36,11 +23,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] (LoginView onMessage) Login successfully.");
-<<<<<<< HEAD
-					nextView();
-=======
-					director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
->>>>>>> origin/master
+
 				}
 
 				else if(status.equals("failed")) {
@@ -57,29 +40,6 @@ public class LoginView extends LoginViewController {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public void onError(Exception ex) {
-		System.err.println("[err] (LoginView onError) An error has been caught.");
-		connector = Connector.renew();
-	}
-
-	@Override
-	public void nextView() {
-		javafx.application.Platform.runLater(new Runnable() {
-  			@Override
-  			public void run() {
-  				try {
-  					director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
-  				} catch (Exception e) {
-  					System.err.println("[err] (LoginView nextView) Error when switching scene");
-  				}
-  			}
-		});
-	}
-
-	@Override
-=======
->>>>>>> origin/master
 	public void login(String account, String password) {
 		Connector.setSender(account);
 
@@ -94,8 +54,7 @@ public class LoginView extends LoginViewController {
 			System.err.println("[err] (LoginView login) An error is caught, no connection.");
 		}
 	}
-<<<<<<< HEAD
+
+
 }
-=======
-}
->>>>>>> origin/master
+

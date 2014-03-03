@@ -66,12 +66,13 @@ public final class Director {
   			@Override
   			public void run() {
   				try {
-  					FXMLLoader loader = new FXMLLoader();
-        			Parent rootNode = (Parent) loader.load(fxmlFile);
-       				setScene(new Scene(rootNode));
-       				localStage.setScene(localScene);
-       				showStage();
+                                    FXMLLoader loader = new FXMLLoader();
+                                    Parent rootNode = (Parent) loader.load(fxmlFile);
+                                    setScene(new Scene(rootNode));
+                                    localStage.setScene(localScene);
+                                    showStage();
   				} catch (Exception e) {
+                                        System.out.println(e);
   					System.err.println("[err] (Director) Error when switching scene");
   				}
   			}

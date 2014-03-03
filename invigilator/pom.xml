@@ -34,11 +34,8 @@
     </dependency>
   </dependencies>
 
-<<<<<<< HEAD
   <build>
-=======
-   <build>
->>>>>>> origin/master
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

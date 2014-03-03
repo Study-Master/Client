@@ -61,6 +61,10 @@ public final class Connector extends WebSocketClient{
         localSender = sender;
     }
 
+    public static String getSender() {
+        return localSender;
+    }
+    
     public static void setEndpoint(String endpoint) {
         localEndpoint = endpoint;
     }
