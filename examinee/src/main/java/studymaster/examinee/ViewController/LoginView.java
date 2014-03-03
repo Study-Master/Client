@@ -5,18 +5,6 @@ import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.text.Text;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBoxBuilder;
-import javafx.event.ActionEvent;
-import javafx.event.*;
-import javafx.stage.StageStyle;
-
 
 public class LoginView extends LoginViewController {
 
@@ -39,36 +27,7 @@ public class LoginView extends LoginViewController {
 
 				else if(status.equals("failed")) {
 					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
-
-					javafx.application.Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							final Stage dialogStage = new Stage();
-							dialogStage.initModality(Modality.WINDOW_MODAL);
-							Button button = new Button("OK");
-							Text text = new Text(content.getString("reason"));
-							dialogStage.initStyle(StageStyle.UNDECORATED);
-							//hide the title bar of the alert window
-
-							dialogStage.setScene(new Scene(VBoxBuilder.create()
-																	  .children(text, button)
-																	  .alignment(Pos.CENTER)
-																	  .padding(new Insets(8))
-																	  .minHeight(100)
-																	  .minWidth(200)
-																	  .maxWidth(400)
-																	  .build()));
-							dialogStage.show();
-
-							button.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									dialogStage.close();
-								}
-							});
-							connector = Connector.renew();
-						}
-					});
+					alert(content.getString("reason"));
 				}
 
 				else {

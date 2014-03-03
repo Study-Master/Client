@@ -73,7 +73,6 @@ public abstract class ViewController implements Initializable, Callback {
 					@Override
 					public void handle(ActionEvent event) {
 						dialogStage.close();
-						director.pushStageWithFXML(getClass().getResource("/fxml/loginView.fxml"));
 						connector = Connector.renew();
 					}
 				});
