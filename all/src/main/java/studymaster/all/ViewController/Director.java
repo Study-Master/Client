@@ -61,21 +61,25 @@ public final class Director {
 		showStage();
 	}
 
-	public static void pushStageWithFXML(final URL fxmlFile) throws java.io.IOException {
+	/**
+	 * Change current stage with a fxml file
+	 * @param fxmlFile url to fxml file
+	 */
+	public static void pushStageWithFXML(final URL fxmlFile) {
        	javafx.application.Platform.runLater(new Runnable() {
   			@Override
   			public void run() {
   				try {
-                                    FXMLLoader loader = new FXMLLoader();
-                                    Parent rootNode = (Parent) loader.load(fxmlFile);
-                                    setScene(new Scene(rootNode));
-                                    localStage.setScene(localScene);
-                                    showStage();
+  					FXMLLoader loader = new FXMLLoader();
+  					Parent rootNode = (Parent) loader.load(fxmlFile);
+  					setScene(new Scene(rootNode));
+  					localStage.setScene(localScene);
+  					showStage();
   				} catch (Exception e) {
-                                        System.out.println(e);
+  					System.out.println(e);
   					System.err.println("[err] (Director) Error when switching scene");
   				}
   			}
-		});
+  		});
 	}
 }

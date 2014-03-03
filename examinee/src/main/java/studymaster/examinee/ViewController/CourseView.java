@@ -39,7 +39,7 @@ public class CourseView extends HomeViewController {
         
 	@Override
 	public void onMessage(String message) {
-		System.out.println("[info] (CourseView onMessage) Receive message: " + message);
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		try {
 			JSONObject msg = new JSONObject(message);
       String event = msg.getString("event");
@@ -51,7 +51,7 @@ public class CourseView extends HomeViewController {
       }
 
 		} catch (Exception e) {
-			System.err.println("[err] (CourseView onMessage) Error when decoding JSON response string.");
+			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
 		}
 	}
 
@@ -116,7 +116,7 @@ public class CourseView extends HomeViewController {
           }
           pane.getChildren().addAll(courseList);
         } catch (Exception e) {
-          System.err.println("[err] (CourseView onMessage) Error when adding component.");
+          System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
         }
       }
     });

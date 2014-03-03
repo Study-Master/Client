@@ -22,7 +22,7 @@ public class LoginView extends LoginViewController {
 
 	@Override
 	public void onMessage(String message) {
-		System.out.println("[info] (LoginView onMessage) Receive message: " + message);
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		try {
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
@@ -33,12 +33,12 @@ public class LoginView extends LoginViewController {
 				String status = content.getString("status");
 
 				if(status.equals("success")) {
-					System.out.println("[info] (LoginView onMessage) Login successfully.");
+					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
 					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
 				}
 
 				else if(status.equals("failed")) {
-					System.out.println("[info] (LoginView onMessage) Login failed.");
+					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
 
 					javafx.application.Platform.runLater(new Runnable() {
 						@Override
@@ -72,12 +72,12 @@ public class LoginView extends LoginViewController {
 				}
 
 				else {
-					System.err.println("[err] (LoginView onMessage) Unexpected JSON response string.");
+					System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Unexpected JSON response string.");
 				}
 			}
 		} catch (Exception e) {
 			System.err.println(e);
-			System.err.println("[err] (LoginView onMessage) Error when decoding JSON response string.");
+			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
 		}
 	}
 
@@ -93,7 +93,7 @@ public class LoginView extends LoginViewController {
 				connector.login(password);
 			}
 		} catch(Exception e) {
-			System.err.println("[err] (LoginView login) An error is caught, no connection.");
+			System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
 		}
 	}
 }

@@ -20,7 +20,7 @@ public abstract class TestViewController extends ViewController {
 	 */
 	@FXML
 	public final void testAction() {
-		System.out.println("[info] (TestViewController, testAction): Trying to test...");
+		System.out.println("[info] (" + getClass().getSimpleName() + " testAction): Trying to test...");
 		//String account = accountField.getText();
 		test();
 	}
@@ -30,10 +30,12 @@ public abstract class TestViewController extends ViewController {
 	 */
 	@FXML
 	public final void exitAction() {
-		System.out.println("[info] (TestViewController, exitAction): Exiting...");
+		System.out.println("[info] (" + getClass().getSimpleName() + " exitAction): Exiting...");
 		System.exit(0);
 	}
 
-    // test: audio test and webcam test
+    /**
+     * Audio and webcam test
+     */
     public abstract void test();
 }

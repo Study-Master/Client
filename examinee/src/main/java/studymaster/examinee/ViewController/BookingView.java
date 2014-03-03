@@ -57,16 +57,16 @@ public class BookingView extends ViewController{
 	}
 
 	public void onOpen(String courseName) {
-		System.out.println("[info] (CourseView onOpen) Socket's connection established.");
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onOpen) Socket's connection established.");
 
 	}
 
 	public void onClose(int code, String reason, boolean remote) {
-		System.out.println("[info] (CourseView onClose) Socket's connection closed.");
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onClose) Socket's connection closed.");
 	}
 
 	public void onMessage(String message) {
-		System.out.println("[info] (BookingView onMessage) Receive message: " + message);
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		
 		try {
 			JSONObject msg = new JSONObject(message);
@@ -90,12 +90,8 @@ public class BookingView extends ViewController{
         
 
 		} catch (Exception e) {
-			System.err.println("[err] (CourseView onMessage) Error when decoding JSON response string.");
+			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
 		}
-	}
-
-	public void onError(Exception ex) {
-		System.err.println("[err] (CourseView onError) An error has been caught.");
 	}
 
 	private void showTimeTable(final JSONArray time, final GridPane timeTable, final ToggleGroup buttonGroup){
@@ -134,7 +130,7 @@ public class BookingView extends ViewController{
 
 				}catch (Exception e) {
 					System.out.println(e);
-          			System.err.println("[err] (CourseView onMessage) Error when adding component.");
+          			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
         		}
 			}
 		});
