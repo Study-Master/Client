@@ -3,17 +3,12 @@ package studymaster.examinee.ViewController;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import studymaster.all.ViewController.HomeViewController;
@@ -87,13 +82,29 @@ public class CourseView extends HomeViewController {
               Button button = new Button("Book");
               courseList.add(button, 2, i);
             }
-            else if (status.equals("booked")) {
-              String examStartTime = course.getString("start_time");
-              CountDown timeLabel = new CountDown(examStartTime);
+            else if (status.equals("booked")) {      
+              try {
+                String examStartTime = course.getString("start_time");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date currentTime = new Date();
+                Date startTime = dateFormat.parse(examStartTime);
+                long diff = startTime.getTime() - currentTime.getTime();
+                long diffDays = diff / (24 * 60 * 60 * 1000);
+                //System.out.println(diffDays);
+                if (diffDays<3){
+                  CountDown timeLabel = new CountDown(examStartTime);
+                  courseList.add(timeLabel, 2, i);
+                }
+                else {
+                  Button button = new Button("Cancel");
+                  courseList.add(button, 2, i);            
+                }
+              }
+              catch (Exception e){
+                  System.err.println("[err] Error when parsing string");
+              }
               
-              //timeLabel.setStyle("-fx-font-size: 10;");
-              //timeLabel.textProperty().bind(remainingTime);
-              courseList.add(timeLabel, 2, i);
+              
             }
           }
           pane.getChildren().addAll(courseList);
