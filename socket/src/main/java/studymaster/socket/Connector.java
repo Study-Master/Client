@@ -61,6 +61,10 @@ public final class Connector extends WebSocketClient{
         localSender = sender;
     }
 
+    public static String getSender() {
+        return localSender;
+    }
+    
     public static void setEndpoint(String endpoint) {
         localEndpoint = endpoint;
     }
@@ -121,6 +125,20 @@ public final class Connector extends WebSocketClient{
         JSONObject content = new JSONObject();
 
         msg.put("event", "profile");
+        msg.put("endpoint", localEndpoint);
+
+        content.put("account", localSender);
+
+        msg.put("content", content);
+
+        super.send(msg.toString());
+    }
+
+    public void auth() throws NotYetConnectedException {
+        JSONObject msg = new JSONObject();
+        JSONObject content = new JSONObject();
+
+        msg.put("event", "auth");
         msg.put("endpoint", localEndpoint);
 
         content.put("account", localSender);
