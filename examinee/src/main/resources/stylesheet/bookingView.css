@@ -1,0 +1,31 @@
+#titleLabel {
+	-fx-alignment: center;
+	-fx-font-family: 'HelveticaNeue LT 25 UltLight';
+	-fx-font-size: 80;
+}
+
+#submitButton {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-border-radius: 3px;
+    -fx-border-color: rgba(0, 102, 153, 1);
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+#cancelButton {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-border-radius: 3px;
+    -fx-border-color: rgba(0, 102, 153, 1);
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+#submitButton:pressed, #cancelButton:hover, #submitButton:pressed, #cancelButton:hover {
+    -fx-background-color: rgba(0, 102, 153, 1);
+    -fx-text-fill: white;
+}
+#gridPane {
+	-fx-border-radius: 4px;
+	-fx-border-color: rgba(0, 102, 153, 1);
+	-fx-background-color: rgba(0, 255, 215, 1);
+    -fx-grid-lines-visible: true;
+
+}

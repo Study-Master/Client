@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -10,18 +11,21 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.BookingView">
   <children>
-    <ImageView fitHeight="150.0" fitWidth="300.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" />
-    <Group id="Group" layoutX="149.0" layoutY="123.0">
-      <children>
-        <Group id="Group" layoutX="5.0" layoutY="130.0">
-          <children>
-            <Button layoutX="211.0" layoutY="100.0" mnemonicParsing="false" text="Cancel" />
-            <Button layoutX="12.0" layoutY="100.0" mnemonicParsing="false" text="Submit" />
-          </children>
-        </Group>
-        <Group id="Group" layoutX="0.0" layoutY="0.0" />
-      </children>
-    </Group>
-    <Label id="courseName" fx:id="title" alignment="CENTER" layoutX="190.0" layoutY="54.0" prefHeight="44.0" prefWidth="221.0" text="Course Name" textAlignment="CENTER" wrapText="false" />
+    <Button fx:id="submitButton" layoutX="326.0" layoutY="594.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Submit" />
+    <Button fx:id="cancelButton" layoutX="609.0" layoutY="594.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Cancel" />
+    <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="64.0" style="" text="CZ2006" textAlignment="CENTER" />
+    <Label fx:id="copyrightLabel" layoutX="416.0" layoutY="653.0" text="©Copyright 2014 Studymaster" />
+    <GridPane id="gridPane" fx:id="timeTable" alignment="CENTER" layoutX="386.0" layoutY="255.0">
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="200.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
+      </rowConstraints>
+    </GridPane>
   </children>
+  <stylesheets>
+    <URL value="@../stylesheet/bookingView.css" />
+  </stylesheets>
 </AnchorPane>

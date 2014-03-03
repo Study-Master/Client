@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.RadioButton;
@@ -34,7 +35,8 @@ public class BookingView extends ViewController{
 
 	
 
-	@FXML protected Label title;
+	@FXML protected Label titleLabel;
+	@FXML protected GridPane timeTable;
 	
 	/**
 	 * Binded to login button
@@ -79,8 +81,8 @@ public class BookingView extends ViewController{
 
         	if(event.equals("booking")) {
         		
-        		title.setText(courseName);
-        		showTimeTable(time);
+        		titleLabel.setText(courseName);
+        		showTimeTable(time, timeTable);
 			}
         
 
@@ -106,7 +108,7 @@ public class BookingView extends ViewController{
 		});
 	}
 
-	private void showTimeTable(final JSONArray time){
+	private void showTimeTable(final JSONArray time, final GridPane timeTable){
 		
 		final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
 		
@@ -128,7 +130,7 @@ public class BookingView extends ViewController{
       		@Override
       		public void run() {
       			try{
-      				GridPane timeTable = new GridPane();
+      				// GridPane timeTable = new GridPane();
 					ArrayList<Label> temp = new ArrayList<Label>();
        				ArrayList<RadioButton> tempButton = new ArrayList<RadioButton>();
 
