@@ -77,17 +77,14 @@ public class CourseView extends HomeViewController {
 
             status = course.getString("status");
             if (status.equals("unbooked")) {
-<<<<<<< HEAD
               Button button = new Button(" Book ");
-=======
-              Button button = new Button("Book");
+
               button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
                   director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
                 }
               });
 
->>>>>>> FETCH_HEAD
               courseList.add(button, 2, i);
             }
             else if (status.equals("booked")) {      
