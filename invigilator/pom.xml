@@ -9,7 +9,7 @@
   </parent>
   <artifactId>invigilator</artifactId>
   <packaging>jar</packaging>
-  
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -34,8 +34,7 @@
     </dependency>
   </dependencies>
 
-  <build>
-
+   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -9,9 +9,8 @@ import org.json.JSONObject;
 public class CourseView extends HomeViewController {
 
 	@Override
-
 	public void onMessage(String message) {
-		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+		System.out.println("[info] (CourseView onMessage) Receive message: " + message);
 		try {
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
@@ -20,9 +19,7 @@ public class CourseView extends HomeViewController {
 
         	//add code here
 		} catch (Exception e) {
-			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+			System.err.println("[err] (CourseView onMessage) Error when decoding JSON response string.");
 		}
 	}
-
 }
-

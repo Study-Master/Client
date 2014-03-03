@@ -20,7 +20,7 @@ public abstract class LoginViewController extends ViewController{
 	 */
 	@FXML
 	public final void loginAction() {
-		System.out.println("[info] (" + getClass().getSimpleName() + " loginAction): Trying to login...");
+		System.out.println("[info] (LoginViewController, loginAction): Trying to login...");
 		String account = accountField.getText();
 		String password = DigestUtils.md5Hex(passwordField.getText());
 		login(account, password);
@@ -31,7 +31,7 @@ public abstract class LoginViewController extends ViewController{
 	 */
 	@FXML
 	public final void exitAction() {
-		System.out.println("[info] (" + getClass().getSimpleName() + " exitAction): Exiting...");
+		System.out.println("[info] (LoginViewController, exitAction): Exiting...");
 		System.exit(0);
 	}
 

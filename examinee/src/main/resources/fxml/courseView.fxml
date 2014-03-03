@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.CourseView">
   <children>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_up.png" />
       </image>
@@ -20,14 +20,7 @@
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Label fx:id="titleLabel" layoutX="75.0" layoutY="100.0" text="Course" />
-    <Button layoutX="51.0" layoutY="14.0" onAction="#gotoTestAction" style="-fx-border-color: transparent;&#10;&#10;" text="Testing">
-      <graphic>
-        <ImageView>
-          <Image url="@../image/testing.png" />
-        </ImageView>
-      </graphic>
-    </Button>
+    <Label fx:id="titleLabel" layoutX="75.0" layoutY="79.0" text="Course" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/courseView.css" />
