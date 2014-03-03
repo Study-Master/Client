@@ -14,7 +14,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class CourseView extends HomeViewController {
-
+    
+        //@FXML
+        public final void gotoTestAction() {
+            try {
+                director.pushStageWithFXML(getClass().getResource("/fxml/testView.fxml"));
+            } catch (Exception e) {
+                System.err.println("[err] (testView) Error when enter testView stage");
+            }
+        }
+        
 	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] (CourseView onMessage) Receive message: " + message);
@@ -42,18 +51,15 @@ public class CourseView extends HomeViewController {
           JSONObject profile = content.getJSONObject("profile");
           JSONArray courses = profile.getJSONArray("courses");
           GridPane courseList = new GridPane();
-          courseList.setVgap(15);
-
-          AnchorPane.setTopAnchor(courseList, 200.0);
-          AnchorPane.setLeftAnchor(courseList, 70.0);
-          AnchorPane.setRightAnchor(courseList, 70.0);
+          AnchorPane.setTopAnchor(courseList, 150.0);
+          AnchorPane.setLeftAnchor(courseList, 90.0);
+          AnchorPane.setRightAnchor(courseList, 90.0);
           ColumnConstraints col1 = new ColumnConstraints();
           col1.setPercentWidth(15);
           ColumnConstraints col2 = new ColumnConstraints();
           col2.setPercentWidth(65);
           ColumnConstraints col3 = new ColumnConstraints();
           col3.setPercentWidth(20);
-
           courseList.getColumnConstraints().addAll(col1,col2,col3);
           courseList.setStyle("-fx-border: 2px solid; -fx-border-color: red; -fx-border-insets: 5;"); //debug only
 
@@ -62,8 +68,6 @@ public class CourseView extends HomeViewController {
             Label code = new Label(course.getString("code"));
             Label name = new Label(course.getString("name"));
             Button button = new Button(course.getString("status"));
-              //System.out.println("[status] " + course.getString("status"));
-            
             courseList.add(code, 0, i);
             courseList.add(name, 1, i);
             courseList.add(button, 2, i);

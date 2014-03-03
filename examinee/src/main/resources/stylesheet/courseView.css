@@ -6,12 +6,11 @@
 
 .label {
 	-fx-font-family: 'HelveticaNeue LT 45 Light';
-	-fx-font-size: 25;
+	-fx-font-size: 20;
 }
 
 .button {
 	-fx-font-family: 'HelveticaNeue LT 45 Light';
-	-fx-font-size: 20;
 	-fx-border-radius: 3px;
     -fx-border-color: rgba(0, 102, 153, 1);
     -fx-background-color: rgba(255, 255, 255, 0.5);

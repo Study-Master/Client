@@ -16,8 +16,8 @@
       <children>
         <Group id="Group" layoutX="201.0" layoutY="208.0">
           <children>
-            <TextField fx:id="accountField" alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" prefHeight="35.0" prefWidth="200.0" promptText="Account" onAction="#onEnter"/>
-            <PasswordField fx:id="passwordField" layoutX="0.0" layoutY="44.0" prefHeight="35.0" prefWidth="200.0" promptText="Password" onAction="#onEnter"/>
+            <TextField fx:id="accountField" alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" prefHeight="35.0" prefWidth="200.0" promptText="Account" />
+            <PasswordField fx:id="passwordField" layoutX="0.0" layoutY="44.0" prefHeight="35.0" prefWidth="200.0" promptText="Password" />
             <Button fx:id="loginButton" layoutX="0.0" layoutY="98.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="30.0" prefWidth="90.0" text="Login" />
             <Button fx:id="exitButton" layoutX="110.0" layoutY="98.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="30.0" prefWidth="90.0" text="Exit" />
           </children>
