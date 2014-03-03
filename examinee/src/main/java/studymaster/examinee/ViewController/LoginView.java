@@ -5,6 +5,14 @@ import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBoxBuilder;
 
 public class LoginView extends LoginViewController {
 
@@ -27,6 +35,21 @@ public class LoginView extends LoginViewController {
 
 				else if(status.equals("failed")) {
 					System.out.println("[info] (LoginView onMessage) Login failed.");
+
+					javafx.application.Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							final Stage dialogStage = new Stage();
+							dialogStage.initModality(Modality.WINDOW_MODAL);
+							dialogStage.setScene(new Scene(VBoxBuilder.create().
+							children(new Text("Login Failed"), new Button("Ok")).
+							alignment(Pos.CENTER).padding(new Insets(10)).build()));
+							dialogStage.show();
+							
+
+							connector = Connector.renew();
+						}
+					});
 				}
 
 				else {
@@ -34,6 +57,7 @@ public class LoginView extends LoginViewController {
 				}
 			}
 		} catch (Exception e) {
+			System.err.println(e);
 			System.err.println("[err] (LoginView onMessage) Error when decoding JSON response string.");
 		}
 	}
