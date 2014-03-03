@@ -13,6 +13,9 @@ import javafx.geometry.Pos;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBoxBuilder;
+import javafx.event.ActionEvent;
+import javafx.event.*;
+
 
 public class LoginView extends LoginViewController {
 
@@ -41,11 +44,20 @@ public class LoginView extends LoginViewController {
 						public void run() {
 							final Stage dialogStage = new Stage();
 							dialogStage.initModality(Modality.WINDOW_MODAL);
+							Button button = new Button("OK");
+							Text text = new Text("login failed");
+
 							dialogStage.setScene(new Scene(VBoxBuilder.create().
-							children(new Text("Login Failed"), new Button("Ok")).
-							alignment(Pos.CENTER).padding(new Insets(10)).build()));
+								children(text, button).
+								alignment(Pos.CENTER).padding(new Insets(5)).build()));
 							dialogStage.show();
-							
+
+							button.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent event) {
+									dialogStage.close();
+								}
+							});
 
 							connector = Connector.renew();
 						}
