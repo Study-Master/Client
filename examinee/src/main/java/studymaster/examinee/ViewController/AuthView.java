@@ -25,11 +25,18 @@ public class AuthView extends ViewController {
 	
 	@Override
 	public void onMessage(String message) {
-		System.out.println("[info] (AuthView onMessage) Receive message: " + message);
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		Webcam webcam = Webcam.getDefault();
-		webcam.open(); 
-		BufferedImage bufferedImage = webcam.getImage();
-		imgView.setImage(createImage(bufferedImage));
+		webcam.open();
+		while(true) {
+			try {
+				BufferedImage bufferedImage = webcam.getImage();
+				imgView.setImage(createImage(bufferedImage));
+				Thread.sleep(100);
+			} catch(Exception e) {
+				System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Thread error.");
+			}
+		}
 	}
 
 	public static javafx.scene.image.Image createImage(java.awt.Image image) {
@@ -49,7 +56,7 @@ public class AuthView extends ViewController {
 			java.io.ByteArrayInputStream in = new java.io.ByteArrayInputStream(out.toByteArray());
 			return new javafx.scene.image.Image(in);
 		} catch (java.io.IOException e) {
-			System.err.println("[err] (AuthView createImage) Error when createImage.");
+			System.err.println("[err] ("+ getClass().getSimpleName() +" createImage) Error when createImage.");
 			return null;
 		}
 	}

@@ -6,7 +6,6 @@ import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
 import org.json.JSONArray;
-
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleGroup;
@@ -19,28 +18,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
 import javafx.scene.Parent;
-
-
 import javax.swing.ButtonGroup;
 import javax.swing.AbstractButton;
 
-
-
-import org.apache.commons.codec.digest.DigestUtils;
-
-import javafx.fxml.Initializable;
-import studymaster.socket.Connector;
-import studymaster.socket.Callback;
-
-
 public class BookingView extends ViewController{
-
-	
-	
-
- 
-
-	
 
 	@FXML protected Label titleLabel;
 	@FXML protected GridPane timeTable;
@@ -54,15 +35,6 @@ public class BookingView extends ViewController{
 		//just for test
 		connector.send("{'event': 'booking','endpoint': 'Server','studentID':'123456', 'content':{'code': 'CZ2001','name': 'java', 'examTime': [{'start_time': '2014/03/03 11:11:11', 'end_time': '2014/03/03 11:11:00'}, {'start_time': '2014/03/03 22:22:22', 'end_time': '2014/03/03 00:01:00'}, {'start_time': '2014/03/03 33:33:33', 'end_time': '2014/03/03 00:01:00'}]}}");
 		// System.out.println("initialized");
-	}
-
-	public void onOpen(String courseName) {
-		System.out.println("[info] ("+ getClass().getSimpleName() +" onOpen) Socket's connection established.");
-
-	}
-
-	public void onClose(int code, String reason, boolean remote) {
-		System.out.println("[info] ("+ getClass().getSimpleName() +" onClose) Socket's connection closed.");
 	}
 
 	public void onMessage(String message) {

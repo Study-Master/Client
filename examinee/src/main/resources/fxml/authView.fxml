@@ -28,6 +28,6 @@
         <URL value="@../stylesheet/authView.css" />
       </stylesheets>
     </Button>
-    <ImageView fx:id="imgView" fitHeight="150.0" fitWidth="200.0" layoutX="412.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="imgView" fitHeight="271.5" fitWidth="362.0" layoutX="332.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" />
   </children>
 </AnchorPane>

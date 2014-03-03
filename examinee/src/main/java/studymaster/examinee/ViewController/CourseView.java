@@ -96,10 +96,23 @@ public class CourseView extends HomeViewController {
                 Date startTime = dateFormat.parse(examStartTime);
                 long diff = startTime.getTime() - currentTime.getTime();
                 long diffDays = diff / (24 * 60 * 60 * 1000);
+                long diffMinutes = diff / (60 * 1000) % 60;
+                long diffHours = diff / (60 * 60 * 1000) % 24;
 
                 if (diffDays<3) {
-                  CountDown timeLabel = new CountDown(examStartTime);
-                  courseList.add(timeLabel, 2, i);
+                  if(diffDays==0 && diffHours ==0 && diffMinutes<=15) {
+                    Button button = new Button("Exam");
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                      @Override public void handle(ActionEvent e) {
+                        director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
+                      }
+                    });
+                    courseList.add(button, 2, i);
+                  }
+                  else {
+                    CountDown timeLabel = new CountDown(examStartTime);
+                    courseList.add(timeLabel, 2, i);
+                  }
                 }
                 else {
                   Button button = new Button("Cancel");
