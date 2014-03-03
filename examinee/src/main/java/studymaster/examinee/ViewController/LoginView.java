@@ -60,14 +60,12 @@ public class LoginView extends LoginViewController {
 																	  .build()));
 							dialogStage.show();
 
-
 							button.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent event) {
 									dialogStage.close();
 								}
 							});
-
 							connector = Connector.renew();
 						}
 					});
