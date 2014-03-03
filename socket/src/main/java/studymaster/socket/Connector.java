@@ -134,6 +134,20 @@ public final class Connector extends WebSocketClient{
         super.send(msg.toString());
     }
 
+    public void auth() throws NotYetConnectedException {
+        JSONObject msg = new JSONObject();
+        JSONObject content = new JSONObject();
+
+        msg.put("event", "auth");
+        msg.put("endpoint", localEndpoint);
+
+        content.put("account", localSender);
+
+        msg.put("content", content);
+
+        super.send(msg.toString());
+    }
+
     public void talk(String receiver, String text) throws NotYetConnectedException {
         JSONObject msg = new JSONObject();
         JSONObject event = new JSONObject();
