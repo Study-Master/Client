@@ -9,6 +9,7 @@ import org.json.JSONArray;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.AnchorPane;
@@ -18,6 +19,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
 import javafx.scene.Parent;
+
+
+import javax.swing.ButtonGroup;
+import javax.swing.AbstractButton;
+
+
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -37,26 +44,16 @@ public class BookingView extends ViewController{
 
 	@FXML protected Label titleLabel;
 	@FXML protected GridPane timeTable;
-	
-	/**
-	 * Binded to login button
-	 */
-	// @FXML
-	// public final void loginAction() {
-	// 	System.out.println("[info] (LoginViewController, loginAction): Trying to login...");
-	// 	String account = accountField.getText();
-	// 	String password = DigestUtils.md5Hex(passwordField.getText());
-	// 	login(account, password);
-	// }
-
+	protected ToggleGroup buttonGroup = new ToggleGroup();
+	JSONObject newMsg = new JSONObject();
 
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
 		
 		//just for test
-		connector.send("{'event': 'booking','endpoint': 'Server','content':{'courseName': 'CZ2006','examTime': [{'date': '11/11/1111','timeSlot': '11:11 - 11:11'}, {'date': '22/22/2222','timeSlot': '22:22 - 22:22'}, {'date': '33/33/3333','timeSlot': '33:33 - 33:33'}]}}");
-		System.out.println("initialized");
+		// connector.send("{'event': 'booking','endpoint': 'Server','studentID':'123456', 'content':{'code': 'CZ2001','name': 'java', 'examTime': [{'start_time': '2014/03/03 11:11:11', 'end_time': '2014/03/03 11:11:00'}, {'start_time': '2014/03/03 22:22:22', 'end_time': '2014/03/03 00:01:00'}, {'start_time': '2014/03/03 33:33:33', 'end_time': '2014/03/03 00:01:00'}]}}");
+		// System.out.println("initialized");
 	}
 
 	public void onOpen(String courseName) {
@@ -76,13 +73,18 @@ public class BookingView extends ViewController{
         	String event = msg.getString("event");
         	String endpoint = msg.getString("endpoint");
         	JSONObject content = msg.getJSONObject("content");
-        	String courseName = content.getString("courseName");
+        	String studentID = msg.getString("studentID");
+        	String courseName = content.getString("name");
+        	String courseCode = content.getString("code");
         	JSONArray time = content.getJSONArray("examTime");
+        	newMsg.put("code", courseCode);
+			newMsg.put("name", courseName);
+			newMsg.put("studentID", studentID);
 
         	if(event.equals("booking")) {
         		
-        		titleLabel.setText(courseName);
-        		showTimeTable(time, timeTable);
+        		titleLabel.setText(courseCode + " " +courseName);
+        		showTimeTable(time, timeTable, buttonGroup);
 			}
         
 
@@ -95,61 +97,59 @@ public class BookingView extends ViewController{
 		System.err.println("[err] (CourseView onError) An error has been caught.");
 	}
 
-	public void nextView() {
-		javafx.application.Platform.runLater(new Runnable() {
-  			@Override
-  			public void run() {
-  				try {
-  					director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
-  				} catch (Exception e) {
-  					System.err.println("[err] (LoginView nextView) Error when switching scene");
-  				}
-  			}
-		});
-	}
-
-	private void showTimeTable(final JSONArray time, final GridPane timeTable){
+	private void showTimeTable(final JSONArray time, final GridPane timeTable, final ToggleGroup buttonGroup){
 		
 		final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
 		
        	/*The Json message we assume to used here:
 			{
-	    		"event": "booking",
+    			"event": "booking",
     			"endpoint": "Server",
     			"content":  {
-            					"courseName": "*****",
+            					"code": "CZ2001",
+            					"name": "Java",
             					"examTime": [{
-												"date": "dd/mm/yyyy",
-            									"timeSlot": "**:** - **:**"
-            								}, {}, {}]//json array
-        					}
-			}
+                    						"start_time": "2014/03/03 00:00:00"
+                    						"end_time": "2014/03/03 00:01:00"
+                    							}, 
+                    						{...}, 
+                    						{...}]//json array
+    						}
+			}		
 		*/
 		
 		javafx.application.Platform.runLater(new Runnable() {
       		@Override
       		public void run() {
       			try{
-      				// GridPane timeTable = new GridPane();
-					ArrayList<Label> temp = new ArrayList<Label>();
        				ArrayList<RadioButton> tempButton = new ArrayList<RadioButton>();
 
 					for(int i=0; i<time.length(); i++){
-						temp.add(new Label()); 
-						System.out.println(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
-   						temp.get(i).setText(((JSONObject)time.get(i)).getString("date") + " " + ((JSONObject)time.get(i)).getString("timeSlot"));
-       					tempButton.add(new RadioButton());
+       					tempButton.add(new RadioButton(((JSONObject)time.get(i)).getString("start_time") + " - " + ((JSONObject)time.get(i)).getString("end_time")));
+       					
+       					timeTable.add(tempButton.get(i), 0, i);
+       					tempButton.get(i).setToggleGroup(buttonGroup);
 					}
 
-					for(int i=0; i<time.length(); i++){
-						timeTable.add(temp.get(i), 0, i);
-						timeTable.add(tempButton.get(i), 1, i);
-					}
-					pane.getChildren().addAll(timeTable);
 				}catch (Exception e) {
+					System.out.println(e);
           			System.err.println("[err] (CourseView onMessage) Error when adding component.");
         		}
 			}
 		});
 	}
+
+	public String book(ToggleGroup bg){
+		return ((RadioButton)bg.getSelectedToggle()).getText();
+	}
+
+	public void selectExamTime(){
+		returnMessage();
+	}
+
+	private void returnMessage(){
+		newMsg.put("examTime", book(buttonGroup));
+		connector.send(newMsg.toString());
+	}
 }
+

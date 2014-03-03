@@ -23,9 +23,9 @@
     -fx-text-fill: white;
 }
 #gridPane {
-	-fx-border-radius: 4px;
-	-fx-border-color: rgba(0, 102, 153, 1);
-	-fx-background-color: rgba(0, 255, 215, 1);
+	-fx-border: 2px solid; 
+	-fx-border-color: red; 
+	-fx-border-insets: 5;
     -fx-grid-lines-visible: true;
 
 }
