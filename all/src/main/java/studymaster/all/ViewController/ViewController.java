@@ -17,10 +17,24 @@ public abstract class ViewController implements Initializable, Callback {
 		javafx.scene.text.Font.loadFont(ViewController.class.getResource("/font/HelveticaLT45Light.ttf").toExternalForm(), 10);
 		System.out.println("[info] (ViewController initialize): Load fxml file from " + location);
 		Connector.setDelegate(this);
-		System.out.println("[info] (ViewController initialize): Connector delegate now is " + this.getClass());
+		System.out.println("[info] (ViewController initialize): Connector delegate now is " + getClass().getSimpleName());
 		director = Director.getInstance();
 		connector = Connector.getInstance();
 	}
 
-	public abstract void nextView();
+	@Override
+	public void onOpen(short httpStatus, String httpStatusMessage) {
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onOpen) Socket's connection established.");
+	}
+
+	public void onClose(int code, String reason, boolean remote) {
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onClose) Socket's connection closed.");
+		connector = Connector.renew();
+	}
+
+	@Override
+	public void onError(Exception ex) {
+		System.err.println("[err] ("+ getClass().getSimpleName() +" onError) An error has been caught.");
+		connector = Connector.renew();
+	}
 }

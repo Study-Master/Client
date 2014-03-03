@@ -7,7 +7,11 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
+<<<<<<< HEAD
 public class AppTest
+=======
+public class AppTest 
+>>>>>>> origin/master
     extends TestCase
 {
     /**

@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public abstract class TestViewController extends ViewController {
-    @FXML protected Label NameField;
 
     /**
 	 * Binded to login button
