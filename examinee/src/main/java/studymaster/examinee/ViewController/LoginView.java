@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.event.ActionEvent;
 import javafx.event.*;
+import javafx.stage.StageStyle;
 
 
 public class LoginView extends LoginViewController {
@@ -45,12 +46,20 @@ public class LoginView extends LoginViewController {
 							final Stage dialogStage = new Stage();
 							dialogStage.initModality(Modality.WINDOW_MODAL);
 							Button button = new Button("OK");
-							Text text = new Text("login failed");
+							Text text = new Text("login failedfdfdfdsfdsfdfdsfdhfksdj dfjsdkf sdfjskj dfjsdd");
+							dialogStage.initStyle(StageStyle.UNDECORATED);
+							//hide the title bar of the alert window
 
-							dialogStage.setScene(new Scene(VBoxBuilder.create().
-								children(text, button).
-								alignment(Pos.CENTER).padding(new Insets(5)).build()));
+							dialogStage.setScene(new Scene(VBoxBuilder.create()
+																	  .children(text, button)
+																	  .alignment(Pos.CENTER)
+																	  .padding(new Insets(8))
+																	  .minHeight(100)
+																	  .minWidth(200)
+																	  .maxWidth(400)
+																	  .build()));
 							dialogStage.show();
+
 
 							button.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
