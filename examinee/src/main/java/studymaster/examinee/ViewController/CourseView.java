@@ -78,8 +78,11 @@ public class CourseView extends HomeViewController {
             status = course.getString("status");
             if (status.equals("unbooked")) {
 <<<<<<< HEAD
+<<<<<<< HEAD
               Button button = new Button(" Book ");
 =======
+=======
+>>>>>>> FETCH_HEAD
               Button button = new Button("Book");
               button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
@@ -87,6 +90,9 @@ public class CourseView extends HomeViewController {
                 }
               });
 
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
               courseList.add(button, 2, i);
             }
@@ -170,4 +176,8 @@ class CountDown extends Label {
     }
   }
   
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> FETCH_HEAD
