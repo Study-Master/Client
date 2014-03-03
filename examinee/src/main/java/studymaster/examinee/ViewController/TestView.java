@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 
 public class TestView extends TestViewController {
 
+    /*
 	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] (TestView onMessage) Receive message: " + message);
@@ -48,9 +49,7 @@ public class TestView extends TestViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] (TestView onMessage) Webcam Test successfully.");
-					/*
-					* next scene?
-					*/
+					
 					director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
 				}
 
@@ -68,8 +67,7 @@ public class TestView extends TestViewController {
 			System.err.println("[err] (LoginView onMessage) Error when decoding JSON response string.");
 		}
 	}
-
-    director.pushStageWithFXML(getClass().getResource("/fxml/testView.fxml"));
+    */
 
 	@Override
 	public void test(String account) {

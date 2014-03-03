@@ -2,10 +2,15 @@ package studymaster.all.ViewController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import javafx.scene.control.TextField;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public abstract class TestViewController extends ViewController {
+    @FXML protected TextField accountField;
+    @Override
+    public void initialize(java.net.URL location, java.util.ResourceBundle resources){
+        super.initialize(location, resources);
+    }
 
     /**
 	 * Binded to login button
