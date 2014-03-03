@@ -22,7 +22,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] (LoginView onMessage) Login successfully.");
-					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+					director.pushStageWithFXML(getClass().getResource("/fxml/BookingView.fxml"));
 				}
 
 				else if(status.equals("failed")) {
