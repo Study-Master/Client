@@ -40,42 +40,44 @@ public abstract class ViewController implements Initializable, Callback {
 
 	public void onClose(int code, String reason, boolean remote) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onClose) Socket's connection closed.");
-		connector = Connector.renew();
+		alert("Connection has been closed");
 	}
 
 	@Override
 	public void onError(Exception ex) {
 		System.err.println("[err] ("+ getClass().getSimpleName() +" onError) An error has been caught.");
-		//director.pushStageWithFXML(App.class.getResource("Client/examinee/src/main/resources/fxml/loginView.fxml"));
-		//an alert window
+	}
+
+	protected void alert(final String content) {
 		javafx.application.Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							final Stage dialogStage = new Stage();
-							dialogStage.initModality(Modality.WINDOW_MODAL);
-							Button button = new Button("OK");
-							Text text = new Text("No connection");
-							dialogStage.initStyle(StageStyle.UNDECORATED);
-							//hide the title bar of the alert window
+			@Override
+			public void run() {
+				final Stage dialogStage = new Stage();
+				dialogStage.initModality(Modality.WINDOW_MODAL);
+				Button button = new Button("OK");
+				Text text = new Text(content);
+				dialogStage.initStyle(StageStyle.UNDECORATED);
+				//hide the title bar of the alert window
 
-							dialogStage.setScene(new Scene(VBoxBuilder.create()
-																	  .children(text, button)
-																	  .alignment(Pos.CENTER)
-																	  .padding(new Insets(8))
-																	  .minHeight(100)
-																	  .minWidth(200)
-																	  .maxWidth(400)
-																	  .build()));
-							dialogStage.show();
+				dialogStage.setScene(new Scene(VBoxBuilder.create()
+												.children(text, button)
+												.alignment(Pos.CENTER)
+												.padding(new Insets(8))
+												.minHeight(100)
+												.minWidth(200)
+												.maxWidth(400)
+												.build()));
+				dialogStage.show();
 
-							button.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									dialogStage.close();
-								}
-							});
-							connector = Connector.renew();
-						}
-					});
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						dialogStage.close();
+						director.pushStageWithFXML(getClass().getResource("/fxml/loginView.fxml"));
+						connector = Connector.renew();
+					}
+				});
+			}
+		});
 	}
 }
