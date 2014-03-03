@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.AuthView">
+  <children>
+    <Label fx:id="copyrightLabel" layoutX="416.0" layoutY="708.0" text="©Copyright 2014 Studymaster" />
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/divider_up.png" />
+      </image>
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="674.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/divider_down.png" />
+      </image>
+    </ImageView>
+    <Button fx:id="startButton" layoutX="462.0" layoutY="519.0" mnemonicParsing="false" text="Start">
+      <stylesheets>
+        <URL value="@../stylesheet/authView.css" />
+      </stylesheets>
+    </Button>
+    <ImageView fx:id="imgView" fitHeight="150.0" fitWidth="200.0" layoutX="412.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
+  </children>
+</AnchorPane>
