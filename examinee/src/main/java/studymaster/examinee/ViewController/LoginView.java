@@ -27,7 +27,7 @@ public class LoginView extends LoginViewController {
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
         	String endpoint = msg.getString("endpoint");
-        	JSONObject content = msg.getJSONObject("content");
+        	final JSONObject content = msg.getJSONObject("content");
 
 			if(event.equals("login")) {
 				String status = content.getString("status");
@@ -46,7 +46,7 @@ public class LoginView extends LoginViewController {
 							final Stage dialogStage = new Stage();
 							dialogStage.initModality(Modality.WINDOW_MODAL);
 							Button button = new Button("OK");
-							Text text = new Text("login failedfdfdfdsfdsfdfdsfdhfksdj dfjsdkf sdfjskj dfjsdd");
+							Text text = new Text(content.getString("reason"));
 							dialogStage.initStyle(StageStyle.UNDECORATED);
 							//hide the title bar of the alert window
 
