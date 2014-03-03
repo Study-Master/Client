@@ -52,7 +52,7 @@ public class BookingView extends ViewController{
 		super.initialize(location, resources);
 		
 		//just for test
-		// connector.send("{'event': 'booking','endpoint': 'Server','studentID':'123456', 'content':{'code': 'CZ2001','name': 'java', 'examTime': [{'start_time': '2014/03/03 11:11:11', 'end_time': '2014/03/03 11:11:00'}, {'start_time': '2014/03/03 22:22:22', 'end_time': '2014/03/03 00:01:00'}, {'start_time': '2014/03/03 33:33:33', 'end_time': '2014/03/03 00:01:00'}]}}");
+		connector.send("{'event': 'booking','endpoint': 'Server','studentID':'123456', 'content':{'code': 'CZ2001','name': 'java', 'examTime': [{'start_time': '2014/03/03 11:11:11', 'end_time': '2014/03/03 11:11:00'}, {'start_time': '2014/03/03 22:22:22', 'end_time': '2014/03/03 00:01:00'}, {'start_time': '2014/03/03 33:33:33', 'end_time': '2014/03/03 00:01:00'}]}}");
 		// System.out.println("initialized");
 	}
 
@@ -77,6 +77,7 @@ public class BookingView extends ViewController{
         	String courseName = content.getString("name");
         	String courseCode = content.getString("code");
         	JSONArray time = content.getJSONArray("examTime");
+        	newMsg.put("event", "booked");
         	newMsg.put("code", courseCode);
 			newMsg.put("name", courseName);
 			newMsg.put("studentID", studentID);
