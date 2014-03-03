@@ -1,5 +1,21 @@
 package studymaster.examinee.ViewController;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import studymaster.all.ViewController.HomeViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
@@ -12,6 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 public class CourseView extends HomeViewController {
 
@@ -41,6 +58,7 @@ public class CourseView extends HomeViewController {
         try {
           JSONObject profile = content.getJSONObject("profile");
           JSONArray courses = profile.getJSONArray("courses");
+          String status;
           GridPane courseList = new GridPane();
           courseList.setVgap(15);
 
@@ -61,14 +79,23 @@ public class CourseView extends HomeViewController {
             JSONObject course = courses.getJSONObject(i);
             Label code = new Label(course.getString("code"));
             Label name = new Label(course.getString("name"));
-            Button button = new Button(course.getString("status"));
-              //System.out.println("[status] " + course.getString("status"));
-            
             courseList.add(code, 0, i);
             courseList.add(name, 1, i);
-            courseList.add(button, 2, i);
-          }
+
+            status = course.getString("status");
+            if (status.equals("unbooked")) {
+              Button button = new Button("Book");
+              courseList.add(button, 2, i);
+            }
+            else if (status.equals("booked")) {
+              String examStartTime = course.getString("start_time");
+              CountDown timeLabel = new CountDown(examStartTime);
               
+              //timeLabel.setStyle("-fx-font-size: 10;");
+              //timeLabel.textProperty().bind(remainingTime);
+              courseList.add(timeLabel, 2, i);
+            }
+          }
           pane.getChildren().addAll(courseList);
         } catch (Exception e) {
           System.err.println("[err] (CourseView onMessage) Error when adding component.");
@@ -76,4 +103,53 @@ public class CourseView extends HomeViewController {
       }
     });
   }
+
+
 }
+
+class CountDown extends Label {
+  public CountDown(String remainingTime) {
+    bindToTime(remainingTime);
+  }
+
+  // the digital clock updates once a second.
+  private void bindToTime(final String examStartTime) {
+    Timeline timeline = new Timeline(
+      new KeyFrame(Duration.seconds(0),
+        new EventHandler<ActionEvent>() {
+          @Override 
+          public void handle(ActionEvent actionEvent) {
+              try {              
+                  setText(getRemainingTime(examStartTime));
+              } catch (ParseException ex) {
+                  Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
+              }
+          }
+        }
+      ),
+      new KeyFrame(Duration.seconds(1))
+    );
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
+  }
+  
+  public static String getRemainingTime(String examStartTime) throws ParseException {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    Date currentTime = new Date();
+    Date startTime = dateFormat.parse(examStartTime);
+    
+    long diff = startTime.getTime() - currentTime.getTime();
+    long diffSeconds = diff / 1000 % 60;
+    long diffMinutes = diff / (60 * 1000) % 60;
+    long diffHours = diff / (60 * 60 * 1000) % 24;
+    long diffDays = diff / (24 * 60 * 60 * 1000);
+    if (diffDays>0) {
+        return diffDays + "D " + diffHours + "H " + diffMinutes + "M" ;
+    }
+    else {
+        return diffHours + "H " + diffMinutes + "M " + diffSeconds + "S" ;       
+    }
+  }
+  
+}
+
