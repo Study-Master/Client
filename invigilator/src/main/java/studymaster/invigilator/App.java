@@ -6,14 +6,15 @@ import studymaster.all.ViewController.Director;
 
 public class App extends Client {
 
+
 	public static void main(String[] args) throws Exception {
 		//Configure
 		Connector.setServer(Configure.SERVER);
 		Connector.setEndpoint(Configure.ENDPOINT);
-
 		//launch
 		launch(args);
 	}
+
 
 	@Override
 	public void start(javafx.stage.Stage stage) throws Exception {

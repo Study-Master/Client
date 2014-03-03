@@ -9,6 +9,7 @@ import org.json.JSONObject;
 public class CourseView extends HomeViewController {
 
 	@Override
+
 	public void onMessage(String message) {
 		System.out.println("[info] (CourseView onMessage) Receive message: " + message);
 		try {
@@ -22,4 +23,6 @@ public class CourseView extends HomeViewController {
 			System.err.println("[err] (CourseView onMessage) Error when decoding JSON response string.");
 		}
 	}
+
 }
+

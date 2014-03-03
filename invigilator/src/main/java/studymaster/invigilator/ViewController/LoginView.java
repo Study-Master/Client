@@ -9,6 +9,7 @@ import org.json.JSONObject;
 public class LoginView extends LoginViewController {
 
 	@Override
+
 	public void onMessage(String message) {
 		System.out.println("[info] (LoginView onMessage) Receive message: " + message);
 		try {
@@ -22,7 +23,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] (LoginView onMessage) Login successfully.");
-					director.pushStageWithFXML(App.class.getResource("/fxml/courseView.fxml"));
+
 				}
 
 				else if(status.equals("failed")) {
@@ -53,4 +54,7 @@ public class LoginView extends LoginViewController {
 			System.err.println("[err] (LoginView login) An error is caught, no connection.");
 		}
 	}
+
+
 }
+
