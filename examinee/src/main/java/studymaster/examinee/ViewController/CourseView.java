@@ -14,7 +14,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class CourseView extends HomeViewController {
-
+    
+        //@FXML
+        public final void gotoTestAction() {
+            try {
+                director.pushStageWithFXML(getClass().getResource("/fxml/testView.fxml"));
+            } catch (Exception e) {
+                System.err.println("[err] (testView) Error when enter testView stage");
+            }
+        }
+        
 	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] (CourseView onMessage) Receive message: " + message);

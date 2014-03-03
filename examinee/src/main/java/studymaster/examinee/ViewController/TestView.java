@@ -5,12 +5,16 @@ import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class TestView extends TestViewController {
 
+<<<<<<< HEAD
     /*
 	@Override
 	public void onMessage(String message) {
@@ -72,5 +76,10 @@ public class TestView extends TestViewController {
 	@Override
 	public void test(String account) {
 
+=======
+	@Override
+	public void test(String account) {
+            
+>>>>>>> origin/master
 	}
 }
