@@ -30,6 +30,7 @@ public final class Connector extends WebSocketClient{
     private static Callback localDelegate = null;
     private static String localSender = "Default Sender";
     private static String localEndpoint = "Default Connector";
+    private String messageContainer = "";
 
     private Connector(URI serverURI) {
         super(serverURI);
@@ -69,6 +70,10 @@ public final class Connector extends WebSocketClient{
         localEndpoint = endpoint;
     }
 
+    public void setMessageContainer(String message) {
+        messageContainer = message;
+    }
+
     public static Connector renew() {
         instance = null;
         return getInstance();
@@ -92,6 +97,14 @@ public final class Connector extends WebSocketClient{
     @Override
     public void onError(Exception ex) {
         localDelegate.onError(ex);
+    }
+
+    /**
+     * Send message which is saved in messageContainer
+     * @throws NotYetConnectedException not connected
+     */
+    public void sendMessageContainer() throws NotYetConnectedException {
+        super.send(messageContainer);
     }
 
     /**

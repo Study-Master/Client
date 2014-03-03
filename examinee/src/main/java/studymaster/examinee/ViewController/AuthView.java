@@ -39,7 +39,7 @@ public class AuthView extends ViewController {
 		}
 	}
 
-	public static javafx.scene.image.Image createImage(java.awt.Image image) {
+	public javafx.scene.image.Image createImage(java.awt.Image image) {
 		try {
 			if (!(image instanceof java.awt.image.RenderedImage)) {
 				BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
