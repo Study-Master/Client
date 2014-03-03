@@ -27,16 +27,7 @@ import javafx.fxml.FXML;
 import javafx.util.Duration;
 
 public class CourseView extends HomeViewController {
-    
-        @FXML
-        public final void gotoTestAction() {
-            try {
-                director.pushStageWithFXML(getClass().getResource("/fxml/testView1.fxml"));
-            } catch (Exception e) {
-                System.err.println("[err] (testView) Error when enter testView stage");
-            }
-        }
-        
+
 	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
@@ -50,31 +41,31 @@ public class CourseView extends HomeViewController {
         showCourseList(content);
       }
 
-		} catch (Exception e) {
-			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
-		}
-	}
+    } catch (Exception e) {
+     System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+   }
+ }
 
-  private void showCourseList(final JSONObject content) {
-    final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
-    javafx.application.Platform.runLater(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          JSONObject profile = content.getJSONObject("profile");
-          JSONArray courses = profile.getJSONArray("courses");
-          String status;
-          GridPane courseList = new GridPane();
-          AnchorPane.setTopAnchor(courseList, 150.0);
-          AnchorPane.setLeftAnchor(courseList, 90.0);
-          AnchorPane.setRightAnchor(courseList, 90.0);
-          ColumnConstraints col1 = new ColumnConstraints();
-          col1.setPercentWidth(15);
-          ColumnConstraints col2 = new ColumnConstraints();
-          col2.setPercentWidth(65);
-          ColumnConstraints col3 = new ColumnConstraints();
-          col3.setPercentWidth(20);
-          courseList.getColumnConstraints().addAll(col1,col2,col3);
+ private void showCourseList(final JSONObject content) {
+  final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+  javafx.application.Platform.runLater(new Runnable() {
+    @Override
+    public void run() {
+      try {
+        JSONObject profile = content.getJSONObject("profile");
+        JSONArray courses = profile.getJSONArray("courses");
+        String status;
+        GridPane courseList = new GridPane();
+        AnchorPane.setTopAnchor(courseList, 150.0);
+        AnchorPane.setLeftAnchor(courseList, 90.0);
+        AnchorPane.setRightAnchor(courseList, 90.0);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(15);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(65);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPercentWidth(20);
+        courseList.getColumnConstraints().addAll(col1,col2,col3);
           courseList.setStyle("-fx-border: 2px solid; -fx-border-color: red; -fx-border-insets: 5;"); //debug only
 
           for(int i=0; i<courses.length(); i++) {
@@ -87,6 +78,12 @@ public class CourseView extends HomeViewController {
             status = course.getString("status");
             if (status.equals("unbooked")) {
               Button button = new Button("Book");
+              button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                  director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
+                }
+              });
+
               courseList.add(button, 2, i);
             }
             else if (status.equals("booked")) {      
@@ -108,7 +105,7 @@ public class CourseView extends HomeViewController {
                 }
               }
               catch (Exception e){
-                  System.err.println("[err] Error when parsing string");
+                System.err.println("[err] Error when parsing string");
               }
               
               
@@ -120,7 +117,7 @@ public class CourseView extends HomeViewController {
         }
       }
     });
-  }
+}
 
 
 }
@@ -137,16 +134,16 @@ class CountDown extends Label {
         new EventHandler<ActionEvent>() {
           @Override 
           public void handle(ActionEvent actionEvent) {
-              try {              
-                  setText(getRemainingTime(examStartTime));
-              } catch (ParseException ex) {
-                  Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-              }
+            try {              
+              setText(getRemainingTime(examStartTime));
+            } catch (ParseException ex) {
+              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
         }
-      ),
+        ),
       new KeyFrame(Duration.seconds(1))
-    );
+      );
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
   }
@@ -162,12 +159,11 @@ class CountDown extends Label {
     long diffHours = diff / (60 * 60 * 1000) % 24;
     long diffDays = diff / (24 * 60 * 60 * 1000);
     if (diffDays>0) {
-        return diffDays + "D " + diffHours + "H " + diffMinutes + "M" ;
+      return diffDays + "D " + diffHours + "H " + diffMinutes + "M" ;
     }
     else {
-        return diffHours + "H " + diffMinutes + "M " + diffSeconds + "S" ;       
+      return diffHours + "H " + diffMinutes + "M " + diffSeconds + "S" ;       
     }
   }
   
 }
-
