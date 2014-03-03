@@ -21,7 +21,7 @@
       </image>
     </ImageView>
     <Label fx:id="titleLabel" layoutX="75.0" layoutY="100.0" text="Course" />
-    <Button layoutX="51.0" layoutY="14.0" style="-fx-border-color: transparent;&#10;&#10;" text="Testing">
+    <Button layoutX="51.0" layoutY="14.0" onAction="#gotoTestAction" style="-fx-border-color: transparent;&#10;&#10;" text="Testing">
       <graphic>
         <ImageView>
           <Image url="@../image/testing.png" />

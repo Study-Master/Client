@@ -12,13 +12,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.fxml.FXML;
 
 public class CourseView extends HomeViewController {
     
-        //@FXML
+        @FXML
         public final void gotoTestAction() {
             try {
-                director.pushStageWithFXML(getClass().getResource("/fxml/testView.fxml"));
+                director.pushStageWithFXML(getClass().getResource("/fxml/testView1.fxml"));
             } catch (Exception e) {
                 System.err.println("[err] (testView) Error when enter testView stage");
             }

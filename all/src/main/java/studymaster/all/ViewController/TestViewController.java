@@ -21,8 +21,8 @@ public abstract class TestViewController extends ViewController {
 	@FXML
 	public final void testAction() {
 		System.out.println("[info] (TestViewController, testAction): Trying to test...");
-		String account = accountField.getText();
-		test(account);
+		//String account = accountField.getText();
+		test();
 	}
 
 	/**
@@ -35,5 +35,5 @@ public abstract class TestViewController extends ViewController {
 	}
 
     // test: audio test and webcam test
-    public abstract void test(String account);
+    public abstract void test();
 }
