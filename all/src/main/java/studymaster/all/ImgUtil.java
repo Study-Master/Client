@@ -23,4 +23,15 @@ public class ImgUtil {
 			return null;
 		}
 	}
+
+	public static byte[] toByte(java.awt.image.BufferedImage image) {
+		try {
+			java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();  
+        	boolean flag = javax.imageio.ImageIO.write(image, "gif", out);  
+        	return out.toByteArray();
+		} catch (Exception e) {
+			System.err.println("[err] (ImgUtil createImage) Error when createImage.");
+			return null;
+		}
+	}
 }

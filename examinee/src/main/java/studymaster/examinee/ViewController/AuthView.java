@@ -12,6 +12,7 @@ import com.github.sarxos.webcam.WebcamUtils;
 import javafx.fxml.FXML;
 import javax.swing.JFrame;
 import studymaster.examinee.App;
+import studymaster.socket.Connector;
 
 public class AuthView extends ViewController {
 
@@ -52,17 +53,25 @@ class WebCamera extends Thread {
 
 	private void view() {
 		BufferedImage bufferedImage = webcam.getImage();
-		view.setImage(ImgUtil.createImage(bufferedImage));
+		
+	}
+
+	private void viewAndSend() {
+
 	}
 
 	@Override
 	public void run() {
 		if(!webcam.isOpen())
 			webcam.open();
+		Connector connector = Connector.getInstance();
 		while(true) {
 			try {
-				this.view();
-				Thread.sleep(100);
+				BufferedImage bufferedImage = webcam.getImage();
+				view.setImage(ImgUtil.createImage(bufferedImage));
+				byte[] byteImage = ImgUtil.toByte(bufferedImage);
+				connector.send(byteImage);
+				Thread.sleep(200);
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
