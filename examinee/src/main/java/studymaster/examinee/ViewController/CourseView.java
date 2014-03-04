@@ -55,7 +55,7 @@ public class CourseView extends HomeViewController {
           JSONArray courses = profile.getJSONArray("courses");
           String status;
           GridPane courseList = new GridPane();
-          AnchorPane.setTopAnchor(courseList, 150.0);
+          AnchorPane.setTopAnchor(courseList, 190.0);
           AnchorPane.setLeftAnchor(courseList, 90.0);
           AnchorPane.setRightAnchor(courseList, 90.0);
           ColumnConstraints col1 = new ColumnConstraints();
@@ -65,7 +65,8 @@ public class CourseView extends HomeViewController {
           ColumnConstraints col3 = new ColumnConstraints();
           col3.setPercentWidth(20);
           courseList.getColumnConstraints().addAll(col1,col2,col3);
-          courseList.setStyle("-fx-border: 2px solid; -fx-border-color: red; -fx-border-insets: 5;");
+          courseList.setVgap(15);
+          //courseList.setStyle("-fx-border: 2px solid; -fx-border-color: red; -fx-border-insets: 5;");
 
           for(int i=0; i<courses.length(); i++) {
             JSONObject course = courses.getJSONObject(i);
