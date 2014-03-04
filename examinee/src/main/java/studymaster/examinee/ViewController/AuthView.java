@@ -70,8 +70,10 @@ class WebCamera extends Thread {
 			while(true) {
 				try {
 					BufferedImage bufferedImage = webcam.getImage();
+					System.out.println("height: "+ bufferedImage.getHeight() + " width: " + bufferedImage.getWidth());
 					view.setImage(ImgUtil.createImage(bufferedImage));
 					byte[] byteImage = ImgUtil.toByte(bufferedImage);
+					System.out.println(byteImage.length);
 					videoCl.send(byteImage);
 					Thread.sleep(200);
 				} catch(InterruptedException e) {

@@ -13,6 +13,7 @@ public class AuthView extends ViewController {
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
 		VideoSS videoSS = VideoSS.getInstance();
+		videoSS.setImgView(imgView);
 		videoSS.start();
 	}
 

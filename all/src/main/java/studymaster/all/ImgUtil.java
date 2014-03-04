@@ -34,4 +34,14 @@ public class ImgUtil {
 			return null;
 		}
 	}
+
+	public static javafx.scene.image.Image byteToImage(byte[] imgByte) {
+		try {
+        	java.io.InputStream in = new java.io.ByteArrayInputStream(imgByte);
+        	return createImage(javax.imageio.ImageIO.read(in));
+    	} catch (Exception e) {
+    		
+    		return null;
+    	}
+	}
 }
