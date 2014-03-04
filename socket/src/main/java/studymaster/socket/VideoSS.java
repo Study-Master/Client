@@ -36,7 +36,7 @@ public class VideoSS extends WebSocketServer {
         clients = new HashMap<String, WebSocket>();
     }
 
-    private static void setDelegate(VideoEventHandler delegate) {
+    public static void setDelegate(VideoEventHandler delegate) {
     	localDelegate = delegate;
     }
 
