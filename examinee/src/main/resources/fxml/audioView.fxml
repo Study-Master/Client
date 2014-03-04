@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="null" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.AudioView">
+  <children>
+    <Group id="Group" layoutX="378.0" layoutY="55.0">
+      <children>
+        <Group id="Group" layoutX="6.0" layoutY="150.0" scaleX="1.0" scaleY="1.0">
+          <children>
+            <Button fx:id="stopButton" layoutX="166.0" layoutY="0.0" mnemonicParsing="false" onAction="#stopRecord" prefHeight="30.0" prefWidth="90.0" text="STOP" />
+            <Button id="start" fx:id="startButton" layoutX="0.0" layoutY="0.0" minHeight="-1.0" minWidth="-1.0" mnemonicParsing="false" onAction="#startRecord" prefHeight="30.0" prefWidth="89.9998779296875" text="START" />
+          </children>
+        </Group>
+        <Label id="titleLabel" fx:id="titleLabel1" layoutX="0.0" layoutY="0.0" text="Record" textAlignment="CENTER" />
+      </children>
+    </Group>
+    <Group id="Group" layoutX="436.0" layoutY="431.0">
+      <children>
+        <Label id="titleLabel" fx:id="titleLabel2" layoutX="0.0" layoutY="0.0" text="Play" textAlignment="CENTER" />
+        <Button id="play" fx:id="playButton" layoutX="31.0" layoutY="146.0" minHeight="-1.0" minWidth="-1.0" mnemonicParsing="false" onAction="#playAudio" prefHeight="30.0" prefWidth="89.9998779296875" text="Play" />
+      </children>
+    </Group>
+  </children>
+  <stylesheets>
+    <URL value="@../stylesheet/audioView.css" />
+  </stylesheets>
+</AnchorPane>
