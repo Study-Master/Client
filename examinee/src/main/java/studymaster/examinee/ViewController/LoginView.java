@@ -55,4 +55,8 @@ public class LoginView extends LoginViewController {
 			System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
 		}
 	}
+
+	public void onEnter() {
+		loginAction();
+	}
 }
