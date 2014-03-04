@@ -7,12 +7,10 @@ import javafx.scene.image.ImageView;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamUtils;
 import javafx.fxml.FXML;
-import javax.swing.JFrame;
 import studymaster.examinee.App;
 import studymaster.socket.Connector;
+import studymaster.socket.VideoCl;
 
 public class AuthView extends ViewController {
 
@@ -62,19 +60,24 @@ class WebCamera extends Thread {
 
 	@Override
 	public void run() {
+		studymaster.socket.VideoCl videoCl;
 		if(!webcam.isOpen())
 			webcam.open();
-		Connector connector = Connector.getInstance();
-		while(true) {
-			try {
-				BufferedImage bufferedImage = webcam.getImage();
-				view.setImage(ImgUtil.createImage(bufferedImage));
-				byte[] byteImage = ImgUtil.toByte(bufferedImage);
-				connector.send(byteImage);
-				Thread.sleep(200);
-			} catch(InterruptedException e) {
-				e.printStackTrace();
+		try {
+			videoCl = new studymaster.socket.VideoCl();
+			videoCl.connectBlocking();
+		
+			while(true) {
+				try {
+					BufferedImage bufferedImage = webcam.getImage();
+					view.setImage(ImgUtil.createImage(bufferedImage));
+					byte[] byteImage = ImgUtil.toByte(bufferedImage);
+					videoCl.send(byteImage);
+					Thread.sleep(200);
+				} catch(InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-		}
+		} catch(Exception e) {}
 	}
 }
