@@ -30,7 +30,7 @@ public class ImgUtil {
         	boolean flag = javax.imageio.ImageIO.write(image, "gif", out);  
         	return out.toByteArray();
 		} catch (Exception e) {
-			System.err.println("[err] (ImgUtil createImage) Error when createImage.");
+			System.err.println("[err] (ImgUtil toByte) Error when toByte.");
 			return null;
 		}
 	}
