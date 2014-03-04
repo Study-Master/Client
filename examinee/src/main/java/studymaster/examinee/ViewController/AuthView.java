@@ -66,7 +66,7 @@ class WebCamera extends Thread {
 		try {
 			videoCl = new studymaster.socket.VideoCl();
 			videoCl.connectBlocking();
-		
+			videoCl.register();
 			while(true) {
 				try {
 					BufferedImage bufferedImage = webcam.getImage();

@@ -23,6 +23,20 @@
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <ImageView fx:id="imgView" fitHeight="271.5" fitWidth="362.0" layoutX="307.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView id="imgView" fx:id="imgView1" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="110.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/sm_logo.png" />
+      </image>
+    </ImageView>
+    <ImageView id="imgView" fx:id="imgView3" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="658.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/sm_logo.png" />
+      </image>
+    </ImageView>
+    <ImageView id="imgView" fx:id="imgView2" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="374.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/sm_logo.png" />
+      </image>
+    </ImageView>
   </children>
 </AnchorPane>
