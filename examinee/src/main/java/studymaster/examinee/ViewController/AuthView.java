@@ -28,7 +28,6 @@ public class AuthView extends ViewController {
 	public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		WebCamera webcam = new WebCamera();
-		webcam.open();
 		webcam.setView(imgView);
 		webcam.run();
 	}
@@ -41,10 +40,6 @@ class WebCamera extends Thread {
 
 	public WebCamera() {
 		this.webcam = Webcam.getDefault();
-	}
-
-	public void open() {
-		this.webcam.open();
 	}
 
 	public void close() {
@@ -62,6 +57,8 @@ class WebCamera extends Thread {
 
 	@Override
 	public void run() {
+		if(!webcam.isOpen())
+			webcam.open();
 		while(true) {
 			try {
 				this.view();
