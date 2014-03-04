@@ -1,6 +1,7 @@
 package studymaster.examinee.ViewController;
 
 import studymaster.all.ViewController.ViewController;
+import studymaster.all.ImgUtil;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.awt.image.BufferedImage;
@@ -15,7 +16,7 @@ import studymaster.examinee.App;
 public class AuthView extends ViewController {
 
 	@FXML protected ImageView imgView;
-	Webcam webcam;
+	WebCamera webcam;
 
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -26,38 +27,48 @@ public class AuthView extends ViewController {
 	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
-		Webcam webcam = Webcam.getDefault();
+		WebCamera webcam = new WebCamera();
 		webcam.open();
-		while(true) {
-			try {
-				BufferedImage bufferedImage = webcam.getImage();
-				imgView.setImage(createImage(bufferedImage));
-				Thread.sleep(100);
-			} catch(Exception e) {
-				System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Thread error.");
-			}
-		}
+		webcam.setView(imgView);
+		webcam.run();
+	}
+}
+
+class WebCamera extends Thread {
+
+	private Webcam webcam;
+	private ImageView view;
+
+	public WebCamera() {
+		this.webcam = Webcam.getDefault();
 	}
 
-	public javafx.scene.image.Image createImage(java.awt.Image image) {
-		try {
-			if (!(image instanceof java.awt.image.RenderedImage)) {
-				BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-				java.awt.Graphics g = bufferedImage.createGraphics();
-				g.drawImage(image, 0, 0, null);
-				g.dispose();
+	public void open() {
+		this.webcam.open();
+	}
 
-				image = bufferedImage;
+	public void close() {
+		this.webcam.close();
+	}
+
+	public void setView(ImageView view) {
+		this.view = view;
+	}
+
+	private void view() {
+		BufferedImage bufferedImage = webcam.getImage();
+		view.setImage(ImgUtil.createImage(bufferedImage));
+	}
+
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				this.view();
+				Thread.sleep(100);
+			} catch(InterruptedException e) {
+				e.printStackTrace();
 			}
-
-			java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-			javax.imageio.ImageIO.write((java.awt.image.RenderedImage) image, "png", out);
-			out.flush();
-			java.io.ByteArrayInputStream in = new java.io.ByteArrayInputStream(out.toByteArray());
-			return new javafx.scene.image.Image(in);
-		} catch (java.io.IOException e) {
-			System.err.println("[err] ("+ getClass().getSimpleName() +" createImage) Error when createImage.");
-			return null;
 		}
 	}
 }
