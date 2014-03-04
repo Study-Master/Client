@@ -6,6 +6,13 @@ import java.nio.ByteBuffer;
 
 public interface VideoEventHandler {
 
-    public void onMessage( WebSocket conn, ByteBuffer message );
+    public void onMessage(WebSocket conn, String message);
 
+    public void onMessage(WebSocket conn, ByteBuffer message );
+
+    public void onOpen(WebSocket conn, ClientHandshake handshake);
+
+    public void onClose(WebSocket conn, int code, String reason, boolean remote);
+
+    public void onError(WebSocket conn, Exception ex);
 }

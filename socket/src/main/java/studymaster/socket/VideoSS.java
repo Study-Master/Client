@@ -1,7 +1,5 @@
 package studymaster.socket;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.nio.ByteBuffer;
 import java.net.InetSocketAddress;
 import org.java_websocket.WebSocket;
@@ -12,12 +10,27 @@ public class VideoSS extends WebSocketServer {
 
 	private static class defaultDelegate implements VideoEventHandler {
 		public void onMessage( WebSocket conn, ByteBuffer message ) {
+			System.out.println("[debug] (VideoSS.defaultDelegate onMessage): Receiving byte message, using default delegate.");
+		}
+
+		public void onMessage(WebSocket conn, String message) {
 			System.out.println("[debug] (VideoSS.defaultDelegate onMessage): Receiving message, using default delegate.");
 		}
+
+    	public void onOpen(WebSocket conn, ClientHandshake handshake) {
+    		System.out.println("[debug] (VideoSS.defaultDelegate onOpen): Open new connection, using default delegate.");
+    	}
+
+    	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+    		System.out.println("[debug] (VideoSS.defaultDelegate onClose): Close connection, using default delegate.");
+    	}
+
+    	public void onError(WebSocket conn, Exception ex) {
+    		System.err.println("[err] (VideoSS.defaultDelegate onError): An error, using default delegate.");
+    	}
 	}
 	private static VideoSS instance = null;
 	private static VideoEventHandler localDelegate = null;
-	private static Map<String, WebSocket> clients = null;
 
 	public static VideoSS getInstance() {
 		if(instance == null) {
@@ -33,7 +46,6 @@ public class VideoSS extends WebSocketServer {
 
 	private VideoSS(InetSocketAddress address) {
         super(address);
-        clients = new HashMap<String, WebSocket>();
     }
 
     public static void setDelegate(VideoEventHandler delegate) {
@@ -42,16 +54,18 @@ public class VideoSS extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        System.out.println("new connection to " + conn.getRemoteSocketAddress());
+        localDelegate.onOpen(conn, handshake);
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        System.out.println("closed " + conn.getRemoteSocketAddress() + " with exit code " + code + " additional info: " + reason);
+        localDelegate.onClose(conn, code, reason, remote);
     }
 
     @Override
-    public void onMessage(WebSocket conn, String message) {}
+    public void onMessage(WebSocket conn, String message) {
+    	localDelegate.onMessage(conn, message);
+    }
 
     @Override
     public void onMessage( WebSocket conn, ByteBuffer message ) {
@@ -60,6 +74,6 @@ public class VideoSS extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        System.err.println("an error occured on connection " + conn.getRemoteSocketAddress()  + ":" + ex);
+        localDelegate.onError(conn, ex);
     }
 }
