@@ -3,8 +3,7 @@ package studymaster.examinee.ViewController;
 import studymaster.all.ViewController.ViewController;
 import javax.sound.sampled.*;
 import java.io.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.AudioClip;
+import javax.websocket.Encoder.Binary;
 
 
 
@@ -26,19 +25,33 @@ public class AudioView extends ViewController {
     private AudioInputStream audioStream;
     private AudioFormat audioFormat;
     private SourceDataLine sourceLine;
-
+//test
+    AudioInputStream bufferedStream;
 
 
 	@Override
-	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-		super.initialize(location, resources);
-		connector.auth();
-	}
+    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        super.initialize(location, resources);
+        connector.auth();
+    }
+    
+    @Override
+    public void onMessage(String message) {
+        studymaster.socket.AudioCl audioCl  = new studymaster.socket.AudioCl();
 
-	@Override
-	public void onMessage(String message){
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+        audioCl.connectBlocking();
+        if(bufferedStream != null){
+            ByteBuffer byteBuffer = Binary<AudioInputStream>.encode(bufferedStream);
+        }
+        audeoCl.send(byteBuffer);
+        
+        
 
-	}
+
+
+    }
+
 	private AudioFormat getAudioFormat() {
 		float sampleRate = 16000;
 		int sampleSizeInBits = 8;
@@ -78,6 +91,9 @@ public class AudioView extends ViewController {
 
             AudioInputStream ais = new AudioInputStream(line);
 
+            //test
+            bufferedStream = new AudioInputStream(line);
+
             System.out.println("Start recording...");
 
             // start recording
@@ -99,9 +115,6 @@ public class AudioView extends ViewController {
     }
 
     public void playAudio(){
-		
-		
-		
 
 		try {
             audioStream = AudioSystem.getAudioInputStream(soundFile);
@@ -144,3 +157,4 @@ public class AudioView extends ViewController {
         sourceLine.close();
     }
 }
+
