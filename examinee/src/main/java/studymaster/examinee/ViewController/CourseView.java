@@ -3,6 +3,9 @@ package studymaster.examinee.ViewController;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +56,7 @@ public class CourseView extends HomeViewController {
         try {
           JSONObject profile = content.getJSONObject("profile");
           JSONArray courses = profile.getJSONArray("courses");
+          ArrayList<JSONObject> coursesArray = new ArrayList<JSONObject>();
           String status;
           GridPane courseList = new GridPane();
           AnchorPane.setTopAnchor(courseList, 190.0);
@@ -68,8 +72,24 @@ public class CourseView extends HomeViewController {
           courseList.setVgap(15);
           //courseList.setStyle("-fx-border: 2px solid; -fx-border-color: red; -fx-border-insets: 5;");
 
-          for(int i=0; i<courses.length(); i++) {
-            JSONObject course = courses.getJSONObject(i);
+          for (int i=0; i<courses.length(); i++) {
+            coursesArray.add(courses.getJSONObject(i));
+          }
+
+          Collections.sort(coursesArray, new Comparator<JSONObject>() {
+            @Override public int compare(JSONObject course1, JSONObject course2)
+            {
+              if ("unbooked".equals(course1.getString("status")) && "unbooked".equals(course2.getString("status"))) {
+                  return course1.getString("code").compareTo(course2.getString("code"));
+              }
+              else {
+                  return  course1.getString("start_time").compareTo(course2.getString("start_time"));
+              }
+            }
+          });
+
+          for(int i=0; i<coursesArray.size(); i++) {
+            JSONObject course = (JSONObject)coursesArray.get(i);
 
             Label code = new Label(course.getString("code"));
             Label name = new Label(course.getString("name"));
@@ -95,25 +115,28 @@ public class CourseView extends HomeViewController {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date currentTime = new Date();
                 Date startTime = dateFormat.parse(examStartTime);
-                long diff = startTime.getTime() - currentTime.getTime();
+                long diff = Math.abs(startTime.getTime() - currentTime.getTime());
                 long diffDays = diff / (24 * 60 * 60 * 1000);
                 long diffMinutes = diff / (60 * 1000) % 60;
                 long diffHours = diff / (60 * 60 * 1000) % 24;
 
-                if (diffDays<3) {
-                  if(diffDays==0 && diffHours ==0 && diffMinutes<=15) {
-                    Button button = new Button("Exam");
-                    button.setOnAction(new EventHandler<ActionEvent>() {
-                      @Override public void handle(ActionEvent e) {
-                        director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
-                      }
-                    });
-                    courseList.add(button, 2, i);
-                  }
-                  else {
-                    CountDown timeLabel = new CountDown(examStartTime);
-                    courseList.add(timeLabel, 2, i);
-                  }
+                
+                if(diffDays==0 && diffHours==0 && diffMinutes<=15) {
+                  Button button = new Button("Exam");
+                  button.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override public void handle(ActionEvent e) {
+                      director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
+                    }
+                  });
+                  courseList.add(button, 2, i);
+                }
+                else if ((startTime.getTime() - currentTime.getTime())<0) {
+                  Label label = new Label("Finished");
+                  courseList.add(label, 2, i);
+                }
+                else if (diffDays<3) {
+                  CountDown timeLabel = new CountDown(examStartTime);
+                  courseList.add(timeLabel, 2, i);
                 }
                 else {
                   Button button = new Button("Cancel");
