@@ -37,7 +37,7 @@ public class VideoSS extends WebSocketServer {
 			if(localDelegate == null)
 				localDelegate = new defaultDelegate();
 			String localhost = "0.0.0.0";
-			int port = 8088;
+			int port = 8089;
 			InetSocketAddress address = new InetSocketAddress(localhost, port);
 			instance = new VideoSS(address);
 		}

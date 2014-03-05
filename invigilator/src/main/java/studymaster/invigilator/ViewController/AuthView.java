@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.json.JSONObject;
-import studymaster.all.ImgUtil;
+import studymaster.socket.ImgUtil;
 import studymaster.all.ViewController.ViewController;
 import studymaster.socket.VideoEventHandler;
 import studymaster.socket.VideoSS;
@@ -49,10 +49,17 @@ public class AuthView extends ViewController implements VideoEventHandler {
         String endpoint = msg.getString("endpoint");
         JSONObject content = msg.getJSONObject("content");
 
+        JSONObject reMsg = new JSONObject();
+        JSONObject reContent = new JSONObject();
+        reMsg.put("event", event);
+        reMsg.put("endpoint", "Invigilator Video Server");
+        reMsg.put("content", reContent);
+
         if(event.equals("register") && clients.size() <= 3) {
         	clients.put(conn, imgViews.get(clients.size()));
-        	System.out.println("registered");
+        	reContent.put("status", "success");
         }
+        conn.send(reMsg.toString());
 	}
 
 	@Override
@@ -62,7 +69,7 @@ public class AuthView extends ViewController implements VideoEventHandler {
 
 	@Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-
+    	System.out.println("New connection.");
     }
 
     @Override

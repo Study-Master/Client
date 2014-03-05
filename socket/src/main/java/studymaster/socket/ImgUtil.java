@@ -1,4 +1,4 @@
-package studymaster.all;
+package studymaster.socket;
 
 public class ImgUtil {
 
