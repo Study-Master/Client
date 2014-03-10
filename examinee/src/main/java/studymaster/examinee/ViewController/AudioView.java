@@ -3,7 +3,10 @@ package studymaster.examinee.ViewController;
 import studymaster.all.ViewController.ViewController;
 import javax.sound.sampled.*;
 import java.io.*;
-import javax.websocket.Encoder.Binary;
+
+import org.apache.commons.io.IOUtils;
+
+
 
 
 
@@ -11,12 +14,8 @@ public class AudioView extends ViewController {
 
 	Thread stopper;
 
-    // path of the wav file
-	File wavFile = new File("/Users/zhanghanlin/Desktop/RecordAudio.wav");
-	File soundFile = new File("/Users/zhanghanlin/Desktop/RecordAudio.wav");
-
     // format of audio file
-	AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
+	AudioFileFormat.Type fileType = AudioFileFormat.Type.AU;
 
     // the line from which audio data is captured
 	TargetDataLine line;
@@ -25,8 +24,10 @@ public class AudioView extends ViewController {
     private AudioInputStream audioStream;
     private AudioFormat audioFormat;
     private SourceDataLine sourceLine;
-//test
-    AudioInputStream bufferedStream;
+
+    private ByteArrayOutputStream outputStream;
+    
+    private byte[] byteArray;
 
 
 	@Override
@@ -37,14 +38,10 @@ public class AudioView extends ViewController {
     
     @Override
     public void onMessage(String message) {
-        studymaster.socket.AudioCl audioCl  = new studymaster.socket.AudioCl();
+        
 
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
-        audioCl.connectBlocking();
-        if(bufferedStream != null){
-            ByteBuffer byteBuffer = Binary<AudioInputStream>.encode(bufferedStream);
-        }
-        audeoCl.send(byteBuffer);
+        
         
         
 
@@ -58,12 +55,18 @@ public class AudioView extends ViewController {
 		int channels = 2;
 		boolean signed = true;
 		boolean bigEndian = true;
-		AudioFormat format = new AudioFormat(sampleRate, sampleSizeInBits,
-			channels, signed, bigEndian);
+		AudioFormat format = new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
 		return format;
 	}
 
 	public void startRecord(){
+        try{
+            outputStream = null
+            outputStream = new ByteArrayOutputStream();
+        }catch(Exception e){
+
+        }
+        
 		stopper = new Thread(new Runnable() {
 			public void run() {
 				capture();
@@ -91,19 +94,20 @@ public class AudioView extends ViewController {
 
             AudioInputStream ais = new AudioInputStream(line);
 
-            //test
-            bufferedStream = new AudioInputStream(line);
-
+            
             System.out.println("Start recording...");
-
+            
             // start recording
-            AudioSystem.write(ais, fileType, wavFile);
+            AudioSystem.write(ais, fileType, outputStream);
 
         } catch (LineUnavailableException ex) {
         	ex.printStackTrace();
         } catch (IOException ioe) {
         	ioe.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
         }
+        
     }
 
     public void stopRecord(){
@@ -111,13 +115,16 @@ public class AudioView extends ViewController {
 		line.close();
 		System.out.println("Finished");
     	stopper.yield();
+        byteArray = outputStream.toByteArray();
+        System.out.println(byteArray);
     	
     }
 
     public void playAudio(){
+        ByteArrayInputStream baiut = new ByteArrayInputStream(byteArray);
 
 		try {
-            audioStream = AudioSystem.getAudioInputStream(soundFile);
+            audioStream = AudioSystem.getAudioInputStream(baiut);
         } catch (Exception e){
             e.printStackTrace();
             System.exit(1);

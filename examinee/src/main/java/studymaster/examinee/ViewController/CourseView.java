@@ -104,7 +104,7 @@ public class CourseView extends HomeViewController {
                     Button button = new Button("Exam");
                     button.setOnAction(new EventHandler<ActionEvent>() {
                       @Override public void handle(ActionEvent e) {
-                        director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
+                        director.pushStageWithFXML(getClass().getResource("/fxml/audioView.fxml"));
                       }
                     });
                     courseList.add(button, 2, i);
