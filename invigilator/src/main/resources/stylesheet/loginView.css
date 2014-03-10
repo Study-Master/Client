@@ -24,11 +24,5 @@
 #loginButton:pressed, #loginButton:hover, #exitButton:pressed, #exitButton:hover {
     -fx-background-color: rgba(0, 102, 153, 1);
     -fx-text-fill: white;
-<<<<<<< HEAD
-=======
-}
 
-.root {
-	-fx-background-image: url('../image/loginView.png');
->>>>>>> origin/master
 }

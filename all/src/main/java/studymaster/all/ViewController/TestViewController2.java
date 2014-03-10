@@ -45,12 +45,20 @@ public abstract class TestViewController extends ViewController {
          /**
 	 * Binded to NEXT button
 	 */
-       @FXML
+ /*       @FXML
         public final void nextAction() {
                 System.out.println("[info] (" + getClass().getSimpleName() + " nextAction): go to next test page");
                 
         }
-     
+ */       
+        /**
+	 * Binded to FINISH button
+	 */
+  /*      @FXML
+        public final void finishAction() {
+                System.out.println("[info] (" + getClass().getSimpleName() + " finishAction): finish of test");
+        }
+ */       
     /**
      * Audio and webcam test
      */
