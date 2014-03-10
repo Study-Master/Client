@@ -46,7 +46,7 @@ public abstract class TestViewController extends ViewController {
 	 * Binded to NEXT button
 	 */
        @FXML
-        public final void nextAction() {
+        public void nextAction() {
                 System.out.println("[info] (" + getClass().getSimpleName() + " nextAction): go to next test page");
                 
         }
