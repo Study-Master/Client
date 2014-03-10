@@ -51,7 +51,7 @@
         <Font size="15.0" />
       </font>
     </Label>
-    <Button id="ExitButton" fx:id="NextButton" font="$x1" layoutX="816.0" layoutY="686.0" mnemonicParsing="false" text="NEXT" />
+    <Button id="ExitButton" fx:id="NextButton" font="$x1" layoutX="816.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="NEXT" />
     <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="677.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
   </children>
   <stylesheets>

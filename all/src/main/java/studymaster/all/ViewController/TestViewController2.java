@@ -5,10 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 
-public abstract class TestViewController extends ViewController {
+public abstract class TestViewController2 extends ViewController {
     @FXML protected TextField accountField;
     @FXML protected Label nameField;
-    
+
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
         super.initialize(location, resources);
@@ -41,16 +41,16 @@ public abstract class TestViewController extends ViewController {
         public final void backAction() {
                 System.out.println("[info] (" + getClass().getSimpleName() + " backAction): back to previous page");
         }
- 
+
          /**
 	 * Binded to NEXT button
 	 */
  /*       @FXML
         public final void nextAction() {
                 System.out.println("[info] (" + getClass().getSimpleName() + " nextAction): go to next test page");
-                
+
         }
- */       
+ */
         /**
 	 * Binded to FINISH button
 	 */
@@ -58,7 +58,7 @@ public abstract class TestViewController extends ViewController {
         public final void finishAction() {
                 System.out.println("[info] (" + getClass().getSimpleName() + " finishAction): finish of test");
         }
- */       
+ */
     /**
      * Audio and webcam test
      */

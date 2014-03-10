@@ -51,7 +51,7 @@
         <Image url="@../image/User.png" />
       </image>
     </ImageView>
-    <Button id="ExitButton" fx:id="FinishiButton" font="$x1" layoutX="837.0" layoutY="686.0" mnemonicParsing="false" text="FINISH" />
+    <Button id="ExitButton" fx:id="FinishiButton" font="$x1" layoutX="837.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="FINISH" />
     <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="703.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
   </children>
   <stylesheets>

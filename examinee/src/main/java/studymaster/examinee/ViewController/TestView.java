@@ -22,16 +22,19 @@ public class TestView extends TestViewController {
         @Override
         public void nextAction() {
                 super.nextAction();
-                
+                if (!test2 && test1) {
+                    director.pushStageWithFXML(getClass().getResource("/fxml/testView2.fxml"));
+                }
+                else if (test1 && test2) {
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                }
         }
-        
-   
+     
+
 	@Override
         //public boolean test() {};
 	public void test() {
-		String test = "success";
-		if (test.equals("success"))
-			director.pushStageWithFXML(getClass().getResource("/fxml/testView2.fxml"));
-
+            if (!test1 && !test2) test1 = true;
+            if (test1 && !test2) test2 = true;
 	}
 }
