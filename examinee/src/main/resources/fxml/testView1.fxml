@@ -24,7 +24,7 @@
       </labelFor>
     </Label>
     <fx:reference source="nameField" />
-    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="213.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>
@@ -35,9 +35,9 @@
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Button fx:id="ExitButton" layoutX="858.0" layoutY="686.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
+    <Button fx:id="ExitButton" layoutX="858.0" layoutY="56.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
       <font>
-        <Font size="20.0" />
+        <Font size="20.0" fx:id="x1" />
       </font>
     </Button>
     <ImageView fitHeight="180.00001525878906" fitWidth="237.60003096395607" layoutX="393.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
@@ -51,6 +51,8 @@
         <Font size="15.0" />
       </font>
     </Label>
+    <Button id="ExitButton" fx:id="NextButton" font="$x1" layoutX="816.0" layoutY="686.0" mnemonicParsing="false" text="NEXT" />
+    <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="677.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/testView.css" />

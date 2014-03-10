@@ -35,9 +35,9 @@
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Button fx:id="ExitButton" layoutX="858.0" layoutY="686.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
+    <Button fx:id="ExitButton" layoutX="879.0" layoutY="99.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
       <font>
-        <Font size="20.0" />
+        <Font size="20.0" fx:id="x1" />
       </font>
     </Button>
     <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="425.0" layoutY="436.0" mnemonicParsing="false" onAction="#testAction" text="WEBCAM TEST" />
@@ -51,6 +51,8 @@
         <Image url="@../image/User.png" />
       </image>
     </ImageView>
+    <Button id="ExitButton" fx:id="FinishiButton" font="$x1" layoutX="837.0" layoutY="686.0" mnemonicParsing="false" text="FINISH" />
+    <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="703.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/testView.css" />
