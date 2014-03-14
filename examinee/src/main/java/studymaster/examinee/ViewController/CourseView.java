@@ -30,7 +30,6 @@ import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.util.Duration;
-import studymaster.examinee.ViewController.CancelButton;
 
 public class CourseView extends HomeViewController {
 
