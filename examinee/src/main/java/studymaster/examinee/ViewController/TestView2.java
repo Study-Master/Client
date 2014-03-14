@@ -9,9 +9,9 @@ import org.json.JSONObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class TestView extends TestViewController {
-        boolean test1 = false;
+public class TestView2 extends TestViewController {
 
+        boolean test2 = false;
     
 	@Override
 	public void onMessage(String message) {
@@ -22,17 +22,16 @@ public class TestView extends TestViewController {
         @Override
         public void nextAction() {
                 super.nextAction();
-                if ( test1) {
-                    director.pushStageWithFXML(getClass().getResource("/fxml/testView2.fxml"));
+                if (test2) {
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                 }
-
         }
      
 
 	@Override
         //public boolean test() {};
 	public void test() {
-            test1 = true;
 
+            test2 = true;
 	}
 }
