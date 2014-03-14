@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import studymaster.all.ViewController.HomeViewController;
@@ -27,7 +28,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.util.Duration;
+import studymaster.examinee.ViewController.CancelButton;
 
 public class CourseView extends HomeViewController {
 
@@ -39,9 +42,19 @@ public class CourseView extends HomeViewController {
       String event = msg.getString("event");
       String endpoint = msg.getString("endpoint");
       final JSONObject content = msg.getJSONObject("content");
+      Button button = new Button();
 
       if(event.equals("profile")) {
         showCourseList(content);
+      }
+      else if(event.equals("stopauth")){
+        try {
+          
+          //button.setDisable();
+        }
+        catch (Exception e){
+          System.out.println("   ");
+        }
       }
     } catch (Exception e) {
       System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
@@ -98,20 +111,29 @@ public class CourseView extends HomeViewController {
 
             status = course.getString("status");
 
-            if (status.equals("unbooked")) {
-              Button button = new Button(" Book ");
+            if (status.equals("closed")) {
+              Label label = new Label("Closed");
+              courseList.add(label, 2, i);
+            }
+            else if (status.equals("finished")) {
+              Label label = new Label("Finished");
+              courseList.add(label, 2, i);
+            }
+            else if (status.equals("unbooked")) {
+              String examStartTime = course.getString("start_time");
+              BookButton button = new BookButton(examStartTime);
+
               button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
                   director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
                 }
               });
-
               courseList.add(button, 2, i);
             }
-
             else if (status.equals("booked")) {
               try {
                 String examStartTime = course.getString("start_time");
+
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date currentTime = new Date();
                 Date startTime = dateFormat.parse(examStartTime);
@@ -120,28 +142,31 @@ public class CourseView extends HomeViewController {
                 long diffMinutes = diff / (60 * 1000) % 60;
                 long diffHours = diff / (60 * 60 * 1000) % 24;
 
-                
-                if(diffDays==0 && diffHours==0 && diffMinutes<=15) {
-                  Button button = new Button("Exam");
+                if (diffDays>=3) {
+                  CancelButton button = new CancelButton(examStartTime, courseList, i);
                   button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
-                      director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
+                      //Cancel Booking
                     }
                   });
                   courseList.add(button, 2, i);
                 }
-                else if ((startTime.getTime() - currentTime.getTime())<0) {
-                  Label label = new Label("Finished");
-                  courseList.add(label, 2, i);
-                }
-                else if (diffDays<3) {
+                else if (diffMinutes>=15) {
                   CountDown timeLabel = new CountDown(examStartTime);
                   courseList.add(timeLabel, 2, i);
                 }
                 else {
-                  Button button = new Button("Cancel");
-                  courseList.add(button, 2, i);
+                  // ExamButton button = new ExamButton(examStartTime);
+                  // courseList.add(ExamButton, 2, i);
+                  // button.setOnAction(new EventHandler<ActionEvent>() {
+                  //   @Override public void handle(ActionEvent e) {
+                  //     director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
+                  //   }
+                  // });
+                  // courseList.add(button, 2, i);
                 }
+
+                
               } catch (Exception e){
                 System.err.println("[err] ("+ getClass().getSimpleName() +")Error when parsing string");
               }
@@ -154,6 +179,8 @@ public class CourseView extends HomeViewController {
       }
     });
   }
+
+
 }
 
 class CountDown extends Label {
@@ -167,11 +194,11 @@ class CountDown extends Label {
         new EventHandler<ActionEvent>() {
           @Override
           public void handle(ActionEvent actionEvent) {
-            try {
-              setText(getRemainingTime(examStartTime));
-            } catch (ParseException ex) {
-              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-            }
+              try {
+                  setText(getRemainingTime(examStartTime));
+              } catch (ParseException ex) {
+                  Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
+              }
           }
         }
       ),
@@ -184,6 +211,7 @@ class CountDown extends Label {
   public static String getRemainingTime(String examStartTime) throws ParseException {
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     Date currentTime = new Date();
+    //System.out.println(currentTime);
     Date startTime = dateFormat.parse(examStartTime);
 
     long diff = startTime.getTime() - currentTime.getTime();
@@ -197,5 +225,83 @@ class CountDown extends Label {
     else {
       return diffHours + "H " + diffMinutes + "M " + diffSeconds + "S" ;
     }
+  }
+}
+
+class BookButton extends Button {
+  public BookButton(String examStartTime){
+    setText(" Book ");
+    bindToTime(examStartTime);
+  }
+  private void bindToTime(final String examStartTime) {
+    Timeline timeline = new Timeline(
+      new KeyFrame(Duration.seconds(0),
+        new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent actionEvent) {
+            try {
+              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+              Date currentTime = new Date();
+              Date startTime = dateFormat.parse(examStartTime);
+              long diff = startTime.getTime() - currentTime.getTime();
+              long diffDays = diff / (24 * 60 * 60 * 1000);
+              if (diffDays<3) {
+                setText("Closed");
+                setDisable(true);
+              }
+            } catch (ParseException ex) {
+              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+        }
+      ),
+      new KeyFrame(Duration.seconds(1))
+    );
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
+  }
+}
+
+class CancelButton extends Button {
+  public CancelButton(String examStartTime, GridPane courseList, int row){
+    setText("Cancel");
+    bindToTime(examStartTime, courseList, row);
+  }
+  private void bindToTime(final String examStartTime, final GridPane courseList, final int row) {
+    Timeline timeline = new Timeline(
+      new KeyFrame(Duration.seconds(0),
+        new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent actionEvent) {
+            try {
+              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+              Date currentTime = new Date();
+              Date startTime = dateFormat.parse(examStartTime);
+              long diff = startTime.getTime() - currentTime.getTime();
+              long diffDays = diff / (24 * 60 * 60 * 1000);
+              if (diffDays<3) {
+                  ObservableList<Node> childrens = courseList.getChildren();
+                  Node button = null;
+                  for(Node node : childrens) {
+                    if(courseList.getRowIndex(node) == row && courseList.getColumnIndex(node) == 2) {
+                        button = node;
+                        break;
+                    }
+                  }
+                  CountDown timeLabel = new CountDown(examStartTime);
+                  courseList.add(timeLabel, 2, row);
+                  courseList.getChildren().remove(button);
+              }
+              
+            } catch (ParseException ex) {
+              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+        }
+      ),
+      new KeyFrame(Duration.seconds(1))
+    );
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
   }
 }
