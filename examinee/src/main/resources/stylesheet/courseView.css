@@ -7,6 +7,7 @@
 .label {
 	-fx-font-family: 'HelveticaNeue LT 45 Light';
 	-fx-font-size: 25;
+	-fx-text-fill: rgba(0, 102, 153, 1);
 }
 
 .button {

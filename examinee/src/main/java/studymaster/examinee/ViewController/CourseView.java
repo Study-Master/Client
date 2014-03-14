@@ -29,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class CourseView extends HomeViewController {
@@ -81,7 +82,7 @@ public class CourseView extends HomeViewController {
           ColumnConstraints col3 = new ColumnConstraints();
           col3.setPercentWidth(20);
           courseList.getColumnConstraints().addAll(col1,col2,col3);
-          courseList.setVgap(15);
+          courseList.setVgap(25);
           //courseList.setStyle("-fx-border: 2px solid; -fx-border-color: red; -fx-border-insets: 5;");
 
           for (int i=0; i<courses.length(); i++) {
@@ -104,7 +105,9 @@ public class CourseView extends HomeViewController {
             JSONObject course = (JSONObject)coursesArray.get(i);
 
             Label code = new Label(course.getString("code"));
+            code.setStyle("-fx-text-fill: black;");
             Label name = new Label(course.getString("name"));
+            name.setStyle("-fx-text-fill: black;");            
             courseList.add(code, 0, i);
             courseList.add(name, 1, i);
 
@@ -121,6 +124,7 @@ public class CourseView extends HomeViewController {
             else if (status.equals("unbooked")) {
               String examStartTime = course.getString("start_time");
               BookButton button = new BookButton(examStartTime, courseList, i);
+              button.setPrefWidth(160);
 
               button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
@@ -143,6 +147,7 @@ public class CourseView extends HomeViewController {
 
                 if (diffDays>=3) {
                   CancelButton button = new CancelButton(examStartTime, courseList, i);
+                  button.setPrefWidth(160);
                   button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
                       //Cancel Booking
@@ -156,6 +161,7 @@ public class CourseView extends HomeViewController {
                 }
                 else {
                   ExamButton button = new ExamButton(examStartTime, courseList, i);
+                  button.setPrefWidth(160);
                   courseList.add(button, 2, i);
                   button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
@@ -211,6 +217,7 @@ class CountDown extends Label {
                     }
                   }
                   ExamButton examButton = new ExamButton(examStartTime, courseList, row);
+                  examButton.setPrefWidth(160);
                   courseList.add(examButton, 2, row);
                   courseList.getChildren().remove(label);
                 }
