@@ -322,8 +322,9 @@ class CancelButton extends Button {
                   }
                 }
                 CountDown timeLabel = new CountDown(examStartTime, courseList, row);
-                courseList.add(timeLabel, 2, row);
                 courseList.getChildren().remove(button);
+                courseList.add(timeLabel, 2, row);
+                
               }              
             } catch (ParseException ex) {
               Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
