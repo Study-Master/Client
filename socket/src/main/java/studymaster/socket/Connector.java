@@ -28,9 +28,9 @@ public final class Connector extends WebSocketClient{
     private static String localServer = "ws://localhost";
     private static Connector instance = null;
     private static Callback localDelegate = null;
-    private static String localSender = "Default Sender";
+    public static String localSender = "Default Sender";
     private static String localEndpoint = "Default Connector";
-    private String messageContainer = "";
+    private static String messageContainer = "";
 
     private Connector(URI serverURI) {
         super(serverURI);
@@ -70,7 +70,7 @@ public final class Connector extends WebSocketClient{
         localEndpoint = endpoint;
     }
 
-    public void setMessageContainer(String message) {
+    public static void setMessageContainer(String message) {
         messageContainer = message;
     }
 
