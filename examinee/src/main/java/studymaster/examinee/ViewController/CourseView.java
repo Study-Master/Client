@@ -93,11 +93,18 @@ public class CourseView extends HomeViewController {
           Collections.sort(coursesArray, new Comparator<JSONObject>() {
             @Override public int compare(JSONObject course1, JSONObject course2)
             {
-              if ("unbooked".equals(course1.getString("status")) && "unbooked".equals(course2.getString("status"))) {
-                  return course1.getString("code").compareTo(course2.getString("code"));
+              if ( ("closed".equals(course1.getString("status")) || "finished".equals(course1.getString("status"))) && 
+                    ("closed".equals(course2.getString("status")) || "finished".equals(course2.getString("status"))) ) {
+                return course1.getString("code").compareTo(course2.getString("code"));
+              }
+              else if ("closed".equals(course1.getString("status")) || "finished".equals(course1.getString("status"))) {
+                return 1;
+              }
+              else if ("closed".equals(course2.getString("status")) || "finished".equals(course2.getString("status"))) {
+                return -1;
               }
               else {
-                  return  course1.getString("start_time").compareTo(course2.getString("start_time"));
+                return course1.getString("code").compareTo(course2.getString("code"));
               }
             }
           });
