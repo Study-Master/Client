@@ -128,6 +128,7 @@ public class CourseView extends HomeViewController {
 
               button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
+                  connector.setMessageContainer("  ");
                   director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
                 }
               });
@@ -162,6 +163,12 @@ public class CourseView extends HomeViewController {
                 else {
                   ExamButton button = new ExamButton(examStartTime, courseList, i);
                   button.setPrefWidth(160);
+                  button.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override public void handle(ActionEvent e) {
+                      connector.setMessageContainer("  ");
+                      director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+                    }
+                  });
                   courseList.add(button, 2, i);
                   button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
@@ -218,6 +225,11 @@ class CountDown extends Label {
                   }
                   ExamButton examButton = new ExamButton(examStartTime, courseList, row);
                   examButton.setPrefWidth(160);
+                  examButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override public void handle(ActionEvent e) {
+                      studymaster.all.ViewController.Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+                    }
+                  });
                   courseList.add(examButton, 2, row);
                   courseList.getChildren().remove(label);
                 }
