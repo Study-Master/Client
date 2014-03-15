@@ -47,16 +47,17 @@ public class CourseView extends HomeViewController {
       if(event.equals("profile")) {
         showCourseList(content);
       }
-      else if(event.equals("stopauth")){
-        try {
+      // else if(event.equals("stopauth")){
+      //   try {
           
-          //button.setDisable();
-        }
-        catch (Exception e){
-          System.out.println("   ");
-        }
-      }
-    } catch (Exception e) {
+      //     //button.setDisable();
+      //   }
+      //   catch (Exception e){
+      //     System.out.println("   ");
+      //   }
+      // }
+    } 
+    catch (Exception e) {
       System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
     }
   }
@@ -67,7 +68,7 @@ public class CourseView extends HomeViewController {
       @Override
       public void run() {
         try {
-          JSONObject profile = content.getJSONObject("profile");
+          final JSONObject profile = content.getJSONObject("profile");
           JSONArray courses = profile.getJSONArray("courses");
           ArrayList<JSONObject> coursesArray = new ArrayList<JSONObject>();
           String status;
@@ -102,7 +103,7 @@ public class CourseView extends HomeViewController {
           });
 
           for(int i=0; i<coursesArray.size(); i++) {
-            JSONObject course = (JSONObject)coursesArray.get(i);
+            final JSONObject course = (JSONObject)coursesArray.get(i);
 
             Label code = new Label(course.getString("code"));
             code.setStyle("-fx-text-fill: black;");
@@ -128,7 +129,7 @@ public class CourseView extends HomeViewController {
 
               button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
-                  connector.setMessageContainer("  ");
+                  setBookingMsg(course.getString("code"), content.getString("account"));
                   director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
                 }
               });
@@ -165,13 +166,7 @@ public class CourseView extends HomeViewController {
                   button.setPrefWidth(160);
                   button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
-                      connector.setMessageContainer("  ");
-                      director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
-                    }
-                  });
-                  courseList.add(button, 2, i);
-                  button.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override public void handle(ActionEvent e) {
+                      setExamMsg(course.getString("code"));
                       director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
                     }
                   });
@@ -192,6 +187,26 @@ public class CourseView extends HomeViewController {
     });
   }
 
+  public static void setBookingMsg(String course, String account) {
+    JSONObject Msg = new JSONObject();
+    JSONObject Content = new JSONObject();
+    Msg.put("event", "booking");
+    Msg.put("endpoint", "Client");
+    Content.put("code", course);
+    Content.put("account", account);
+    Msg.put("content", Content);
+    Connector.setMessageContainer(Msg.toString());
+  }
+
+  public static void setExamMsg(String course) {
+    JSONObject Msg = new JSONObject();
+    JSONObject Content = new JSONObject();
+    Msg.put("event", "exam");
+    Msg.put("endpoint", "Client");
+    Content.put("code", course);
+    Msg.put("content", Content);
+    Connector.setMessageContainer(Msg.toString());
+  }
 
 }
 
@@ -227,6 +242,7 @@ class CountDown extends Label {
                   examButton.setPrefWidth(160);
                   examButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
+                      studymaster.examinee.ViewController.CourseView.setExamMsg(Connector.getInstance().getSender());
                       studymaster.all.ViewController.Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
                     }
                   });
