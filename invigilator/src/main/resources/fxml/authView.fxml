@@ -23,42 +23,41 @@
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Group id="Group" layoutX="150.0" layoutY="183.0">
+    <Group id="Group" layoutX="146.0" layoutY="174.0">
       <children>
-        <ImageView id="imgView" fx:id="imgView0" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
-          <image>
-            <Image url="@../image/user.png" />
-          </image>
-        </ImageView>
-        <ImageView id="imgView" fx:id="imgView3" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="532.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
-          <image>
-            <Image url="@../image/user.png" />
-          </image>
-        </ImageView>
-        <ImageView id="imgView" fx:id="imgView1" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="272.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+        <Button fx:id="authButton0" layoutX="47.0" layoutY="242.0" mnemonicParsing="false" prefWidth="110.0" text="Authentic" />
+        <Button fx:id="terminateButton0" layoutX="47.0" layoutY="279.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <ImageView fx:id="imgView0" fitHeight="203.0" fitWidth="203.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
       </children>
     </Group>
-    <Label layoutX="446.0" layoutY="384.0" text="Waiting for connection" />
-    <Label layoutX="174.0" layoutY="384.0" text="Waiting for connection" />
-    <Label layoutX="706.0" layoutY="384.0" text="Waiting for connection" />
-    <Button fx:id="authButton0" layoutX="165.0" layoutY="424.0" mnemonicParsing="false" text="Authentic">
-      <stylesheets>
-        <URL value="@../stylesheet/authView.css" />
-      </stylesheets>
-    </Button>
-    <Button fx:id="authButton1" layoutX="437.0" layoutY="424.0" mnemonicParsing="false" text="Authentic">
-      <stylesheets>
-        <URL value="@../stylesheet/authView.css" />
-      </stylesheets>
-    </Button>
-    <Button fx:id="authButton2" layoutX="697.0" layoutY="424.0" mnemonicParsing="false" text="Authentic">
-      <stylesheets>
-        <URL value="@../stylesheet/authView.css" />
-      </stylesheets>
-    </Button>
+    <Group id="Group" layoutX="411.0" layoutY="174.0">
+      <children>
+        <Button fx:id="authButton1" layoutX="46.0" layoutY="242.0" mnemonicParsing="false" prefWidth="110.0" text="Authentic" />
+        <Button fx:id="terminateButton1" layoutX="46.0" layoutY="279.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <ImageView fx:id="imgView1" fitHeight="203.0" fitWidth="203.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+      </children>
+    </Group>
+    <Group id="Group" layoutX="677.0" layoutY="174.0">
+      <children>
+        <Button fx:id="authButton2" layoutX="47.0" layoutY="242.0" mnemonicParsing="false" prefWidth="110.0" text="Authentic" />
+        <Button fx:id="terminateButton2" layoutX="47.0" layoutY="279.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <ImageView fx:id="imgView2" fitHeight="203.0" fitWidth="203.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+      </children>
+    </Group>
   </children>
+  <stylesheets>
+    <URL value="@../stylesheet/authView.css" />
+  </stylesheets>
 </AnchorPane>

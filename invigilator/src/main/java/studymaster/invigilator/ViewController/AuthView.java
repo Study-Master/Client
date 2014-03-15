@@ -30,10 +30,13 @@ public class AuthView extends ViewController implements VideoEventHandler {
 	}
 	@FXML ImageView imgView0;
 	@FXML Button authButton0;
+	@FXML Button terminateButton0;
 	@FXML ImageView imgView1;
 	@FXML Button authButton1;
+	@FXML Button terminateButton1;
 	@FXML ImageView imgView2;
 	@FXML Button authButton2;
+	@FXML Button terminateButton2;
 	private ArrayList<Slot> slots;
 	private Map<WebSocket, Slot> clientSlots;
 
@@ -44,16 +47,16 @@ public class AuthView extends ViewController implements VideoEventHandler {
 		VideoSS videoSS = VideoSS.getInstance();
 		videoSS.start();
 
-		Slot s1 = new Slot(imgView0, authButton0, null);
-		Slot s2 = new Slot(imgView1, authButton1, null);
-		Slot s3 = new Slot(imgView1, authButton2, null);
+		Slot s0 = new Slot(imgView0, authButton0, terminateButton0);
+		Slot s1 = new Slot(imgView1, authButton1, terminateButton1);
+		Slot s2 = new Slot(imgView1, authButton2, terminateButton2);
 
-		slots = new ArrayList();
+		slots = new ArrayList(3);
 		clientSlots = new HashMap();
 
+		slots.add(s0);
 		slots.add(s1);
 		slots.add(s2);
-		slots.add(s3);
 	}
 
 	@Override
