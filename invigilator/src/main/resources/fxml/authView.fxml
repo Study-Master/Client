@@ -18,25 +18,47 @@
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="674.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="63.0" layoutY="674.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <ImageView id="imgView" fx:id="imgView1" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="110.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/sm_logo.png" />
-      </image>
-    </ImageView>
-    <ImageView id="imgView" fx:id="imgView3" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="658.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/sm_logo.png" />
-      </image>
-    </ImageView>
-    <ImageView id="imgView" fx:id="imgView2" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="374.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/sm_logo.png" />
-      </image>
-    </ImageView>
+    <Group id="Group" layoutX="150.0" layoutY="183.0">
+      <children>
+        <ImageView id="imgView" fx:id="imgView0" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <ImageView id="imgView" fx:id="imgView3" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="532.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <ImageView id="imgView" fx:id="imgView1" fitHeight="191.5" fitWidth="255.33333333333331" layoutX="272.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+      </children>
+    </Group>
+    <Label layoutX="446.0" layoutY="384.0" text="Waiting for connection" />
+    <Label layoutX="174.0" layoutY="384.0" text="Waiting for connection" />
+    <Label layoutX="706.0" layoutY="384.0" text="Waiting for connection" />
+    <Button fx:id="authButton0" layoutX="165.0" layoutY="424.0" mnemonicParsing="false" text="Authentic">
+      <stylesheets>
+        <URL value="@../stylesheet/authView.css" />
+      </stylesheets>
+    </Button>
+    <Button fx:id="authButton1" layoutX="437.0" layoutY="424.0" mnemonicParsing="false" text="Authentic">
+      <stylesheets>
+        <URL value="@../stylesheet/authView.css" />
+      </stylesheets>
+    </Button>
+    <Button fx:id="authButton2" layoutX="697.0" layoutY="424.0" mnemonicParsing="false" text="Authentic">
+      <stylesheets>
+        <URL value="@../stylesheet/authView.css" />
+      </stylesheets>
+    </Button>
   </children>
 </AnchorPane>
