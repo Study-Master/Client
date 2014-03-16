@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.TestView2">
   <children>
-    <Label fx:id="titleLabel" alignment="CENTER" layoutX="358.0" layoutY="63.0" prefHeight="86.0" prefWidth="309.0" text="Test 2/2" textOverrun="CENTER_WORD_ELLIPSIS">
+    <Label fx:id="TestField" alignment="CENTER" layoutX="358.0" layoutY="74.0" prefHeight="86.0" prefWidth="309.0" text="Test 2/2" textOverrun="CENTER_WORD_ELLIPSIS">
       <font>
         <Font size="60.0" />
       </font>
@@ -23,19 +23,25 @@
         </Label>
       </labelFor>
     </Label>
+    <fx:reference source="nameField" />
     <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Label alignment="CENTER" layoutX="382.0" layoutY="606.0" prefHeight="44.0" prefWidth="262.0" style="-fx-font-size: 15;" text="©Copyright 2014 Studymaster" />
-    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="220.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+    <Label layoutX="430.0" layoutY="601.0" prefHeight="43.344635009765625" prefWidth="165.0" text="©Copyright 2014 Studymaster" />
+    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="407.0" layoutY="436.0" mnemonicParsing="false" onMousePressed="#testAction" onMouseReleased="#aftertestAction" text="WEBCAM TEST" />
-    <Label alignment="CENTER" layoutX="218.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" style="-fx-font-size: 15;&#10;" text="*Press start to open webcam. If you can see yourself up here, you are all set!">
+    <Button fx:id="ExitButton" layoutX="879.0" layoutY="99.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
+      <font>
+        <Font size="20.0" fx:id="x1" />
+      </font>
+    </Button>
+    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="425.0" layoutY="436.0" mnemonicParsing="false" onAction="#testAction" text="WEBCAM TEST" />
+    <Label alignment="CENTER" layoutX="220.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" text="*Press start to open webcam. If you can see yourself up here, you are all set!">
       <font>
         <Font size="15.0" />
       </font>
@@ -45,11 +51,7 @@
         <Image url="@../image/User.png" />
       </image>
     </ImageView>
-    <Button id="ExitButton" fx:id="FinishiButton" layoutX="837.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="FINISH">
-      <font>
-        <Font size="20.0" fx:id="x1" />
-      </font>
-    </Button>
+    <Button id="ExitButton" fx:id="FinishiButton" font="$x1" layoutX="837.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="FINISH" />
     <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="703.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
   </children>
   <stylesheets>
