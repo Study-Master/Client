@@ -218,8 +218,8 @@ public class CourseView extends HomeViewController {
 }
 
 class CountDown extends Label {
-  public CountDown(String remainingTime, GridPane courseList, int row) {
-    bindToTime(remainingTime, courseList, row);
+  public CountDown(String examStartTime, GridPane courseList, int row) {
+    bindToTime(examStartTime, courseList, row);
   }
 
   private void bindToTime(final String examStartTime, final GridPane courseList, final int row) {
@@ -257,7 +257,12 @@ class CountDown extends Label {
                   courseList.getChildren().remove(label);
                 }
                 else {
-                  setText(getRemainingTime(examStartTime));
+                  String remainingTime;
+                  remainingTime = getRemainingTime(examStartTime);
+                  setText(remainingTime);
+                  if (remainingTime.contains(":")) {
+                    setStyle("-fx-text-fill: red;");
+                  }
                 }
                 
               } catch (ParseException ex) {
@@ -284,10 +289,10 @@ class CountDown extends Label {
     long diffHours = diff / (60 * 60 * 1000) % 24;
     long diffDays = diff / (24 * 60 * 60 * 1000);
     if (diffDays>0) {
-      return diffDays + "D " + diffHours + "H " + diffMinutes + "M" ;
+      return diffDays + " Days" ;
     }
     else {
-      return diffHours + "H " + diffMinutes + "M " + diffSeconds + "S" ;
+      return diffHours + ":" + diffMinutes + ":" + diffSeconds ;
     }
   }
 }
