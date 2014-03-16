@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.TestView">
   <children>
-    <Label fx:id="TestField" alignment="CENTER" layoutX="358.0" layoutY="74.0" prefHeight="86.0" prefWidth="309.0" text="Test 1/2" textOverrun="CENTER_WORD_ELLIPSIS">
+    <Label fx:id="titleLabel" alignment="CENTER" layoutX="358.0" layoutY="79.0" prefHeight="86.0" prefWidth="309.0" text="Test 1/2" textOverrun="CENTER_WORD_ELLIPSIS">
       <font>
         <Font size="60.0" />
       </font>
@@ -23,35 +23,33 @@
         </Label>
       </labelFor>
     </Label>
-    <fx:reference source="nameField" />
     <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="213.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Label layoutX="430.0" layoutY="601.0" prefHeight="43.344635009765625" prefWidth="165.0" text="©Copyright 2014 Studymaster" />
-    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+    <Label alignment="CENTER" layoutX="391.0" layoutY="634.0" prefHeight="44.0" prefWidth="247.0" style="-fx-font-size: 15;" text="©Copyright 2014 Studymaster" />
+    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="205.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Button fx:id="ExitButton" layoutX="858.0" layoutY="56.0" mnemonicParsing="false" onAction="#exitAction" text="EXIT">
-      <font>
-        <Font size="20.0" fx:id="x1" />
-      </font>
-    </Button>
-    <ImageView fitHeight="180.00001525878906" fitWidth="237.60003096395607" layoutX="393.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="180.00001525878906" fitWidth="237.60003096395607" layoutX="395.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/Audio.png" />
       </image>
     </ImageView>
-    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="439.0" layoutY="436.0" mnemonicParsing="false" onAction="#testAction" text="AUDIO TEST" />
-    <Label alignment="CENTER" layoutX="220.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" text="*Press begin to start recording.Your voice will be replayed after the recording stops">
+    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="424.0" layoutY="436.0" mnemonicParsing="false" onMousePressed="#testAction" onMouseReleased="#aftertestAction" text="AUDIO TEST" />
+    <Label alignment="CENTER" layoutX="219.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" style="-fx-font-size: 15;" text="*Press begin to start recording.Your voice will be replayed after the recording stops">
       <font>
         <Font size="15.0" />
       </font>
     </Label>
-    <Button id="ExitButton" fx:id="NextButton" font="$x1" layoutX="816.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="NEXT" />
+    <Button id="ExitButton" fx:id="NextButton" layoutX="816.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="NEXT">
+      <font>
+        <Font size="20.0" fx:id="x1" />
+      </font>
+    </Button>
     <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="677.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
   </children>
   <stylesheets>

@@ -27,11 +27,24 @@ public class TestView2 extends TestViewController {
                 }
         }
      
+        @FXML
+        @Override
+        public void backAction() {
+                super.backAction();
 
+                    director.pushStageWithFXML(getClass().getResource("/fxml/testView1.fxml"));
+
+
+        }
+        
+        
 	@Override
-        //public boolean test() {};
 	public void test() {
-
             test2 = true;
+	}
+        
+        @Override
+	public void aftertest() {
+
 	}
 }

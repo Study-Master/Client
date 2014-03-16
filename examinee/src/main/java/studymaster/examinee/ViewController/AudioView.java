@@ -1,29 +1,12 @@
 package studymaster.examinee.ViewController;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import studymaster.all.ViewController.TestViewController;
-import studymaster.all.ViewController.Director;
-import studymaster.socket.Connector;
-import studymaster.examinee.App;
-import org.json.JSONObject;
+import studymaster.all.ViewController.ViewController;
+import javax.sound.sampled.*;
+import java.io.*;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.TargetDataLine;
+public class AudioView extends ViewController {
 
-public class TestView extends TestViewController {
-
-// Copy from AudioView
-    	Thread stopper;
+	Thread stopper;
 
     // format of audio file
 	AudioFileFormat.Type fileType = AudioFileFormat.Type.AU;
@@ -39,46 +22,27 @@ public class TestView extends TestViewController {
     private ByteArrayOutputStream outputStream;
     
     private byte[] byteArray;
-// End of copy from AudioView
 
+
+	@Override
+    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        super.initialize(location, resources);
+        connector.auth();
+    }
     
-	@Override
-	public void onMessage(String message) {
-		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
-	}
+    @Override
+    public void onMessage(String message) {
         
-        @FXML
-        @Override
-        public void nextAction() {
-                super.nextAction();
 
-                    director.pushStageWithFXML(getClass().getResource("/fxml/testView2.fxml"));
-
-
-        }
-     
-        @FXML
-        @Override
-        public void backAction() {
-                super.backAction();
-
-                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
-
-
-        }
-
-	@Override
-	public void test() {
-                startRecord();
-	}
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
         
-        @Override
-	public void aftertest() {
-                stopRecord();
-                playAudio();
-	}
         
-// Copy from AudioView        
+        
+
+
+
+    }
+
 	private AudioFormat getAudioFormat() {
 		float sampleRate = 16000;
 		int sampleSizeInBits = 8;
@@ -193,7 +157,4 @@ public class TestView extends TestViewController {
         sourceLine.drain();
         sourceLine.close();
     }
-
-// End of copy form AudioView
-
 }

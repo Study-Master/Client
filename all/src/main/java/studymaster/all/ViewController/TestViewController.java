@@ -21,14 +21,21 @@ public abstract class TestViewController extends ViewController {
 	@FXML
 	public final void testAction() {
 		System.out.println("[info] (" + getClass().getSimpleName() + " testAction): Trying to test...");
-		//String account = accountField.getText();
 		test();
+	}
+        
+        @FXML
+	public final void aftertestAction() {
+		System.out.println("[info] (" + getClass().getSimpleName() + " testAction): Finishing test...");
+		//String account = accountField.getText();
+		aftertest();
 	}
 
 	/**
 	 * Binded to exit button
 	 */
-	@FXML
+
+        @FXML
 	public final void exitAction() {
 		System.out.println("[info] (" + getClass().getSimpleName() + " exitAction): Exiting...");
 		System.exit(0);
@@ -38,7 +45,7 @@ public abstract class TestViewController extends ViewController {
 	 * Binded to BACK button
 	 */
      @FXML
-        public final void backAction() {
+        public void backAction() {
                 System.out.println("[info] (" + getClass().getSimpleName() + " backAction): back to previous page");
         }
  
@@ -55,4 +62,5 @@ public abstract class TestViewController extends ViewController {
      * Audio and webcam test
      */
     public abstract void test();
+    public abstract void aftertest();
 }
