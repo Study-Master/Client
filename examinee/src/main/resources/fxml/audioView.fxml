@@ -21,12 +21,12 @@
         <Label id="titleLabel" fx:id="titleLabel1" layoutX="0.0" layoutY="0.0" text="Record" textAlignment="CENTER" />
       </children>
     </Group>
-    <Group id="Group" layoutX="436.0" layoutY="431.0">
+    <Group id="Group" layoutX="419.0" layoutY="430.0">
       <children>
-        <Label id="titleLabel" fx:id="titleLabel2" layoutX="0.0" layoutY="0.0" text="Play" textAlignment="CENTER" />
-        <Button id="play" fx:id="playButton" layoutX="31.0" layoutY="146.0" minHeight="-1.0" minWidth="-1.0" mnemonicParsing="false" onAction="#playAudio" prefHeight="30.0" prefWidth="89.9998779296875" text="Play" />
+        <Label id="titleLabel" fx:id="titleLabel2" layoutX="0.0" layoutY="0.0" text="Send" textAlignment="CENTER" />
       </children>
     </Group>
+    <Button id="play" fx:id="playButton" layoutX="467.0" layoutY="555.0" minHeight="-1.0" minWidth="-1.0" mnemonicParsing="false" onAction="#send" prefHeight="30.0" prefWidth="89.9998779296875" text="Send" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/audioView.css" />

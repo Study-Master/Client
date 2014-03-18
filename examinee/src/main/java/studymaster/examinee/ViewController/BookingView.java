@@ -31,7 +31,7 @@ public class BookingView extends ViewController{
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
-		
+
 		//just for test
 		connector.send("{'event': 'booking','endpoint': 'Server','studentID':'123456', 'content':{'code': 'CZ2001','name': 'java', 'examTime': [{'start_time': '2014/03/03 11:11:11', 'end_time': '2014/03/03 11:11:00'}, {'start_time': '2014/03/03 22:22:22', 'end_time': '2014/03/03 00:01:00'}, {'start_time': '2014/03/03 33:33:33', 'end_time': '2014/03/03 00:01:00'}]}}");
 		// System.out.println("initialized");
@@ -39,7 +39,7 @@ public class BookingView extends ViewController{
 
 	public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
-		
+
 		try {
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
@@ -51,15 +51,15 @@ public class BookingView extends ViewController{
         	JSONArray time = content.getJSONArray("examTime");
         	newMsg.put("event", "booked");
         	newMsg.put("code", courseCode);
-			newMsg.put("name", courseName);
-			newMsg.put("studentID", studentID);
+					newMsg.put("name", courseName);
+					newMsg.put("studentID", studentID);
 
         	if(event.equals("booking")) {
-        		
+
         		titleLabel.setText(courseCode + " " +courseName);
         		showTimeTable(time, timeTable, buttonGroup);
 			}
-        
+
 
 		} catch (Exception e) {
 			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
@@ -67,9 +67,9 @@ public class BookingView extends ViewController{
 	}
 
 	private void showTimeTable(final JSONArray time, final GridPane timeTable, final ToggleGroup buttonGroup){
-		
+
 		final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
-		
+
        	/*The Json message we assume to used here:
 			{
     			"event": "booking",
@@ -80,13 +80,13 @@ public class BookingView extends ViewController{
             					"examTime": [{
                     						"start_time": "2014/03/03 00:00:00"
                     						"end_time": "2014/03/03 00:01:00"
-                    							}, 
-                    						{...}, 
+                    							},
+                    						{...},
                     						{...}]//json array
     						}
-			}		
+			}
 		*/
-		
+
 		javafx.application.Platform.runLater(new Runnable() {
       		@Override
       		public void run() {
@@ -95,7 +95,7 @@ public class BookingView extends ViewController{
 
 					for(int i=0; i<time.length(); i++){
        					tempButton.add(new RadioButton(((JSONObject)time.get(i)).getString("start_time") + " - " + ((JSONObject)time.get(i)).getString("end_time")));
-       					
+
        					timeTable.add(tempButton.get(i), 0, i);
        					tempButton.get(i).setToggleGroup(buttonGroup);
 					}
@@ -121,4 +121,3 @@ public class BookingView extends ViewController{
 		connector.send(newMsg.toString());
 	}
 }
-

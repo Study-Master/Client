@@ -14,9 +14,9 @@ public class LoginView extends LoginViewController {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		try {
 			JSONObject msg = new JSONObject(message);
-        	String event = msg.getString("event");
-        	String endpoint = msg.getString("endpoint");
-        	JSONObject content = msg.getJSONObject("content");
+			String event = msg.getString("event");
+			String endpoint = msg.getString("endpoint");
+			JSONObject content = msg.getJSONObject("content");
 
 			if(event.equals("login")) {
 				String status = content.getString("status");
@@ -57,4 +57,3 @@ public class LoginView extends LoginViewController {
 
 
 }
-

@@ -11,12 +11,12 @@ import javafx.scene.control.Label;
 
 public class TestView extends TestViewController {
 
-    
+
 	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 	}
-   
+
 	@Override
 	public void test() {
 		String test1 = "success";

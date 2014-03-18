@@ -11,28 +11,21 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.json.JSONObject;
 import studymaster.socket.ImgUtil;
 import studymaster.all.ViewController.ViewController;
-import studymaster.socket.VideoEventHandler;
-import studymaster.socket.VideoSS;
+import studymaster.socket.AudioEventHandler;
+import studymaster.socket.AudioSS;
 
-public class AuthView extends ViewController implements VideoEventHandler {
+public class AudioView extends ViewController implements AudioEventHandler {
 
-	@FXML protected ImageView imgView1;
-	@FXML protected ImageView imgView2;
-	@FXML protected ImageView imgView3;
-	private Map<WebSocket, ImageView> clients = null;
-	private ArrayList<ImageView> imgViews;
+	
 
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
-		VideoSS.setDelegate(this);
-		VideoSS videoSS = VideoSS.getInstance();
-		videoSS.start();
-		clients = new HashMap();
-		imgViews = new ArrayList();
-		imgViews.add(imgView1);
-		imgViews.add(imgView2);
-		imgViews.add(imgView3);
+		AudioSS.setDelegate(this);
+		AudioSS audioSS = AudioSS.getInstance();
+		
+		// clients = new HashMap();
+		
 	}
 
 	@Override
@@ -52,19 +45,23 @@ public class AuthView extends ViewController implements VideoEventHandler {
         JSONObject reMsg = new JSONObject();
         JSONObject reContent = new JSONObject();
         reMsg.put("event", event);
-        reMsg.put("endpoint", "Invigilator Video Server");
+        reMsg.put("endpoint", "Invigilator Audio Server");
         reMsg.put("content", reContent);
 
-        if(event.equals("register") && clients.size() <= 3) {
-        	clients.put(conn, imgViews.get(clients.size()));
-        	reContent.put("status", "success");
-        }
-        conn.send(reMsg.toString());
+        // if(event.equals("register") && clients.size() <= 3) {
+        // 	clients.put(conn, imgViews.get(clients.size()));
+        // 	reContent.put("status", "success");
+        // }
+        // conn.send(reMsg.toString());
+	}
+
+	public void playAudio(){
+		AudioSS.playAudio();
 	}
 
 	@Override
 	public void onMessage( WebSocket conn, ByteBuffer message ) {
-		clients.get(conn).setImage(ImgUtil.byteBufferToImage(message));
+		AudioSS.setByteArray(message.array());
 	}
 
 	@Override
