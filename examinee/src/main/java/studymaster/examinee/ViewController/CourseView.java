@@ -30,10 +30,13 @@ import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import org.json.JSONException;
 
 public class CourseView extends HomeViewController {
   GridPane List;
@@ -51,23 +54,37 @@ public class CourseView extends HomeViewController {
       if(event.equals("profile")) {
         showCourseList(content);
       }
-      else if (event.equals("cancel")) {
-        //dialog - inform student
-        JSONObject cancelInfo = msg.getJSONObject("content");
-        String examStartTime = cancelInfo.getString("start_time");
-        int row=0;
-        ObservableList<Node> childrens = List.getChildren();
-          Node cancelButton = null;
-          for(Node node : childrens) {
-            if (node.isDisabled()) {
-              cancelButton = node;
-              row = List.getRowIndex(node);
-              break;
-            }
-          }
-        List.getChildren().remove(cancelButton);
-        BookButton button = new BookButton(examStartTime, List, row);
-      }
+      // else if (event.equals("cancel")) {
+      //   //dialog - inform student
+      //   JSONObject cancelInfo = content;
+      //   if (cancelInfo.getString("status").equals("successful")) {
+      //     System.out.println("[Info] Successfully cancel the booking!");
+      //     //alert
+      //     try{
+      //       String examStartTime = cancelInfo.getString("start_time");
+      //       int row=1;
+      //       ObservableList<Node> childrens = List.getChildren();
+      //         Node cancelButton = null;
+      //         for(Node node : childrens) {
+      //           System.out.println("+1");
+      //           if (node.isDisabled()) {
+      //             cancelButton = node;
+      //             row = List.getRowIndex(node);
+                  
+      //             break;
+      //           }
+      //         }
+      //       List.getChildren().remove(cancelButton);
+      //       BookButton button = new BookButton(examStartTime, List, row);
+      //     }
+      //     catch (Exception e) {
+      //       System.err.println("[err] Fail to change CancelButton to BookButton");
+      //     }
+      //   }
+      //   else {
+      //     //alert
+      //   }
+      // }
     } 
     catch (Exception e) {
       System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
@@ -75,20 +92,33 @@ public class CourseView extends HomeViewController {
   }
 
   private void showCourseList(final JSONObject content) {
-    final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+
     javafx.application.Platform.runLater(new Runnable() {
       @Override
       public void run() {
         try {
+          final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+    // //final AnchorPane spane = (AnchorPane) (pane.lookup("#spane"));
+    // try {
+    final ScrollPane sp = (ScrollPane) pane.lookup("#scrollpane");
+    System.out.println(sp.getId());
+    final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
+    System.out.println(ap.getId());
+    //sp.getChildren().remove(ap);
+  // }
+  // catch (Exception e){
+  //   System.err.println(e.getMessage());
+  // }
           final JSONObject profile = content.getJSONObject("profile");
           JSONArray courses = profile.getJSONArray("courses");
           ArrayList<JSONObject> coursesArray = new ArrayList<JSONObject>();
           String status;
           GridPane courseList = new GridPane();
           List = courseList;
-          AnchorPane.setTopAnchor(courseList, 190.0);
-          AnchorPane.setLeftAnchor(courseList, 90.0);
-          AnchorPane.setRightAnchor(courseList, 90.0);
+          AnchorPane.setTopAnchor(courseList, 20.0);
+          AnchorPane.setLeftAnchor(courseList, 20.0);
+          AnchorPane.setRightAnchor(courseList, 10.0);
+          AnchorPane.setBottomAnchor(courseList, 25.0);
           ColumnConstraints col1 = new ColumnConstraints();
           col1.setPercentWidth(15);
           ColumnConstraints col2 = new ColumnConstraints();
@@ -180,6 +210,15 @@ public class CourseView extends HomeViewController {
                       button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
                       button.setDisable(true);
                       //send msg to server
+                      JSONObject sendMsg = new JSONObject();
+                      JSONObject sendContent = new JSONObject();
+                      sendMsg.put("event", "cancel");
+                      sendMsg.put("endpoint", "Java Client");
+                      sendMsg.put("content", sendContent);
+                      sendContent.put("code", course.getString("code"));
+                      sendContent.put("account", content.getString("account"));
+                      Connector.setMessageContainer(sendMsg.toString());
+                      Connector.getInstance().sendMessageContainer();
                     }
                   });
                   courseList.add(button, 2, i);
@@ -206,8 +245,9 @@ public class CourseView extends HomeViewController {
               }
             }
           }
-          pane.getChildren().addAll(courseList);
-        } catch (Exception e) {
+          
+          ap.getChildren().addAll(courseList);
+        } catch (JSONException e) {
           System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
         }
       }
