@@ -10,9 +10,6 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import java.nio.ByteBuffer;
 import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.TextField;
-import javafx.scene.Scene;
 
 public class InvigilateView extends ViewController implements VideoEventHandler {
 
