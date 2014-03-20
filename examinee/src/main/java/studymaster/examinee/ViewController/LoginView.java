@@ -5,10 +5,8 @@ import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
 import studymaster.examinee.App;
 import org.json.JSONObject;
-import javax.sound.sampled.*;
 
 public class LoginView extends LoginViewController {
-
 
 	@Override
 	public void onMessage(String message) {
@@ -24,7 +22,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
-					director.pushStageWithFXML(getClass().getResource("/fxml/loginView.fxml"));
+					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
 				}
 
 				else if(status.equals("failed")) {
@@ -56,5 +54,9 @@ public class LoginView extends LoginViewController {
 		} catch(Exception e) {
 			System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
 		}
+	}
+
+	public void onEnter() {
+		loginAction();
 	}
 }

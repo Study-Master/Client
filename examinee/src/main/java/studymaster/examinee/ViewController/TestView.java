@@ -22,7 +22,6 @@ import javax.sound.sampled.TargetDataLine;
 
 public class TestView extends TestViewController {
 
-<<<<<<< HEAD
 // Copy from AudioView
     	Thread stopper;
 
@@ -43,14 +42,10 @@ public class TestView extends TestViewController {
 // End of copy from AudioView
 
     
-=======
-
->>>>>>> Audio-Test
 	@Override
 	public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 	}
-<<<<<<< HEAD
         
         @FXML
         @Override
@@ -71,8 +66,6 @@ public class TestView extends TestViewController {
 
 
         }
-=======
->>>>>>> Audio-Test
 
 	@Override
 	public void test() {

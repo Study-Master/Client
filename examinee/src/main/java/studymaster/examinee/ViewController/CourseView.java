@@ -66,17 +66,8 @@ public class CourseView extends HomeViewController {
             @Override
               public void run() {
                 int row=1;
-                ObservableList<Node> childrens = List.getChildren();
-                Node cancelButton = null;
-                for(Node node : childrens) {
-                  //System.out.println("+1");
-                  if (node.isDisabled()) {
-                    cancelButton = node;
-                    row = List.getRowIndex(node);
-                    //System.out.println("[Info] Oh we get it!!!");
-                    break;
-                  }
-                }
+                CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
+                cancelButton.setId("Deleted");
                 List.getChildren().remove(cancelButton);
                 BookButton button = new BookButton(examStartTime, List, row);
                 button.setPrefWidth(120);
@@ -202,7 +193,6 @@ public class CourseView extends HomeViewController {
                 long diffMinutes = diff / (60 * 1000) % 60;
                 long diffHours = diff / (60 * 60 * 1000) % 24;
 
-<<<<<<< HEAD
                 if (diffDays>=3) {
                   final CancelButton button = new CancelButton(examStartTime, courseList, i);
                   button.setPrefWidth(120);
@@ -213,6 +203,8 @@ public class CourseView extends HomeViewController {
                       button.setGraphic(new ImageView(LoadingIcon));
                       button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
                       button.setDisable(true);
+
+                      button.setId("toDelete");
                       //send msg to server
                       JSONObject sendMsg = new JSONObject();
                       JSONObject sendContent = new JSONObject();
@@ -230,22 +222,6 @@ public class CourseView extends HomeViewController {
                 else if (diffMinutes>=15) {
                   CountDown timeLabel = new CountDown(examStartTime, courseList, i);
                   courseList.add(timeLabel, 2, i);
-=======
-                if (diffDays<3) {
-                  if(diffDays==0 && diffHours ==0 && diffMinutes<=15) {
-                    Button button = new Button("Exam");
-                    button.setOnAction(new EventHandler<ActionEvent>() {
-                      @Override public void handle(ActionEvent e) {
-                        director.pushStageWithFXML(getClass().getResource("/fxml/audioView.fxml"));
-                      }
-                    });
-                    courseList.add(button, 2, i);
-                  }
-                  else {
-                    CountDown timeLabel = new CountDown(examStartTime);
-                    courseList.add(timeLabel, 2, i);
-                  }
->>>>>>> Audio-Test
                 }
                 else {
                   final ExamButton button = new ExamButton(examStartTime, courseList, i);
