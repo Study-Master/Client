@@ -16,18 +16,9 @@ import studymaster.socket.ImgUtil;
 import studymaster.all.ViewController.ViewController;
 import studymaster.socket.VideoEventHandler;
 import studymaster.socket.VideoSS;
+import studymaster.invigilator.Slot;
 
 public class AuthView extends ViewController implements VideoEventHandler {
-	private class Slot {
-		protected ImageView imageView;
-		protected Button authButton;
-		protected Button terminateButton;
-		public Slot(ImageView imageView, Button authButton, Button terminateButton) {
-			this.imageView = imageView;
-			this.authButton = authButton;
-			this.terminateButton = terminateButton;
-		}
-	}
 	@FXML ImageView imgView0;
 	@FXML Button authButton0;
 	@FXML Button terminateButton0;
