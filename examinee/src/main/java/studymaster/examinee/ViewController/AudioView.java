@@ -43,12 +43,7 @@
          AudioCl.stopRecord();
      }
 
-     public void playAudio(){
-         AudioCl.playAudio();
-     }
-
      public void send(){
          AudioCl.submit();
      }
  }
-

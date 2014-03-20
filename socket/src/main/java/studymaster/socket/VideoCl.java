@@ -18,7 +18,7 @@ public class VideoCl extends WebSocketClient {
     private static String localEndpoint = "Default VideoCl";
     private static ImageView imgView = null;
     private static Webcam webcam;
-    
+
     private VideoCl(URI serverURI) {
             super(serverURI);
     }

@@ -16,16 +16,17 @@ import studymaster.socket.AudioSS;
 
 public class AudioView extends ViewController implements AudioEventHandler {
 
-	
+
 
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
 		AudioSS.setDelegate(this);
 		AudioSS audioSS = AudioSS.getInstance();
-		
+		audioSS.start();
+
 		// clients = new HashMap();
-		
+
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class AudioView extends ViewController implements AudioEventHandler {
 
 	@Override
 	public void onMessage( WebSocket conn, ByteBuffer message ) {
-		AudioSS.setByteArray(message.array());
+		AudioSS.setByteArray(message);
 	}
 
 	@Override
