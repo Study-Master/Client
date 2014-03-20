@@ -8,10 +8,10 @@ public class App extends Client {
 
 
 	public static void main(String[] args) throws Exception {
-		//Configure
+//Configure
 		Connector.setServer(Configure.SERVER);
 		Connector.setEndpoint(Configure.ENDPOINT);
-		//launch
+//launch
 		launch(args);
 	}
 
@@ -20,6 +20,6 @@ public class App extends Client {
 	public void start(javafx.stage.Stage stage) throws Exception {
 		stage.setTitle("Study Master");
 		director.setStage(stage);
-        director.pushStageWithFXML(App.class.getResource("/fxml/authView.fxml"));
-    }
+		director.pushStageWithFXML(App.class.getResource("/fxml/audioView.fxml"));
+	}
 }

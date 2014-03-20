@@ -202,6 +202,7 @@ public class CourseView extends HomeViewController {
                 long diffMinutes = diff / (60 * 1000) % 60;
                 long diffHours = diff / (60 * 60 * 1000) % 24;
 
+<<<<<<< HEAD
                 if (diffDays>=3) {
                   final CancelButton button = new CancelButton(examStartTime, courseList, i);
                   button.setPrefWidth(120);
@@ -229,6 +230,22 @@ public class CourseView extends HomeViewController {
                 else if (diffMinutes>=15) {
                   CountDown timeLabel = new CountDown(examStartTime, courseList, i);
                   courseList.add(timeLabel, 2, i);
+=======
+                if (diffDays<3) {
+                  if(diffDays==0 && diffHours ==0 && diffMinutes<=15) {
+                    Button button = new Button("Exam");
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                      @Override public void handle(ActionEvent e) {
+                        director.pushStageWithFXML(getClass().getResource("/fxml/audioView.fxml"));
+                      }
+                    });
+                    courseList.add(button, 2, i);
+                  }
+                  else {
+                    CountDown timeLabel = new CountDown(examStartTime);
+                    courseList.add(timeLabel, 2, i);
+                  }
+>>>>>>> Audio-Test
                 }
                 else {
                   final ExamButton button = new ExamButton(examStartTime, courseList, i);
