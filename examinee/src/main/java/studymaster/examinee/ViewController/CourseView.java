@@ -313,10 +313,13 @@ class CountDown extends Label {
                       break;
                     }
                   }
-                  ExamButton examButton = new ExamButton(examStartTime, courseList, row);
+                  final ExamButton examButton = new ExamButton(examStartTime, courseList, row);
                   examButton.setPrefWidth(120);
                   examButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
+                      examButton.setText("");
+                      Image LoadingIcon = new Image(getClass().getResourceAsStream("/image/Loading.gif"));
+                      examButton.setGraphic(new ImageView(LoadingIcon));
                       studymaster.examinee.ViewController.CourseView.setExamMsg(Connector.getInstance().getSender());
                       studymaster.all.ViewController.Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
                     }
