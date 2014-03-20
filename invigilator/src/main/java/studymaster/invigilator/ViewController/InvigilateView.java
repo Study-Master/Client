@@ -42,7 +42,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
     public void onError(WebSocket conn, Exception ex){}
 
 	public void chatAction0() {
-		System.out.println("[info] ( " + getClass().getSimpleName() + " chatAction0 )");
+		System.out.println("[info] (" + getClass().getSimpleName() + " chatAction0)");
 		director.toggleStage(chatWindow0);
 	}
 }

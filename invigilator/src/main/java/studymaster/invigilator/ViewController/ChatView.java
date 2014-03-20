@@ -32,7 +32,13 @@ public class ChatView extends ViewController {
 		//TODO: Send message to server.
 	}
 
-	public final void voiceMessageAction() {
+	public final void onVoiceMessagePressed() {
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onVoiceMessagePressed)");
+		//TODO: Send a voice message.
+	}
+
+	public final void onVoiceMessageReleased() {
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onVoiceMessageReleased)");
 		//TODO: Send a voice message.
 	}
 }
