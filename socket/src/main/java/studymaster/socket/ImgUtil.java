@@ -1,4 +1,4 @@
-package studymaster.all;
+package studymaster.socket;
 
 public class ImgUtil {
 
@@ -34,4 +34,25 @@ public class ImgUtil {
 			return null;
 		}
 	}
+
+	public static java.awt.image.BufferedImage byteToBufferedImage(byte[] imgByte) {
+		try {
+			java.io.InputStream in = new java.io.ByteArrayInputStream(imgByte);
+        	return javax.imageio.ImageIO.read(in);
+		} catch(Exception e) {
+			return null;
+		} 
+	}
+
+	public static javafx.scene.image.Image byteToImage(byte[] imgByte) {
+		java.awt.image.BufferedImage image = byteToBufferedImage(imgByte);
+		if(image==null)
+			return null;
+		return createImage(image);
+	}
+
+	public static javafx.scene.image.Image byteBufferToImage(java.nio.ByteBuffer byteBuffer) {
+		return byteToImage(byteBuffer.array());
+	}
+
 }

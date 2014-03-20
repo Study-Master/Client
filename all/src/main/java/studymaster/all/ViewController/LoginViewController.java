@@ -2,8 +2,11 @@ package studymaster.all.ViewController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -14,6 +17,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public abstract class LoginViewController extends ViewController{
 	@FXML protected TextField accountField;
 	@FXML protected PasswordField passwordField;
+	@FXML protected Button loginButton;
 
 	/**
 	 * Binded to login button
@@ -23,6 +27,11 @@ public abstract class LoginViewController extends ViewController{
 		System.out.println("[info] (" + getClass().getSimpleName() + " loginAction): Trying to login...");
 		String account = accountField.getText();
 		String password = DigestUtils.md5Hex(passwordField.getText());
+		loginButton.setText("");
+        Image LoadingIcon = new Image(getClass().getResourceAsStream("/image/Loading.gif"));
+        loginButton.setGraphic(new ImageView(LoadingIcon));
+        loginButton.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
+        loginButton.setDisable(true);
 		login(account, password);
 	}
 

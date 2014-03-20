@@ -28,6 +28,11 @@
         </ImageView>
       </graphic>
     </Button>
+    <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="62.0" layoutY="184.0" prefHeight="504.0" prefWidth="921.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
+      <content>
+        <AnchorPane id="ap" maxHeight="1.7976931348623157E308" opacity="1.0" prefHeight="489.0" prefWidth="865.0" style="" visible="true" />
+      </content>
+    </ScrollPane>
   </children>
   <stylesheets>
     <URL value="@../stylesheet/courseView.css" />

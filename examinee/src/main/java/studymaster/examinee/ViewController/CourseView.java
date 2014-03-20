@@ -28,11 +28,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import org.json.JSONException;
 
 public class CourseView extends HomeViewController {
+  GridPane List;
 
   @Override
 	public void onMessage(String message) {
@@ -42,20 +48,52 @@ public class CourseView extends HomeViewController {
       String event = msg.getString("event");
       String endpoint = msg.getString("endpoint");
       final JSONObject content = msg.getJSONObject("content");
-      Button button = new Button();
+      //Button button = new Button();
 
       if(event.equals("profile")) {
         showCourseList(content);
       }
-      // else if(event.equals("stopauth")){
-      //   try {
-          
-      //     //button.setDisable();
-      //   }
-      //   catch (Exception e){
-      //     System.out.println("   ");
-      //   }
-      // }
+      else if (event.equals("cancel")) {
+        //dialog - inform student
+        JSONObject cancelInfo = content;
+        if (cancelInfo.getString("status").equals("successful")) {
+          System.out.println("[Info] Successfully cancel the booking!");
+          //alert
+          alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
+          try{
+            final String examStartTime = cancelInfo.getString("start_time");
+            javafx.application.Platform.runLater(new Runnable() {
+            @Override
+              public void run() {
+                int row=1;
+                ObservableList<Node> childrens = List.getChildren();
+                Node cancelButton = null;
+                for(Node node : childrens) {
+                  //System.out.println("+1");
+                  if (node.isDisabled()) {
+                    cancelButton = node;
+                    row = List.getRowIndex(node);
+                    //System.out.println("[Info] Oh we get it!!!");
+                    break;
+                  }
+                }
+                List.getChildren().remove(cancelButton);
+                BookButton button = new BookButton(examStartTime, List, row);
+                button.setPrefWidth(120);
+                List.add(button, 2, row);
+              }
+            });
+          }
+          catch (Exception e) {
+            System.err.println("[err] Fail to change CancelButton to BookButton");
+          }
+        }      
+        else {
+          //alert
+            alert("Can't cancel this exam. " + cancelInfo.getString("error"));
+            
+        }
+      }
     } 
     catch (Exception e) {
       System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
@@ -63,19 +101,27 @@ public class CourseView extends HomeViewController {
   }
 
   private void showCourseList(final JSONObject content) {
-    final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+
     javafx.application.Platform.runLater(new Runnable() {
       @Override
       public void run() {
         try {
+          final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+          final ScrollPane sp = (ScrollPane) pane.lookup("#scrollpane");
+          //System.out.println(sp.getId());
+          final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
+          //System.out.println(ap.getId());
+
           final JSONObject profile = content.getJSONObject("profile");
           JSONArray courses = profile.getJSONArray("courses");
           ArrayList<JSONObject> coursesArray = new ArrayList<JSONObject>();
           String status;
           GridPane courseList = new GridPane();
-          AnchorPane.setTopAnchor(courseList, 190.0);
-          AnchorPane.setLeftAnchor(courseList, 90.0);
-          AnchorPane.setRightAnchor(courseList, 90.0);
+          List = courseList;
+          AnchorPane.setTopAnchor(courseList, 20.0);
+          AnchorPane.setLeftAnchor(courseList, 20.0);
+          AnchorPane.setRightAnchor(courseList, 10.0);
+          AnchorPane.setBottomAnchor(courseList, 25.0);
           ColumnConstraints col1 = new ColumnConstraints();
           col1.setPercentWidth(15);
           ColumnConstraints col2 = new ColumnConstraints();
@@ -84,6 +130,8 @@ public class CourseView extends HomeViewController {
           col3.setPercentWidth(20);
           courseList.getColumnConstraints().addAll(col1,col2,col3);
           courseList.setVgap(25);
+          col3.setHalignment(HPos.RIGHT);
+
           //courseList.setStyle("-fx-border: 2px solid; -fx-border-color: red; -fx-border-insets: 5;");
 
           for (int i=0; i<courses.length(); i++) {
@@ -132,7 +180,7 @@ public class CourseView extends HomeViewController {
             else if (status.equals("unbooked")) {
               String examStartTime = course.getString("start_time");
               BookButton button = new BookButton(examStartTime, courseList, i);
-              button.setPrefWidth(160);
+              button.setPrefWidth(120);
 
               button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
@@ -155,11 +203,25 @@ public class CourseView extends HomeViewController {
                 long diffHours = diff / (60 * 60 * 1000) % 24;
 
                 if (diffDays>=3) {
-                  CancelButton button = new CancelButton(examStartTime, courseList, i);
-                  button.setPrefWidth(160);
+                  final CancelButton button = new CancelButton(examStartTime, courseList, i);
+                  button.setPrefWidth(120);
                   button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
-                      //Cancel Booking
+                      button.setText("");
+                      Image LoadingIcon = new Image(getClass().getResourceAsStream("/image/Loading.gif"));
+                      button.setGraphic(new ImageView(LoadingIcon));
+                      button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
+                      button.setDisable(true);
+                      //send msg to server
+                      JSONObject sendMsg = new JSONObject();
+                      JSONObject sendContent = new JSONObject();
+                      sendMsg.put("event", "cancel");
+                      sendMsg.put("endpoint", "Java Client");
+                      sendMsg.put("content", sendContent);
+                      sendContent.put("code", course.getString("code"));
+                      sendContent.put("account", content.getString("account"));
+                      Connector.setMessageContainer(sendMsg.toString());
+                      Connector.getInstance().sendMessageContainer();
                     }
                   });
                   courseList.add(button, 2, i);
@@ -169,10 +231,15 @@ public class CourseView extends HomeViewController {
                   courseList.add(timeLabel, 2, i);
                 }
                 else {
-                  ExamButton button = new ExamButton(examStartTime, courseList, i);
-                  button.setPrefWidth(160);
+                  final ExamButton button = new ExamButton(examStartTime, courseList, i);
+                  button.setPrefWidth(120);
                   button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
+                      button.setText("");
+                      Image LoadingIcon = new Image(getClass().getResourceAsStream("/image/Loading.gif"));
+                      button.setGraphic(new ImageView(LoadingIcon));
+                      button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
+                      button.setDisable(true);
                       setExamMsg(course.getString("code"));
                       director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
                     }
@@ -186,8 +253,9 @@ public class CourseView extends HomeViewController {
               }
             }
           }
-          pane.getChildren().addAll(courseList);
-        } catch (Exception e) {
+          
+          ap.getChildren().addAll(courseList);
+        } catch (JSONException e) {
           System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
         }
       }
@@ -245,10 +313,13 @@ class CountDown extends Label {
                       break;
                     }
                   }
-                  ExamButton examButton = new ExamButton(examStartTime, courseList, row);
-                  examButton.setPrefWidth(160);
+                  final ExamButton examButton = new ExamButton(examStartTime, courseList, row);
+                  examButton.setPrefWidth(120);
                   examButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
+                      examButton.setText("");
+                      Image LoadingIcon = new Image(getClass().getResourceAsStream("/image/Loading.gif"));
+                      examButton.setGraphic(new ImageView(LoadingIcon));
                       studymaster.examinee.ViewController.CourseView.setExamMsg(Connector.getInstance().getSender());
                       studymaster.all.ViewController.Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
                     }
@@ -280,7 +351,6 @@ class CountDown extends Label {
   public static String getRemainingTime(String examStartTime) throws ParseException {
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     Date currentTime = new Date();
-    //System.out.println(currentTime);
     Date startTime = dateFormat.parse(examStartTime);
 
     long diff = startTime.getTime() - currentTime.getTime();
