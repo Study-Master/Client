@@ -55,27 +55,36 @@ public class CourseView extends HomeViewController {
       }
       else if (event.equals("cancel")) {
         //dialog - inform student
-        JSONObject cancelInfo = content;
+        final JSONObject cancelInfo = content;
         if (cancelInfo.getString("status").equals("successful")) {
           System.out.println("[Info] Successfully cancel the booking!");
           //alert
           alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
           try{
             final String examStartTime = cancelInfo.getString("start_time");
-            javafx.application.Platform.runLater(new Runnable() {
-            @Override
-              public void run() {
-                int row;
-                CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
-                //cancelButton.setId("Deleted");
+            // javafx.application.Platform.runLater(new Runnable() {
+            // @Override
+            //   public void run() {
+
+                final CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
+                cancelButton.setId("Deleted");
                 System.out.println("[Info] "+cancelButton.getId());
-                row=List.getRowIndex(cancelButton);
-                List.getChildren().remove(cancelButton);
-                BookButton button = new BookButton(examStartTime, List, row);
-                button.setPrefWidth(120);
-                List.add(button, 2, row);
-              }
-            });
+                final int row=List.getRowIndex(cancelButton);
+                javafx.application.Platform.runLater(new Runnable() {
+                  @Override
+                  public void run() {
+                    List.getChildren().remove(cancelButton);
+                    BookButton button = new BookButton(examStartTime, List, row);
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                      @Override public void handle(ActionEvent e) {
+                        setBookingMsg(cancelInfo.getString("code"), cancelInfo.getString("account"));
+                        director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
+                      }
+                    });
+                    button.setPrefWidth(120);
+                    List.add(button, 2, row);
+                  }
+                });
           }
           catch (Exception e) {
             System.err.println("[err] Fail to change CancelButton to BookButton");
