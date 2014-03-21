@@ -26,8 +26,8 @@ public class BookingView extends ViewController{
 	@FXML protected Label titleLabel;
 	@FXML protected GridPane timeTable;
 	protected ToggleGroup buttonGroup = new ToggleGroup();
-	JSONObject newMsg = new JSONObject();
-	JSONObject newContent = new JSONObject();
+	private static String code;
+	private static String start_time;
 
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -41,29 +41,26 @@ public class BookingView extends ViewController{
 		try {
 			JSONObject msg = new JSONObject(message);
         	String event = msg.getString("event");
-        	
         	JSONObject content = msg.getJSONObject("content");
-        	String studentID = content.getString("account");
-        	String courseCode = content.getString("code");
-        	JSONArray time = content.getJSONArray("examTime");
-        	newMsg.put("event", "booked");
-        	newMsg.put("endpoint", "Examinee");
-			newMsg.put("content", newContent);
-			newContent.put("account", studentID);
-			newContent.put("code", courseCode);
 
         	if(event.equals("booking")) {
-        		titleLabel.setText(courseCode);
-        		showTimeTable(time, timeTable, buttonGroup);
+        		code = content.getString("code");
+        		titleLabel.setText(code);
+        		showTimeTable(content.getJSONArray("examTime"), timeTable, buttonGroup);
 			}
-        
+			else if(event.equals("booked")){
+				if(content.getString("status").equals("success")){
+					alert("Exam successfully booked for " + code + "\nTime: " + start_time);
+					backView();
+				}
+			}
 
 		} catch (Exception e) {
 			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
 		}
 	}
 
-	private void showTimeTable(final JSONArray time, final GridPane timeTable, final ToggleGroup buttonGroup){	
+	private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){	
 		final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
 		javafx.application.Platform.runLater(new Runnable() {
       		@Override
@@ -71,8 +68,8 @@ public class BookingView extends ViewController{
       			try{
        				ArrayList<RadioButton> tempButton = new ArrayList<RadioButton>();
 
-					for(int i=0; i<time.length(); i++){
-       					tempButton.add(new RadioButton(((JSONObject)time.getJSONObject(i)).getString("start_time")));
+					for(int i=0; i<examTime.length(); i++){
+       					tempButton.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
        					
        					timeTable.add(tempButton.get(i), 0, i);
        					tempButton.get(i).setToggleGroup(buttonGroup);
@@ -91,16 +88,25 @@ public class BookingView extends ViewController{
 	}
 
 	public void selectExamTime(){
-		returnMessage();
+		start_time = book(buttonGroup);
+		setBookedMsg();
+		Connector.getInstance().sendMessageContainer();
 	}
 
 	public void backView(){
 		director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
 	}
 
-	private void returnMessage(){
-		newContent.put("examTime", book(buttonGroup));
-		connector.send(newMsg.toString());
+	public static void setBookedMsg() {
+    	JSONObject Msg = new JSONObject();
+    	JSONObject Content = new JSONObject();
+	    Msg.put("event", "booked");
+	    Msg.put("endpoint", "Examinee");
+	    Content.put("code", code);
+	    Content.put("account", Connector.getInstance().getSender());
+		Content.put("start_time", start_time);
+    	Msg.put("content", Content);
+	    Connector.setMessageContainer(Msg.toString());
 	}
 }
 
