@@ -5,3 +5,4 @@ public class Configure {
 	public static final String ENDPOINT = "Java Examinee Client";
 }
 
+//cz2006.ciel.im:
