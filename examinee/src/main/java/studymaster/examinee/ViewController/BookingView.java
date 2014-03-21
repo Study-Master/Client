@@ -23,90 +23,90 @@ import javax.swing.AbstractButton;
 
 public class BookingView extends ViewController{
 
-	@FXML protected Label titleLabel;
-	@FXML protected GridPane timeTable;
-	protected ToggleGroup buttonGroup = new ToggleGroup();
-	private static String code;
-	private static String start_time;
+    @FXML protected Label titleLabel;
+    @FXML protected GridPane timeTable;
+    protected ToggleGroup buttonGroup = new ToggleGroup();
+    private static String code;
+    private static String start_time;
 
-	@Override
-	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-		super.initialize(location, resources);
-		Connector.getInstance().sendMessageContainer(); 
-	}
+    @Override
+    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        super.initialize(location, resources);
+        Connector.getInstance().sendMessageContainer(); 
+    }
 
-	public void onMessage(String message) {
-		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+    public void onMessage(String message) {
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		
-		try {
-			JSONObject msg = new JSONObject(message);
-        	String event = msg.getString("event");
-        	JSONObject content = msg.getJSONObject("content");
+        try {
+            JSONObject msg = new JSONObject(message);
+            String event = msg.getString("event");
+            JSONObject content = msg.getJSONObject("content");
 
-        	if(event.equals("booking")) {
-        		code = content.getString("code");
-        		titleLabel.setText(code);
-        		showTimeTable(content.getJSONArray("examTime"), timeTable, buttonGroup);
-			}
-			else if(event.equals("booked")){
-				if(content.getString("status").equals("success")){
-					alert("Exam successfully booked for " + code + "\nTime: " + start_time);
-					backView();
-				}
-			}
+            if(event.equals("booking")) {
+                code = content.getString("code");
+                titleLabel.setText(code);
+                showTimeTable(content.getJSONArray("examTime"), timeTable, buttonGroup);
+            }
+            else if(event.equals("booked")){
+                if(content.getString("status").equals("success")){
+                    alert("Exam successfully booked for " + code + "\nTime: " + start_time);
+                    backView();
+                }
+            }
 
-		} catch (Exception e) {
-			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
-		}
-	}
+        } catch (Exception e) {
+            System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+        }
+    }
 
-	private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){	
-		final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
-		javafx.application.Platform.runLater(new Runnable() {
-      		@Override
-      		public void run() {
-      			try{
-       				ArrayList<RadioButton> tempButton = new ArrayList<RadioButton>();
+    private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){	
+        final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+        javafx.application.Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        ArrayList<RadioButton> tempButton = new ArrayList<RadioButton>();
 
-					for(int i=0; i<examTime.length(); i++){
-       					tempButton.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
-       					
-       					timeTable.add(tempButton.get(i), 0, i);
-       					tempButton.get(i).setToggleGroup(buttonGroup);
-					}
+                        for(int i=0; i<examTime.length(); i++){
+                            tempButton.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
+					
+                            timeTable.add(tempButton.get(i), 0, i);
+                            tempButton.get(i).setToggleGroup(buttonGroup);
+                        }
 
-				}catch (Exception e) {
-					System.out.println(e);
-          			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
-        		}
-			}
-		});
-	}
+                    }catch (Exception e) {
+                        System.out.println(e);
+                        System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
+                    }
+                }
+            });
+    }
 
-	public String book(ToggleGroup bg){
-		return ((RadioButton)bg.getSelectedToggle()).getText();
-	}
+    public String book(ToggleGroup bg){
+        return ((RadioButton)bg.getSelectedToggle()).getText();
+    }
 
-	public void selectExamTime(){
-		start_time = book(buttonGroup);
-		setBookedMsg();
-		Connector.getInstance().sendMessageContainer();
-	}
+    public void selectExamTime(){
+        start_time = book(buttonGroup);
+        setBookedMsg();
+        Connector.getInstance().sendMessageContainer();
+    }
 
-	public void backView(){
-		director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
-	}
+    public void backView(){
+        director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+    }
 
-	public static void setBookedMsg() {
-    	JSONObject Msg = new JSONObject();
-    	JSONObject Content = new JSONObject();
-	    Msg.put("event", "booked");
-	    Msg.put("endpoint", "Examinee");
-	    Content.put("code", code);
-	    Content.put("account", Connector.getInstance().getSender());
-		Content.put("start_time", start_time);
-    	Msg.put("content", Content);
-	    Connector.setMessageContainer(Msg.toString());
-	}
+    public static void setBookedMsg() {
+        JSONObject Msg = new JSONObject();
+        JSONObject Content = new JSONObject();
+        Msg.put("event", "booked");
+        Msg.put("endpoint", "Examinee");
+        Content.put("code", code);
+        Content.put("account", Connector.getInstance().getSender());
+        Content.put("start_time", start_time);
+        Msg.put("content", Content);
+        Connector.setMessageContainer(Msg.toString());
+    }
 }
 
