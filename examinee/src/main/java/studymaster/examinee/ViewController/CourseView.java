@@ -65,9 +65,11 @@ public class CourseView extends HomeViewController {
             javafx.application.Platform.runLater(new Runnable() {
             @Override
               public void run() {
-                int row=1;
+                int row;
                 CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
-                cancelButton.setId("Deleted");
+                //cancelButton.setId("Deleted");
+                System.out.println("[Info] "+cancelButton.getId());
+                row=List.getRowIndex(cancelButton);
                 List.getChildren().remove(cancelButton);
                 BookButton button = new BookButton(examStartTime, List, row);
                 button.setPrefWidth(120);
