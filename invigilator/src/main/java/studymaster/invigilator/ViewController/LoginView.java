@@ -9,7 +9,6 @@ import org.json.JSONObject;
 public class LoginView extends LoginViewController {
 
 	@Override
-
 	public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		try {

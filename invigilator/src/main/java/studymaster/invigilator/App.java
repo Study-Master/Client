@@ -20,6 +20,12 @@ public class App extends Client {
 	public void start(javafx.stage.Stage stage) throws Exception {
 		stage.setTitle("Study Master");
 		director.setStage(stage);
+<<<<<<< HEAD
 		director.pushStageWithFXML(App.class.getResource("/fxml/audioView.fxml"));
 	}
 }
+=======
+        director.pushStageWithFXML(App.class.getResource("/fxml/invigilatorView.fxml"));
+    }
+}
+>>>>>>> origin/invigilator

@@ -51,6 +51,28 @@ public final class Director {
 		return localScene;
 	}
 
+	public static Stage initStageWithFXML(final URL fxmlFile) {
+		Stage stage = null;
+  		try {
+  			stage = new Stage();
+  			FXMLLoader loader = new FXMLLoader();
+  			Parent rootNode = (Parent) loader.load(fxmlFile);
+  			stage.setScene(new Scene(rootNode));
+  		} catch (Exception e) {
+  			System.out.println(e);
+  			System.err.println("[err] (Director) Error when switching scene");
+  		}
+  		return stage;
+  	}
+
+  	public static Stage toggleStage(Stage stage) {
+  		if(stage.isShowing())
+  			stage.hide();
+  		else
+  			stage.show();
+  		return stage;
+  	}
+
 	/**
 	 * Change current stage with a new scene
 	 * @param  newScene new scene

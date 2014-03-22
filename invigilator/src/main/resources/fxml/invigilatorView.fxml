@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.invigilator.ViewController.InvigilateView">
+  <children>
+    <Label fx:id="copyrightLabel" layoutX="416.0" layoutY="708.0" text="©Copyright 2014 Studymaster" />
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/divider_up.png" />
+      </image>
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="63.0" layoutY="674.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/divider_down.png" />
+      </image>
+    </ImageView>
+    <ImageView fx:id="imgView0" fitHeight="207.0" fitWidth="207.0" layoutX="132.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/user.png" />
+      </image>
+    </ImageView>
+    <Button fx:id="terminateButton0" layoutX="221.0" layoutY="357.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+    <ImageView fx:id="screenView0" fitHeight="207.0" fitWidth="207.0" layoutX="132.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@../image/user.png" />
+      </image>
+    </ImageView>
+    <Button fx:id="chatButton0" layoutX="140.0" layoutY="357.0" minWidth="31.0" mnemonicParsing="false" onAction="#chatAction0" prefWidth="65.0" text="chat" />
+  </children>
+  <stylesheets>
+    <URL value="@../stylesheet/invigilatorView.css" />
+  </stylesheets>
+</AnchorPane>
