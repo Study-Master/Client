@@ -13,11 +13,13 @@ public final class Director {
 	private static Scene localScene = null;
 	
 	private Director() {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " Director) Create director instance");
 		localScene = null;
 		localStage = null;
 	}
 
 	public static Director getInstance() {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " getInstance)");
 		if (instance==null) {
 			instance = new Director();
 		}
@@ -26,15 +28,18 @@ public final class Director {
 	}
 
 	public static void setStage(Stage stage) {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " setStage) Set localStage");
 		localStage = stage;
 		localStage.setResizable(false);
 	}
 
 	public static void setScene(Scene scene) {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " setScene) Set localScene");
 		localScene = scene;
 	}
 
 	public static void showStage() {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " showStage) Show localStage");
 		localStage.show();
 	}
 
@@ -43,12 +48,14 @@ public final class Director {
 	}
 
 	public static void pushStageWithScene(Scene newScene) {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " pushStageWithScene) Switch scene to a new scene");
 		setScene(newScene);
 		localStage.setScene(localScene);
 		showStage();
 	}
 
 	public static void pushStageWithFXML(final URL fxmlFile) {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " pushStageWithFXML) Switch scene to a new scene from " + fxmlFile);
 		javafx.application.Platform.runLater(new Runnable() {
 			@Override public void run() {
 				try {
@@ -58,7 +65,7 @@ public final class Director {
 					localStage.setScene(localScene);
   					showStage();
   				} catch (Exception e) {
-  					System.err.println("[err] (" + getClass().getSimpleName() + ") Error when switching scene");
+  					System.err.println("[err] (" + Director.class.getSimpleName() + ") Error when switch scene");
   					e.printStackTrace();
   				}
   			}
@@ -66,6 +73,7 @@ public final class Director {
 	}
 
 	public Stage initStageWithFXML(final URL fxmlFile) {
+		System.out.println("[info] (" + Director.class.getSimpleName() + " initStageWithFXML) Create a new scene from " + fxmlFile);
 		Stage stage = null;
   		try {
   			stage = new Stage();
@@ -74,13 +82,14 @@ public final class Director {
   			Parent rootNode = (Parent) loader.load(fxmlFile);
   			stage.setScene(new Scene(rootNode));
   		} catch (Exception e) {
-  			System.err.println("[err] (" + getClass().getSimpleName() + ") Error when switching scene");
+  			System.err.println("[err] (" + Director.class.getSimpleName() + ") Error when switch scene");
   			e.printStackTrace();
   		}
   		return stage;
   	}
 
   	public Stage toggleStage(Stage stage) {
+  		System.out.println("[info] (" + Director.class.getSimpleName() + " toggleStage) Show or hide a stage");
   		if(stage.isShowing()) {
   			stage.hide();
   		}
