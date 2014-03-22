@@ -49,10 +49,15 @@ public class LoginView extends LoginViewController {
 			if(!connector.isOpen())
 				connected = connector.connectBlocking();
 			if(connected) {
-				connector.login(password);
+				JSONObject content = new JSONObject();
+				content.put("account", account);
+        		content.put("password", password);
+        		content.put("time", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
+        		connector.setAndSendMessageContainer("login", content);
 			}
 		} catch(Exception e) {
 			System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
+			e.printStackTrace();
 		}
 	}
 

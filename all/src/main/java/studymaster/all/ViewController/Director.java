@@ -19,7 +19,6 @@ public final class Director {
 	}
 
 	public static Director getInstance() {
-		System.out.println("[info] (" + Director.class.getSimpleName() + " getInstance)");
 		if (instance==null) {
 			instance = new Director();
 		}
@@ -28,18 +27,15 @@ public final class Director {
 	}
 
 	public static void setStage(Stage stage) {
-		System.out.println("[info] (" + Director.class.getSimpleName() + " setStage) Set localStage");
 		localStage = stage;
 		localStage.setResizable(false);
 	}
 
 	public static void setScene(Scene scene) {
-		System.out.println("[info] (" + Director.class.getSimpleName() + " setScene) Set localScene");
 		localScene = scene;
 	}
 
 	public static void showStage() {
-		System.out.println("[info] (" + Director.class.getSimpleName() + " showStage) Show localStage");
 		localStage.show();
 	}
 
@@ -89,7 +85,6 @@ public final class Director {
   	}
 
   	public Stage toggleStage(Stage stage) {
-  		System.out.println("[info] (" + Director.class.getSimpleName() + " toggleStage) Show or hide a stage");
   		if(stage.isShowing()) {
   			stage.hide();
   		}
