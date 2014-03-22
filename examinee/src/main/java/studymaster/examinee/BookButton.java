@@ -24,14 +24,14 @@ public class BookButton extends Button {
     public BookButton(String examStartTime, String courseCode, int row){
         setText("Book");
         bindToTime(examStartTime, courseCode, row);
+        System.out.println("[Info] A BookButton created!");
     }
     
     private void bindToTime(final String examStartTime, String courseCode, final int row) {
         Timeline timeline = new Timeline(
                                          new KeyFrame(Duration.seconds(0),
                                                       new EventHandler<ActionEvent>() {
-                                                          @Override
-                                                          public void handle(ActionEvent actionEvent) {
+                                                          @Override public void handle(ActionEvent actionEvent) {
                                                               try {
                                                                   DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                                                                   Date currentTime = new Date();

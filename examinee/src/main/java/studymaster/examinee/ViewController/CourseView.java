@@ -98,6 +98,7 @@ public class CourseView extends HomeViewController {
                     }
                 }      
                 else {
+                    System.out.println("[Info] Cancel failed");
                     alert("Can't cancel this exam. " + cancelInfo.getString("error"));         
                 }
             }
@@ -108,7 +109,6 @@ public class CourseView extends HomeViewController {
     }
 
     private void showCourseList(final JSONObject content) {
-
         javafx.application.Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -218,7 +218,6 @@ public class CourseView extends HomeViewController {
                                 }
                             }
                         }
-          
                         ap.getChildren().addAll(courseList);
                     } catch (JSONException e) {
                         System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
@@ -239,7 +238,6 @@ public class CourseView extends HomeViewController {
                                 Director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
                             }
                         });
-
                     List.add(button, 2, row);
                 }
             });

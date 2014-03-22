@@ -21,6 +21,7 @@ public class CountDown extends Label {
     
     public CountDown(String examStartTime, String courseCode, int row) {
         bindToTime(examStartTime, courseCode, row);
+        System.out.println("[Info] A CountDown Label created!");
     }
 
     private void bindToTime(final String examStartTime, final String courseCode, final int row) {

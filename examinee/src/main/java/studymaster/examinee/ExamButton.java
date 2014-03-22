@@ -21,16 +21,16 @@ import studymaster.examinee.ViewController.CourseView;
 public class ExamButton extends Button {
 
     public ExamButton(String examStartTime, String courseCode, int row){
-        setText(" Exam ");
+        setText("Exam");
         bindToTime(examStartTime, courseCode, row);
+        System.out.println("[Info] A ExamButton created!");
     }
     
     private void bindToTime(final String examStartTime, String courseCode, final int row) {
         Timeline timeline = new Timeline(
                                          new KeyFrame(Duration.seconds(0),
                                                       new EventHandler<ActionEvent>() {
-                                                          @Override
-                                                          public void handle(ActionEvent actionEvent) {
+                                                          @Override public void handle(ActionEvent actionEvent) {
                                                               try {
                                                                   DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                                                                   Date currentTime = new Date();

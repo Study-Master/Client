@@ -23,14 +23,14 @@ public class CancelButton extends Button {
     public CancelButton(String examStartTime, String courseCode, int row){
         setText("Cancel");
         bindToTime(examStartTime, courseCode, row);
+        System.out.println("[Info] A CancelButton created!");
     }
     
     private void bindToTime(final String examStartTime, final String courseCode, final int row) {
         Timeline timeline = new Timeline(
                                          new KeyFrame(Duration.seconds(0),
                                                       new EventHandler<ActionEvent>() {
-                                                          @Override
-                                                          public void handle(ActionEvent actionEvent) {
+                                                          @Override public void handle(ActionEvent actionEvent) {
                                                               try {
                                                                   DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                                                                   Date currentTime = new Date();
