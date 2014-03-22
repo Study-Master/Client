@@ -65,9 +65,9 @@ public class CourseView extends HomeViewController {
           try{
             final String examStartTime = cancelInfo.getString("start_time");
             final String courseCode = cancelInfo.getString("code");
-            // javafx.application.Platform.runLater(new Runnable() {
-            // @Override
-            //   public void run() {
+            javafx.application.Platform.runLater(new Runnable() {
+            @Override
+              public void run() {
 
                 final CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
                 cancelButton.setId("Deleted");
@@ -90,6 +90,9 @@ public class CourseView extends HomeViewController {
                 // });
                 int row = List.getRowIndex(cancelButton);
                 createBookButton(examStartTime, courseCode, row);
+                List.getChildren().remove(cancelButton);
+              }
+            });
           }
           catch (Exception e) {
             System.err.println("[err] Fail to change CancelButton to BookButton");
@@ -243,8 +246,10 @@ public class CourseView extends HomeViewController {
     });
   }
 
-  public static void createBookButton(String examStartTime, final String courseCode, int row) {
- 
+  public static void createBookButton(final String examStartTime, final String courseCode, final int row) {
+     javafx.application.Platform.runLater(new Runnable() {
+      @Override
+      public void run() {
     BookButton button = new BookButton(examStartTime, courseCode, row);
     button.setPrefWidth(120);
 
@@ -256,6 +261,8 @@ public class CourseView extends HomeViewController {
     });
 
     List.add(button, 2, row);
+    }
+  });
   }
 
   public static void createCountDownLabel(String examStartTime, String courseCode, int row) {
@@ -264,8 +271,10 @@ public class CourseView extends HomeViewController {
     List.add(timeLabel, 2, row);
   }
 
-  public static void createCancelButton(String examStartTime, final String courseCode, int row) {
-
+  public static void createCancelButton(final String examStartTime, final String courseCode, final int row) {
+    javafx.application.Platform.runLater(new Runnable() {
+      @Override
+      public void run() {
     final CancelButton button = new CancelButton(examStartTime, courseCode, row);
     button.setPrefWidth(120);
     button.setOnAction(new EventHandler<ActionEvent>() {
@@ -290,11 +299,15 @@ public class CourseView extends HomeViewController {
       }
     });
     List.add(button, 2, row);
+  }
+});
 
   }
 
-  public static void createExamButton(String examStartTime, final String courseCode, int row) {
-
+  public static void createExamButton(final String examStartTime, final String courseCode, final int row) {
+    javafx.application.Platform.runLater(new Runnable() {
+      @Override
+      public void run() {
     final ExamButton button = new ExamButton(examStartTime, courseCode, row);
     button.setPrefWidth(120);
     button.setOnAction(new EventHandler<ActionEvent>() {
@@ -309,7 +322,8 @@ public class CourseView extends HomeViewController {
       }
     });
     List.add(button, 2, row);
-
+}
+});
   }
 
   public static void setBookingMsg(String course, String account) {
@@ -356,6 +370,10 @@ class CountDown extends Label {
                 long diffMinutes = diff / (60 * 1000) % 60;
                 long diffHours = diff / (60 * 60 * 1000) % 24;
                 if (diffDays==0 && diffHours==0 && diffMinutes<15 ) {
+                  // javafx.application.Platform.runLater(new Runnable() {
+                  // @Override
+                  // public void run() {
+
                   ObservableList<Node> childrens = CourseView.List.getChildren();
                   Node label = null;
                   for(Node node : childrens) {
@@ -379,7 +397,8 @@ class CountDown extends Label {
 
                   CourseView.List.getChildren().remove(label);
                   CourseView.createExamButton(examStartTime, courseCode, row);
-                  
+                //   }
+                // });
                 }
                 else {
                   String remainingTime;
@@ -439,6 +458,12 @@ class BookButton extends Button {
               long diff = startTime.getTime() - currentTime.getTime();
               long diffDays = diff / (24 * 60 * 60 * 1000);
               if (diffDays<3) {
+
+
+              // javafx.application.Platform.runLater(new Runnable() {
+              // @Override
+              // public void run() {
+
                   ObservableList<Node> childrens = CourseView.List.getChildren();
                   Node button = null;
                   for(Node node : childrens) {
@@ -451,7 +476,10 @@ class BookButton extends Button {
 
                   CourseView.List.getChildren().remove(button);
                   CourseView.List.add(closedLabel, 2, row);
-                  
+              //   }
+                
+              // });
+
               }
               
             } catch (ParseException ex) {
@@ -486,6 +514,9 @@ class CancelButton extends Button {
               long diff = startTime.getTime() - currentTime.getTime();
               long diffDays = diff / (24 * 60 * 60 * 1000);
               if (diffDays<3) {
+                // javafx.application.Platform.runLater(new Runnable() {
+                // @Override
+                // public void run() {
                 ObservableList<Node> childrens = CourseView.List.getChildren();
                 Node button = null;
                 for(Node node : childrens) {
@@ -496,10 +527,11 @@ class CancelButton extends Button {
                 }
                 // CountDown timeLabel = new CountDown(examStartTime, courseCode, row);
                 // CourseView.List.add(timeLabel, 2, row);
-
+                
                 CourseView.List.getChildren().remove(button);
                 CourseView.createCountDownLabel(examStartTime, courseCode, row);                
-                
+              //   }
+              // });
 
                 
               }              
@@ -534,6 +566,9 @@ class ExamButton extends Button {
               long diff = Math.abs(startTime.getTime() - currentTime.getTime());
               long diffMinutes = diff / (60 * 1000) % 60;
               if (diffMinutes>=15) {
+                // javafx.application.Platform.runLater(new Runnable() {
+                // @Override
+                // public void run() {
                   ObservableList<Node> childrens = CourseView.List.getChildren();
                   Node button = null;
                   for(Node node : childrens) {
@@ -543,9 +578,11 @@ class ExamButton extends Button {
                     }
                   }
                   Label closedLabel = new Label("Closed");
-
+    
                   CourseView.List.add(closedLabel, 2, row);
                   CourseView.List.getChildren().remove(button);
+              //   }
+              // });
 
               }
             } catch (ParseException ex) {
