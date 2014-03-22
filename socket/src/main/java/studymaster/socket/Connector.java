@@ -86,8 +86,12 @@ public final class Connector extends WebSocketClient{
         JSONObject msg = new JSONObject();
         msg.put("event", event);
         msg.put("endpoint", localEndpoint);
-        msg.put("content", content);
-
+        if (content==null) {
+            msg.put("content", "null");
+        }
+        else {
+            msg.put("content", content);
+        }
         messageContainer = msg.toString();
 
         System.out.println("[info] (" + Connector.class.getSimpleName() + " setMessageContainer) Set messageContainer to " + messageContainer);
