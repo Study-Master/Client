@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import studymaster.all.ViewController.HomeViewController;
@@ -23,6 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.control.Label;
 import javafx.geometry.HPos;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,14 +32,9 @@ import org.json.JSONException;
 
 public class CourseView extends HomeViewController {
     protected static GridPane List;
-    protected static String Account;
 
     public static GridPane getList() {
         return List;
-    }
-
-    public static String getAccount() {
-        return Account;
     }
 
     @Override
@@ -100,14 +97,56 @@ public class CourseView extends HomeViewController {
                     alert("Can't cancel this exam. " + cancelInfo.getString("error"));         
                 }
             }
-            else if (event.equals("showCountDown")) {
-                
+            else if (event.equals("cancel_disabled")) {
+                //Remove cancel button, add count dwon label
+                String courseCode = content.getString("code");
+                String examStartTime = content.getString("start_time");
+                ObservableList<Node> childrens = CourseView.getList().getChildren();
+                CancelButton button = null;
+                for (Node node : childrens) {
+                    if (node instanceof CancelButton) {
+                        if(content.getString("course") == ((CancelButton)node).getCourseCode()) {
+                            button = (CancelButton)node;
+                            break;
+                        }
+                    }
+                }
+                createCountDownLabel(examStartTime, courseCode, button.getRow());
+                List.getChildren().remove(button);
             }
-            else if (event.equals("showExamButton")) {
-
+            else if (event.equals("exam_enabled")) {
+                //Remove count dwon label, add exam button
+                //createExamButton(examStartTime, courseCode, row);
+                String courseCode = content.getString("code");
+                String examStartTime = content.getString("start_time");
+                ObservableList<Node> childrens = CourseView.getList().getChildren();
+                CountDown label = null;
+                for (Node node : childrens) {
+                    if (node instanceof CountDown) {
+                        if(content.getString("course") == ((CountDown)node).getCourseCode()) {
+                            label = (CountDown)node;
+                            break;
+                        }
+                    }
+                }
+                createExamButton(examStartTime, courseCode, label.getRow());
+                List.getChildren().remove(label);
             }
-            else if (event.equals("showCloseLabel")) {
-                
+            else if (event.equals("exam_disabled")) {
+                //Remove cance button, add exam button
+                ExamButton button = null;
+                ObservableList<Node> childrens = CourseView.getList().getChildren();
+                for (Node node : childrens) {
+                    if (node instanceof ExamButton) {
+                        if(content.getString("course") == ((ExamButton)node).getCourseCode()) {
+                            button = (ExamButton)node;
+                            break;
+                        }
+                    }
+                }
+                Label label = new Label("Close");
+                List.add(label, 2, button.getRow());
+                List.getChildren().remove(button);
             }
         } 
         catch (Exception e) {
@@ -218,8 +257,6 @@ public class CourseView extends HomeViewController {
                                         //Exam button
                                         createExamButton(examStartTime, courseCode, i);
                                     }
-
-                
                                 } catch (Exception e){
                                     System.err.println("[err] ("+ getClass().getSimpleName() +")Error when parsing string");
                                 }
@@ -241,7 +278,7 @@ public class CourseView extends HomeViewController {
                     button.setPrefWidth(120);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override public void handle(ActionEvent e) {
-                                setBookingMsg(courseCode, Account);
+                                setBookingMsg(courseCode);
                                 Director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
                             }
                         });
@@ -272,7 +309,6 @@ public class CourseView extends HomeViewController {
                                 //Send msg to server
                                 JSONObject sendContent = new JSONObject();
                                 sendContent.put("code", courseCode);
-                                sendContent.put("account", Account);
                                 Connector.getInstance().setAndSendMessageContainer("cancel", sendContent);
                             }
                         });
@@ -303,17 +339,15 @@ public class CourseView extends HomeViewController {
             });
     }
 
-    public static void setBookingMsg(String course, String account) {
+    public static void setBookingMsg(String course) {
         JSONObject content = new JSONObject();
         content.put("code", course);
-        //content.put("account", account);
         Connector.setMessageContainer("booking", content);
     }
 
     public static void setExamMsg(String course) {
         JSONObject content = new JSONObject();
         content.put("code", course);
-        //content.put("account", Account);
         Connector.getInstance().setAndSendMessageContainer("exam", content);
     }
 }

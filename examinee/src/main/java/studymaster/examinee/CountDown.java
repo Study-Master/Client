@@ -18,8 +18,20 @@ import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
 public class CountDown extends Label {
-    
+    int row;
+    String courseCode; 
+
+    public int getRow() {
+        return row;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }    
+
     public CountDown(String examStartTime, String courseCode, int row) {
+        this.row = row;
+        this.courseCode = courseCode;
         bindToTime(examStartTime, courseCode, row);
         System.out.println("[Info] A CountDown Label created!");
     }

@@ -19,51 +19,21 @@ import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
 public class ExamButton extends Button {
+    int row;
+    String courseCode;
+
+    public int getRow() {
+        return row;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }    
 
     public ExamButton(String examStartTime, String courseCode, int row){
+        this.row = row;
+        this.courseCode = courseCode;
         setText("Exam");
-        bindToTime(examStartTime, courseCode, row);
         System.out.println("[Info] A ExamButton created!");
-    }
-    
-    private void bindToTime(final String examStartTime, String courseCode, final int row) {
-        Timeline timeline = new Timeline(
-                                         new KeyFrame(Duration.seconds(0),
-                                                      new EventHandler<ActionEvent>() {
-                                                          @Override public void handle(ActionEvent actionEvent) {
-                                                              try {
-                                                                  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                                                  Date currentTime = new Date();
-                                                                  Date startTime = dateFormat.parse(examStartTime);
-                                                                  long diff = Math.abs(startTime.getTime() - currentTime.getTime());
-                                                                  long diffMinutes = diff / (60 * 1000) % 60;
-                                                                  if (diffMinutes>=15) {
-                                                                      // javafx.application.Platform.runLater(new Runnable() {
-                                                                      // @Override
-                                                                      // public void run() {
-                                                                      ObservableList<Node> childrens = CourseView.getList().getChildren();
-                                                                      Node button = null;
-                                                                      for(Node node : childrens) {
-                                                                          if(CourseView.getList().getRowIndex(node) == row && CourseView.getList().getColumnIndex(node) == 2) {
-                                                                              button = node;
-                                                                              break;
-                                                                          }
-                                                                      }
-                                                                      Label closedLabel = new Label("Closed");
-                                                                      CourseView.getList().add(closedLabel, 2, row);
-                                                                      CourseView.getList().getChildren().remove(button);
-                                                                      //   }
-                                                                      // });
-                                                                  }
-                                                              } catch (ParseException ex) {
-                                                                  Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-                                                              }
-                                                          }
-                                                      }
-                                                      ),
-                                         new KeyFrame(Duration.seconds(1))
-                                         );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
     }
 }

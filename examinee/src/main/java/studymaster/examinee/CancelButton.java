@@ -19,52 +19,21 @@ import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
 public class CancelButton extends Button {
+    int row;
+    String courseCode;
+
+    public int getRow() {
+        return row;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }    
 
     public CancelButton(String examStartTime, String courseCode, int row){
         setText("Cancel");
-        bindToTime(examStartTime, courseCode, row);
+        this.row = row;
+        this.courseCode = courseCode;
         System.out.println("[Info] A CancelButton created!");
-    }
-    
-    private void bindToTime(final String examStartTime, final String courseCode, final int row) {
-        Timeline timeline = new Timeline(
-                                         new KeyFrame(Duration.seconds(0),
-                                                      new EventHandler<ActionEvent>() {
-                                                          @Override public void handle(ActionEvent actionEvent) {
-                                                              try {
-                                                                  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                                                  Date currentTime = new Date();
-                                                                  Date startTime = dateFormat.parse(examStartTime);
-                                                                  long diff = startTime.getTime() - currentTime.getTime();
-                                                                  long diffDays = diff / (24 * 60 * 60 * 1000);
-                                                                  if (diffDays<3) {
-                                                                      // javafx.application.Platform.runLater(new Runnable() {
-                                                                      // @Override
-                                                                      // public void run() {
-                                                                      ObservableList<Node> childrens = CourseView.getList().getChildren();
-                                                                      Node button = null;
-                                                                      for(Node node : childrens) {
-                                                                          if(CourseView.getList().getRowIndex(node) == row && CourseView.getList().getColumnIndex(node) == 2) {
-                                                                              button = node;
-                                                                              break;
-                                                                          }
-                                                                      }
-                                                                      CourseView.getList().getChildren().remove(button);
-                                                                      CourseView.createCountDownLabel(examStartTime, courseCode, row);                
-                                                                      //   }
-                                                                      // });
-
-                
-                                                                  }              
-                                                              } catch (ParseException ex) {
-                                                                  Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-                                                              }
-                                                          }
-                                                      }
-                                                      ),
-                                         new KeyFrame(Duration.seconds(1))
-                                         );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
     }
 }
