@@ -15,17 +15,15 @@ import studymaster.socket.AudioSS;
 import studymaster.socket.AudioCl;
 
 public class ChatView extends ViewController {
-	
+
 	@FXML TextArea histroyArea;
 	@FXML TextArea sendArea;
 	@FXML Button messageButton;
-	@Override
-	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+	@Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
 	}
 
-	@Override
-	public void onMessage(String message) {
+	@Override public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 	}
 

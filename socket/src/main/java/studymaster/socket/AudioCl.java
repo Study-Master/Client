@@ -18,18 +18,15 @@ public class AudioCl extends WebSocketClient {
     }
 
     //override methods
-    @Override
-    public void onOpen(ServerHandshake handshakedata) {
+    @Override public void onOpen(ServerHandshake handshakedata) {
         request();
     }
 
-    @Override
-    public void onClose(int code, String reason, boolean remote) {
+    @Override public void onClose(int code, String reason, boolean remote) {
 
     }
 
-    @Override
-    public void onMessage(String message) {
+    @Override public void onMessage(String message) {
         System.out.println("[info] (AudioCl onMessage) Receive message: " + message);
         JSONObject msg = new JSONObject(message);
         String event = msg.getString("event");
@@ -41,8 +38,7 @@ public class AudioCl extends WebSocketClient {
         }
     }
 
-    @Override
-    public void onError(Exception ex) {}
+    @Override public void onError(Exception ex) {}
 
     //Methods
     public static AudioCl getInstance() {
@@ -82,11 +78,11 @@ public class AudioCl extends WebSocketClient {
         System.out.println("sent!");
     }
 
-    public static void startRecord(){
+    public static void startRecord() {
         SoundUtil.startRecord();
     }
 
-    public static void stopRecord(){
+    public static void stopRecord() {
         SoundUtil.stopRecord();
     }
 

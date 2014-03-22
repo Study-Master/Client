@@ -52,39 +52,34 @@ public class AudioSS extends WebSocketServer {
     public static void setDelegate(AudioEventHandler delegate) {
         localDelegate = delegate;
     }
-        
+
     //Override methods
-    @Override
-    public void onOpen(WebSocket conn, ClientHandshake handshake) {
+    @Override public void onOpen(WebSocket conn, ClientHandshake handshake) {
         localDelegate.onOpen(conn, handshake);
     }
 
-    @Override
-    public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+    @Override public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         localDelegate.onClose(conn, code, reason, remote);
     }
 
-    @Override
-    public void onMessage(WebSocket conn, String message) {
+    @Override public void onMessage(WebSocket conn, String message) {
         localDelegate.onMessage(conn, message);
     }
 
-    @Override
-    public void onMessage( WebSocket conn, ByteBuffer message ) {
+    @Override public void onMessage( WebSocket conn, ByteBuffer message ) {
         localDelegate.onMessage(conn, message);
     }
 
-    @Override
-    public void onError(WebSocket conn, Exception ex) {
+    @Override public void onError(WebSocket conn, Exception ex) {
         localDelegate.onError(conn, ex);
     }
 
     //Methods called by audioview from invigilators
-    public static void setByteArray(ByteBuffer temp){
+    public static void setByteArray(ByteBuffer temp) {
         SoundUtil.setByteArray(temp);
     }
 
-    public static void playAudio(){
+    public static void playAudio() s{
         SoundUtil.playAudio();
     }
 }
