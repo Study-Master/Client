@@ -37,8 +37,6 @@ public class BookButton extends Button {
                                                                   long diff = startTime.getTime() - currentTime.getTime();
                                                                   long diffDays = diff / (24 * 60 * 60 * 1000);
                                                                   if (diffDays<3) {
-
-
                                                                       // javafx.application.Platform.runLater(new Runnable() {
                                                                       // @Override
                                                                       // public void run() {

@@ -47,9 +47,6 @@ public class CancelButton extends Button {
                                                                               break;
                                                                           }
                                                                       }
-                                                                      // CountDown timeLabel = new CountDown(examStartTime, courseCode, row);
-                                                                      // CourseView.List.add(timeLabel, 2, row);
-                
                                                                       CourseView.getList().getChildren().remove(button);
                                                                       CourseView.createCountDownLabel(examStartTime, courseCode, row);                
                                                                       //   }
