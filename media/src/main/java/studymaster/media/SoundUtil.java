@@ -30,11 +30,12 @@ public class SoundUtil  {
     }
 
     public static void startRecord() {
+        System.out.println("[info] ("+ SoundUtil.class.getSimpleName() +" startRecord)");
         try{
             outputStream = null;
             outputStream = new ByteArrayOutputStream();
         }catch(Exception e){
-
+            e.printStackTrace();
         }
 
         stopper = new Thread(new Runnable() {
@@ -46,52 +47,17 @@ public class SoundUtil  {
         stopper.start();
     }
 
-    public static void stopRecord() {
+    public static byte[] stopRecord() {
+        System.out.println("[info] ("+ SoundUtil.class.getSimpleName() +" stopRecord)");
         line.stop();
         line.close();
-        System.out.println("[info] ("+ SoundUtil.class +" stopRecord): Record Finished.");
         stopper.yield();
         byteArray = outputStream.toByteArray();
-        System.out.println("[info] ("+ SoundUtil.class +" stopRecord): ByteArray: "+ byteArray);
-    }
-
-
-    public static void capture() {
-        try {
-            AudioFormat format = getAudioFormat();
-            DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-
-            // checks if system supports the data line
-            if (!AudioSystem.isLineSupported(info)) {
-                System.out.println("[info] ("+ SoundUtil.class +" capture): Line not supported");
-                System.exit(0);
-            }
-            line = (TargetDataLine) AudioSystem.getLine(info);
-            line.open(format);
-            // start capturing
-            line.start();
-            System.out.println("[info] ("+ SoundUtil.class +" capture): Start capturing...");
-            AudioInputStream ais = new AudioInputStream(line);
-
-            System.out.println("[info] ("+ SoundUtil.class +" capture): Start recording...");
-            AudioSystem.write(ais, fileType, outputStream);
-
-        } catch (LineUnavailableException ex) {
-            ex.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void setByteArray(ByteBuffer temp) {
-        System.out.println("[info] ("+ SoundUtil.class +" setByteArray): Convert bytebuffer to temp");
-        byteArray = temp.array();
-        System.out.println("[info] ("+ SoundUtil.class +" setByteArray): Successfully converted");
+        return byteArray;
     }
 
     public static void playAudio() {
+        System.out.println("[info] ("+ SoundUtil.class.getSimpleName() +" playAudio)");
         ByteArrayInputStream baiut = new ByteArrayInputStream(byteArray);
 
         try {
@@ -135,7 +101,33 @@ public class SoundUtil  {
         sourceLine.close();
     }
 
+    public static void setByteArray(ByteBuffer byteBuffer) {
+        byteArray = byteBuffer.array();
+    }
+
     public static byte[] getByteArray() {
         return byteArray;
+    }
+
+    private static void capture() {
+        try {
+            AudioFormat format = getAudioFormat();
+            DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+
+            // checks if system supports the data line
+            if (!AudioSystem.isLineSupported(info)) {
+                System.out.println("[info] ("+ SoundUtil.class.getSimpleName() +" capture) Line not supported");
+                System.exit(0);
+            }
+            line = (TargetDataLine) AudioSystem.getLine(info);
+            line.open(format);
+            // start capturing
+            line.start();
+            AudioInputStream ais = new AudioInputStream(line);
+            
+            AudioSystem.write(ais, fileType, outputStream);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
