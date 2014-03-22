@@ -28,7 +28,7 @@ public class SoundUtil  {
         return format;
     }
 
-    public static void startRecord(){
+    public static void startRecord() {
         try{
             outputStream = null;
             outputStream = new ByteArrayOutputStream();
@@ -45,7 +45,7 @@ public class SoundUtil  {
         stopper.start();
     }
 
-    public static void stopRecord(){
+    public static void stopRecord() {
         line.stop();
         line.close();
         System.out.println("[info] ("+ SoundUtil.class +" stopRecord): Record Finished.");
@@ -55,7 +55,7 @@ public class SoundUtil  {
     }
 
 
-    public static void capture(){
+    public static void capture() {
         try {
             AudioFormat format = getAudioFormat();
             DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
@@ -84,13 +84,13 @@ public class SoundUtil  {
         }
     }
 
-    public static void setByteArray(ByteBuffer temp){
+    public static void setByteArray(ByteBuffer temp) {
         System.out.println("[info] ("+ SoundUtil.class +" setByteArray): Convert bytebuffer to temp");
         byteArray = temp.array();
         System.out.println("[info] ("+ SoundUtil.class +" setByteArray): Successfully converted");
     }
 
-    public static void playAudio(){
+    public static void playAudio() {
         ByteArrayInputStream baiut = new ByteArrayInputStream(byteArray);
 
         try {
@@ -134,7 +134,7 @@ public class SoundUtil  {
         sourceLine.close();
     }
 
-    public static byte[] getByteArray(){
+    public static byte[] getByteArray() {
         return byteArray;
     }
 }
