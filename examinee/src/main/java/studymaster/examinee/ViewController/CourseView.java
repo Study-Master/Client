@@ -271,15 +271,10 @@ public class CourseView extends HomeViewController {
                                 button.setDisable(true);
                                 button.setId("toDelete");
                                 //Send msg to server
-                                JSONObject sendMsg = new JSONObject();
                                 JSONObject sendContent = new JSONObject();
-                                sendMsg.put("event", "cancel");
-                                sendMsg.put("endpoint", "Java Client");
-                                sendMsg.put("content", sendContent);
                                 sendContent.put("code", courseCode);
                                 sendContent.put("account", Account);
-                                Connector.setMessageContainer(sendMsg.toString());
-                                Connector.getInstance().sendMessageContainer();
+                                Connector.getInstance().setAndSendMessageContainer("cancel", sendContent);
                             }
                         });
                     List.add(button, 2, row);
@@ -321,14 +316,10 @@ public class CourseView extends HomeViewController {
     }
 
     public static void setExamMsg(String course) {
-        JSONObject Msg = new JSONObject();
-        JSONObject Content = new JSONObject();
-        Msg.put("event", "exam");
-        Msg.put("endpoint", "Client");
-        Content.put("code", course);
-        Content.put("account", Account);
-        Msg.put("content", Content);
-        Connector.setMessageContainer(Msg.toString());
+        JSONObject content = new JSONObject();
+        content.put("code", course);
+        content.put("account", Account);
+        Connector.setAndSendMessageContainer("exam", content);
     }
 }
 
