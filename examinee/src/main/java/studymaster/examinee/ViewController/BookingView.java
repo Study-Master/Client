@@ -29,8 +29,7 @@ public class BookingView extends ViewController{
     private static String code;
     private static String start_time;
 
-    @Override
-    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+    @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
         Connector.getInstance().sendMessageContainer(); 
     }
@@ -60,28 +59,6 @@ public class BookingView extends ViewController{
         }
     }
 
-    private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){	
-        final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
-        javafx.application.Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
-
-                        for(int i=0; i<examTime.length(); i++){
-                            radioButtonList.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
-                            timeTable.add(radioButtonList.get(i), 0, i);
-                            radioButtonList.get(i).setToggleGroup(buttonGroup);
-                        }
-
-                    }catch (Exception e) {
-                        System.out.println(e);
-                        System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
-                    }
-                }
-            });
-    }
-
     public String book(ToggleGroup bg){
         return ((RadioButton)bg.getSelectedToggle()).getText();
     }
@@ -106,6 +83,28 @@ public class BookingView extends ViewController{
         Content.put("start_time", start_time);
         Msg.put("content", Content);
         Connector.setMessageContainer(Msg.toString());
+    }
+
+    private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){	
+        final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+        javafx.application.Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
+
+                        for(int i=0; i<examTime.length(); i++){
+                            radioButtonList.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
+                            timeTable.add(radioButtonList.get(i), 0, i);
+                            radioButtonList.get(i).setToggleGroup(buttonGroup);
+                        }
+
+                    }catch (Exception e) {
+                        System.out.println(e);
+                        System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
+                    }
+                }
+            });
     }
 }
 
