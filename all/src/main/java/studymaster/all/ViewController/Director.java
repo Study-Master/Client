@@ -58,8 +58,8 @@ public final class Director {
 					localStage.setScene(localScene);
   					showStage();
   				} catch (Exception e) {
-  					System.out.println(e);
-  					System.err.println("[err] (Director) Error when switching scene");
+  					System.err.println("[err] (" + getClass().getSimpleName() + ") Error when switching scene");
+  					e.printStackTrace();
   				}
   			}
   		});
@@ -69,11 +69,12 @@ public final class Director {
 		Stage stage = null;
   		try {
   			stage = new Stage();
+  			stage.setResizable(false);
   			FXMLLoader loader = new FXMLLoader();
   			Parent rootNode = (Parent) loader.load(fxmlFile);
   			stage.setScene(new Scene(rootNode));
   		} catch (Exception e) {
-  			System.err.println("[err] (" + getClass().getSimpleName() + ") Error when switching scene.");
+  			System.err.println("[err] (" + getClass().getSimpleName() + ") Error when switching scene");
   			e.printStackTrace();
   		}
   		return stage;
