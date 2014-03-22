@@ -17,6 +17,7 @@
   <modules>  
     <module>all</module>
     <module>socket</module>
+    <module>media</module>
     <module>invigilator</module>
     <module>examinee</module>
   </modules>
