@@ -31,12 +31,12 @@ public class BookingView extends ViewController{
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
-        Connector.getInstance().sendMessageContainer(); 
+        Connector.getInstance().sendMessageContainer();
     }
 
     public void onMessage(String message) {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
-		
+
         try {
             JSONObject msg = new JSONObject(message);
             String event = msg.getString("event");
@@ -74,18 +74,17 @@ public class BookingView extends ViewController{
     }
 
     public static void setBookedMsg() {
-        JSONObject Msg = new JSONObject();
-        JSONObject Content = new JSONObject();
-        Msg.put("event", "booked");
-        Msg.put("endpoint", "Examinee");
-        Content.put("code", code);
-        Content.put("account", Connector.getInstance().getSender());
-        Content.put("start_time", start_time);
-        Msg.put("content", Content);
-        Connector.setMessageContainer(Msg.toString());
+
+        JSONObject content = new JSONObject();
+
+        content.put("code", code);
+        content.put("account", Connector.getInstance().getSender());
+        content.put("start_time", start_time);
+
+        Connector.setMessageContainer("booked", content);
     }
 
-    private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){	
+    private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){
         final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
         javafx.application.Platform.runLater(new Runnable() {
                 @Override
@@ -107,4 +106,3 @@ public class BookingView extends ViewController{
             });
     }
 }
-

@@ -83,14 +83,14 @@ public final class Connector extends WebSocketClient{
     }
 
     public static void setMessageContainer(String event, JSONObject content) {
-        System.out.println("[info] (" + Connector.class.getSimpleName() + " setMessageContainer) Set messageContainer to " + content);
-
         JSONObject msg = new JSONObject();
         msg.put("event", event);
         msg.put("endpoint", localEndpoint);
         msg.put("content", content);
 
         messageContainer = msg.toString();
+
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " setMessageContainer) Set messageContainer to " + messageContainer);
     }
 
     public void sendMessageContainer() throws NotYetConnectedException {
