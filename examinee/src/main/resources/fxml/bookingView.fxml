@@ -2,20 +2,16 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.BookingView">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studymaster.examinee.ViewController.BookingView">
   <children>
     <Button fx:id="submitButton" layoutX="326.0" layoutY="594.0" mnemonicParsing="false" onAction="#selectExamTime" prefHeight="30.0" prefWidth="90.0" text="Submit" />
     <Button fx:id="cancelButton" layoutX="609.0" layoutY="594.0" mnemonicParsing="false" onAction="#backView" prefHeight="30.0" prefWidth="90.0" text="Cancel" />
     <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="64.0" style="" text="CZ2006" textAlignment="CENTER" />
     <Label fx:id="copyrightLabel" layoutX="416.0" layoutY="653.0" text="©Copyright 2014 Studymaster" />
-    <GridPane id="gridPane" fx:id="timeTable" alignment="CENTER" layoutX="258.0" layoutY="254.0" prefWidth="507.0">
+    <GridPane id="gridPane" fx:id="timeTable" alignment="CENTER" layoutX="258.0" layoutY="254.0" prefWidth="507.0" style="-fx-border-color: transparent; -fx-grid-lines-visible: false;">
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="200.0" />
       </columnConstraints>
