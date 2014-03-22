@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ScreenCapture {
-
     private static ScreenCapture instance = null;
     private static class captureThread extends Thread {
         ImageView view;
@@ -42,7 +41,7 @@ public class ScreenCapture {
         if (instance==null) {
             instance = new ScreenCapture();
         }
-        else{}
+        else {}
         return instance;
     }
 
@@ -54,6 +53,7 @@ public class ScreenCapture {
             BufferedImage screenShot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
             newImg = ImgUtil.createImage(screenShot);
         }catch(Exception e){
+            System.out.println("[info] (" + ScreenCapture.class.getSimpleName() + " createScreenShot)");
             e.printStackTrace();
         }
         return newImg;
