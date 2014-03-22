@@ -305,21 +305,17 @@ public class CourseView extends HomeViewController {
     }
 
     public static void setBookingMsg(String course, String account) {
-        JSONObject Msg = new JSONObject();
-        JSONObject Content = new JSONObject();
-        Msg.put("event", "booking");
-        Msg.put("endpoint", "Client");
-        Content.put("code", course);
-        Content.put("account", account);
-        Msg.put("content", Content);
-        Connector.setMessageContainer(Msg.toString());
+        JSONObject content = new JSONObject();
+        content.put("code", course);
+        //content.put("account", account);
+        Connector.setMessageContainer("booking", content);
     }
 
     public static void setExamMsg(String course) {
         JSONObject content = new JSONObject();
         content.put("code", course);
-        content.put("account", Account);
-        Connector.setAndSendMessageContainer("exam", content);
+        //content.put("account", Account);
+        Connector.getInstance().setAndSendMessageContainer("exam", content);
     }
 }
 
