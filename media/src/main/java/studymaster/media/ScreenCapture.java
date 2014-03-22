@@ -4,16 +4,15 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ScreenCapture {
     private static ScreenCapture instance = null;
-    private static class captureThread extends Thread {
+    private static class CaptureThread extends Thread {
         ImageView view;
 
-        public captureThread(ImageView view) {
+        public CaptureThread(ImageView view) {
             this.view = view;
         }
 
@@ -33,7 +32,7 @@ public class ScreenCapture {
             }
         }
     }
-    private captureThread cap;
+    private CaptureThread ct;
 
     private ScreenCapture(){}
 
@@ -60,17 +59,17 @@ public class ScreenCapture {
     }
 
     public void stop() {
-        cap.yield();
-        cap = null;
+        ct.yield();
+        ct = null;
     }
 
     public void capture(ImageView imageView) {
-        if (cap!=null) {
-            cap.setImageView(imageView);
+        if (ct!=null) {
+            ct.setImageView(imageView);
         }
         else {
-            cap = new captureThread(imageView);
-            cap.start();
+            ct = new CaptureThread(imageView);
+            ct.start();
         }
     }
 }
