@@ -19,6 +19,7 @@ import studymaster.all.ViewController.HomeViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
 import studymaster.examinee.App;
+import studymaster.examinee.QuestionDatabase;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import javafx.scene.layout.Region;
@@ -37,9 +38,11 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.json.JSONException;
 
+
+
 public class CourseView extends HomeViewController {
-  static GridPane List;
-  static String Account;
+  public static GridPane List;
+  public static String Account;
 
   @Override
 	public void onMessage(String message) {
@@ -55,6 +58,25 @@ public class CourseView extends HomeViewController {
       if(event.equals("profile")) {
         showCourseList(content);
       }
+      else if(event.equals("exam_question")) {
+        JSONArray question_set = content.getJSONArray("question_set");
+        QuestionDatabase database = QuestionDatabase.getInstance();
+        //sort according to question number
+        //from first to last, add the question from the question_set to the QuestionDatabase
+        //once we add it, remove it from the jsonArray
+        database.setCourseCode(content.getString("code"));//course code is put at database[0]
+        System.out.println("set course code:" + content.getString("code") + "\n\n");
+        while (question_set.length() != 0) {
+        for (int i=0; i<question_set.length(); i++) {
+        if ((question_set.getJSONObject(i).getInt("number")-1) == database.getQuestionSetSize()) {
+                database.addQuestion(question_set.getJSONObject(i));
+                System.out.println("\n" + question_set.getJSONObject(i).toString() + "\n");
+                question_set.remove(i);
+              }
+            }
+          }
+        }
+      
       else if (event.equals("cancel")) {
         //dialog - inform student
         final JSONObject cancelInfo = content;
@@ -350,250 +372,9 @@ public class CourseView extends HomeViewController {
 
 }
 
-class CountDown extends Label {
-  public CountDown(String examStartTime, String courseCode, int row) {
-    bindToTime(examStartTime, courseCode, row);
-  }
-
-  private void bindToTime(final String examStartTime, final String courseCode, final int row) {
-    Timeline timeline = new Timeline(
-      new KeyFrame(Duration.seconds(0),
-        new EventHandler<ActionEvent>() {
-          @Override
-          public void handle(ActionEvent actionEvent) {
-              try {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date currentTime = new Date();
-                Date startTime = dateFormat.parse(examStartTime);
-                long diff = startTime.getTime() - currentTime.getTime();
-                long diffDays = diff / (24 * 60 * 60 * 1000);
-                long diffMinutes = diff / (60 * 1000) % 60;
-                long diffHours = diff / (60 * 60 * 1000) % 24;
-                if (diffDays==0 && diffHours==0 && diffMinutes<15 ) {
-                  // javafx.application.Platform.runLater(new Runnable() {
-                  // @Override
-                  // public void run() {
-
-                  ObservableList<Node> childrens = CourseView.List.getChildren();
-                  Node label = null;
-                  for(Node node : childrens) {
-                    if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
-                      label = node;
-                      break;
-                    }
-                  }
-                  // final ExamButton examButton = new ExamButton(examStartTime, courseCode, row);
-                  // examButton.setPrefWidth(120);
-                  // examButton.setOnAction(new EventHandler<ActionEvent>() {
-                  //   @Override public void handle(ActionEvent e) {
-                  //     examButton.setText("");
-                  //     Image LoadingIcon = new Image(getClass().getResourceAsStream("/image/Loading.gif"));
-                  //     examButton.setGraphic(new ImageView(LoadingIcon));
-                  //     studymaster.examinee.ViewController.CourseView.setExamMsg(Connector.getInstance().getSender());
-                  //     studymaster.all.ViewController.Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
-                  //   }
-                  // });
-                  // CourseView.List.add(examButton, 2, row);
-
-                  CourseView.List.getChildren().remove(label);
-                  CourseView.createExamButton(examStartTime, courseCode, row);
-                //   }
-                // });
-                }
-                else {
-                  String remainingTime;
-                  remainingTime = getRemainingTime(examStartTime);
-                  setText(remainingTime);
-                  if (remainingTime.contains(":")) {
-                    setStyle("-fx-text-fill: red;");
-                  }
-                }
-                
-              } catch (ParseException ex) {
-                Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-              }
-          }
-        }
-      ),
-      new KeyFrame(Duration.seconds(1))
-    );
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-  }
-
-  public static String getRemainingTime(String examStartTime) throws ParseException {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    Date currentTime = new Date();
-    Date startTime = dateFormat.parse(examStartTime);
-
-    long diff = startTime.getTime() - currentTime.getTime();
-    long diffSeconds = diff / 1000 % 60;
-    long diffMinutes = diff / (60 * 1000) % 60;
-    long diffHours = diff / (60 * 60 * 1000) % 24;
-    long diffDays = diff / (24 * 60 * 60 * 1000);
-    if (diffDays>0) {
-      return diffDays + " Days" ;
-    }
-    else {
-      return diffHours + ":" + diffMinutes + ":" + diffSeconds ;
-    }
-  }
-}
-
-class BookButton extends Button {
-  public BookButton(String examStartTime, String courseCode, int row){
-    setText(" Book ");
-    bindToTime(examStartTime, courseCode, row);
-  }
-  private void bindToTime(final String examStartTime, String courseCode, final int row) {
-    Timeline timeline = new Timeline(
-      new KeyFrame(Duration.seconds(0),
-        new EventHandler<ActionEvent>() {
-          @Override
-          public void handle(ActionEvent actionEvent) {
-            try {
-              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-              Date currentTime = new Date();
-              Date startTime = dateFormat.parse(examStartTime);
-              long diff = startTime.getTime() - currentTime.getTime();
-              long diffDays = diff / (24 * 60 * 60 * 1000);
-              if (diffDays<3) {
 
 
-              // javafx.application.Platform.runLater(new Runnable() {
-              // @Override
-              // public void run() {
-
-                  ObservableList<Node> childrens = CourseView.List.getChildren();
-                  Node button = null;
-                  for(Node node : childrens) {
-                    if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
-                        button = node;
-                        break;
-                    }
-                  }
-                  Label closedLabel = new Label("Closed");
-
-                  CourseView.List.getChildren().remove(button);
-                  CourseView.List.add(closedLabel, 2, row);
-              //   }
-                
-              // });
-
-              }
-              
-            } catch (ParseException ex) {
-              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          }
-        }
-      ),
-      new KeyFrame(Duration.seconds(1))
-    );
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-  }
-}
 
 
-class CancelButton extends Button {
-  public CancelButton(String examStartTime, String courseCode, int row){
-    setText("Cancel");
-    bindToTime(examStartTime, courseCode, row);
-  }
-  private void bindToTime(final String examStartTime, final String courseCode, final int row) {
-    Timeline timeline = new Timeline(
-      new KeyFrame(Duration.seconds(0),
-        new EventHandler<ActionEvent>() {
-          @Override
-          public void handle(ActionEvent actionEvent) {
-            try {
-              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-              Date currentTime = new Date();
-              Date startTime = dateFormat.parse(examStartTime);
-              long diff = startTime.getTime() - currentTime.getTime();
-              long diffDays = diff / (24 * 60 * 60 * 1000);
-              if (diffDays<3) {
-                // javafx.application.Platform.runLater(new Runnable() {
-                // @Override
-                // public void run() {
-                ObservableList<Node> childrens = CourseView.List.getChildren();
-                Node button = null;
-                for(Node node : childrens) {
-                  if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
-                    button = node;
-                    break;
-                  }
-                }
-                // CountDown timeLabel = new CountDown(examStartTime, courseCode, row);
-                // CourseView.List.add(timeLabel, 2, row);
-                
-                CourseView.List.getChildren().remove(button);
-                CourseView.createCountDownLabel(examStartTime, courseCode, row);                
-              //   }
-              // });
 
-                
-              }              
-            } catch (ParseException ex) {
-              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          }
-        }
-      ),
-      new KeyFrame(Duration.seconds(1))
-    );
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-  }
-}
 
-class ExamButton extends Button {
-  public ExamButton(String examStartTime, String courseCode, int row){
-    setText(" Exam ");
-    bindToTime(examStartTime, courseCode, row);
-  }
-  private void bindToTime(final String examStartTime, String courseCode, final int row) {
-    Timeline timeline = new Timeline(
-      new KeyFrame(Duration.seconds(0),
-        new EventHandler<ActionEvent>() {
-          @Override
-          public void handle(ActionEvent actionEvent) {
-            try {
-              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-              Date currentTime = new Date();
-              Date startTime = dateFormat.parse(examStartTime);
-              long diff = Math.abs(startTime.getTime() - currentTime.getTime());
-              long diffMinutes = diff / (60 * 1000) % 60;
-              if (diffMinutes>=15) {
-                // javafx.application.Platform.runLater(new Runnable() {
-                // @Override
-                // public void run() {
-                  ObservableList<Node> childrens = CourseView.List.getChildren();
-                  Node button = null;
-                  for(Node node : childrens) {
-                    if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
-                        button = node;
-                        break;
-                    }
-                  }
-                  Label closedLabel = new Label("Closed");
-    
-                  CourseView.List.add(closedLabel, 2, row);
-                  CourseView.List.getChildren().remove(button);
-              //   }
-              // });
-
-              }
-            } catch (ParseException ex) {
-              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          }
-        }
-      ),
-      new KeyFrame(Duration.seconds(1))
-    );
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-  }
-}
