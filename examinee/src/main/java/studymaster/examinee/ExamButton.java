@@ -1,6 +1,5 @@
 package studymaster.examinee;
 
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,10 +19,12 @@ import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
 public class ExamButton extends Button {
+
     public ExamButton(String examStartTime, String courseCode, int row){
         setText(" Exam ");
         bindToTime(examStartTime, courseCode, row);
     }
+    
     private void bindToTime(final String examStartTime, String courseCode, final int row) {
         Timeline timeline = new Timeline(
                                          new KeyFrame(Duration.seconds(0),

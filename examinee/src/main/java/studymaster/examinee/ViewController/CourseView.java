@@ -49,7 +49,6 @@ public class CourseView extends HomeViewController {
             String endpoint = msg.getString("endpoint");
             final JSONObject content = msg.getJSONObject("content");
             Account = content.getString("account");
-            //Button button = new Button();
 
             if(event.equals("profile")) {
                 showCourseList(content);
@@ -118,7 +117,6 @@ public class CourseView extends HomeViewController {
                         final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
                         final ScrollPane sp = (ScrollPane) pane.lookup("#scrollpane");
                         final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
-
                         //Create a gridpane - courseList
                         final JSONObject profile = content.getJSONObject("profile");
                         JSONArray courses = profile.getJSONArray("courses");
@@ -139,12 +137,10 @@ public class CourseView extends HomeViewController {
                         courseList.getColumnConstraints().addAll(col1,col2,col3);
                         courseList.setVgap(25);
                         col3.setHalignment(HPos.RIGHT);
-
                         //Add courses into an ArrayList
                         for (int i=0; i<courses.length(); i++) {
                             coursesArray.add(courses.getJSONObject(i));
                         }
-
                         //Sort the ArrayList
                         Collections.sort(coursesArray, new Comparator<JSONObject>() {
                                 @Override public int compare(JSONObject course1, JSONObject course2)
@@ -164,11 +160,9 @@ public class CourseView extends HomeViewController {
                                     }
                                 }
                             });
-
                         //Display the courses
                         for(int i=0; i<coursesArray.size(); i++) {
                             final JSONObject course = (JSONObject)coursesArray.get(i);
-
                             //First 2 columns
                             Label code = new Label(course.getString("code"));
                             code.setStyle("-fx-text-fill: black;");
@@ -194,13 +188,10 @@ public class CourseView extends HomeViewController {
                             }
                             else if (status.equals("unbooked")) {
                                 //Book button
-              
                                 createBookButton(examStartTime, courseCode, i);
-
                             }
                             else if (status.equals("booked")) {
                                 try {
-
                                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                                     Date currentTime = new Date();
                                     Date startTime = dateFormat.parse(examStartTime);
@@ -208,24 +199,16 @@ public class CourseView extends HomeViewController {
                                     long diffDays = diff / (24 * 60 * 60 * 1000);
                                     long diffMinutes = diff / (60 * 1000) % 60;
                                     long diffHours = diff / (60 * 60 * 1000) % 24;
-
                                     if (diffDays>=3) {
-
                                         //Cancel button
                                         createCancelButton(examStartTime, courseCode, i);
-
-
                                     }
                                     else if (diffMinutes>=15) {
-
-
                                         //Countdown label
                                         createCountDownLabel(examStartTime, courseCode, i);
-
                                     }
                                     else {
                                         //Exam button
-
                                         createExamButton(examStartTime, courseCode, i);
                                     }
 
@@ -250,7 +233,6 @@ public class CourseView extends HomeViewController {
                 public void run() {
                     BookButton button = new BookButton(examStartTime, courseCode, row);
                     button.setPrefWidth(120);
-
                     button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override public void handle(ActionEvent e) {
                                 setBookingMsg(courseCode, Account);
@@ -264,7 +246,6 @@ public class CourseView extends HomeViewController {
     }
 
     public static void createCountDownLabel(String examStartTime, String courseCode, int row) {
-
         CountDown timeLabel = new CountDown(examStartTime, courseCode, row);
         List.add(timeLabel, 2, row);
     }
@@ -283,7 +264,6 @@ public class CourseView extends HomeViewController {
                                 button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
                                 button.setDisable(true);
                                 button.setId("toDelete");
-
                                 //Send msg to server
                                 JSONObject sendMsg = new JSONObject();
                                 JSONObject sendContent = new JSONObject();
@@ -344,7 +324,6 @@ public class CourseView extends HomeViewController {
         Msg.put("content", Content);
         Connector.setMessageContainer(Msg.toString());
     }
-
 }
 
 

@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
 public class CountDown extends Label {
+    
     public CountDown(String examStartTime, String courseCode, int row) {
         bindToTime(examStartTime, courseCode, row);
     }

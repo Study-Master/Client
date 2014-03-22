@@ -20,10 +20,12 @@ import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
 public class BookButton extends Button {
+
     public BookButton(String examStartTime, String courseCode, int row){
-        setText(" Book ");
+        setText("Book");
         bindToTime(examStartTime, courseCode, row);
     }
+    
     private void bindToTime(final String examStartTime, String courseCode, final int row) {
         Timeline timeline = new Timeline(
                                          new KeyFrame(Duration.seconds(0),
@@ -40,7 +42,6 @@ public class BookButton extends Button {
                                                                       // javafx.application.Platform.runLater(new Runnable() {
                                                                       // @Override
                                                                       // public void run() {
-
                                                                       ObservableList<Node> childrens = CourseView.getList().getChildren();
                                                                       Node button = null;
                                                                       for(Node node : childrens) {
@@ -50,15 +51,11 @@ public class BookButton extends Button {
                                                                           }
                                                                       }
                                                                       Label closedLabel = new Label("Closed");
-
                                                                       CourseView.getList().getChildren().remove(button);
                                                                       CourseView.getList().add(closedLabel, 2, row);
                                                                       //   }
-                
                                                                       // });
-
                                                                   }
-              
                                                               } catch (ParseException ex) {
                                                                   Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
                                                               }

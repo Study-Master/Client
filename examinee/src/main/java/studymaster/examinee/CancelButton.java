@@ -19,10 +19,12 @@ import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
 public class CancelButton extends Button {
+
     public CancelButton(String examStartTime, String courseCode, int row){
         setText("Cancel");
         bindToTime(examStartTime, courseCode, row);
     }
+    
     private void bindToTime(final String examStartTime, final String courseCode, final int row) {
         Timeline timeline = new Timeline(
                                          new KeyFrame(Duration.seconds(0),
