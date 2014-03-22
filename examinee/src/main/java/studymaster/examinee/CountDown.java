@@ -1,6 +1,5 @@
 package studymaster.examinee;
 
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +35,7 @@ public class CountDown extends Label {
                                                                   long diffDays = diff / (24 * 60 * 60 * 1000);
                                                                   long diffMinutes = diff / (60 * 1000) % 60;
                                                                   long diffHours = diff / (60 * 60 * 1000) % 24;
+                                                                  long diffSeconds = diff / 1000 % 60;
                                                                   if (diffDays==0 && diffHours==0 && diffMinutes<15 ) {
                                                                       // javafx.application.Platform.runLater(new Runnable() {
                                                                       // @Override
@@ -68,7 +68,12 @@ public class CountDown extends Label {
                                                                   }
                                                                   else {
                                                                       String remainingTime;
-                                                                      remainingTime = getRemainingTime(examStartTime);
+                                                                      if (diffDays>0) {
+                                                                            remainingTime = Long.toString(diffDays) + " Days" ;
+                                                                        }
+                                                                        else {
+                                                                            remainingTime = Long.toString(diffHours) + ":" + Long.toString(diffMinutes) + ":" + Long.toString(diffSeconds) ;
+                                                                        }
                                                                       setText(remainingTime);
                                                                       if (remainingTime.contains(":")) {
                                                                           setStyle("-fx-text-fill: red;");
@@ -84,23 +89,5 @@ public class CountDown extends Label {
                                          );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-    }
-
-    public static String getRemainingTime(String examStartTime) throws ParseException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date currentTime = new Date();
-        Date startTime = dateFormat.parse(examStartTime);
-
-        long diff = startTime.getTime() - currentTime.getTime();
-        long diffSeconds = diff / 1000 % 60;
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long diffHours = diff / (60 * 60 * 1000) % 24;
-        long diffDays = diff / (24 * 60 * 60 * 1000);
-        if (diffDays>0) {
-            return diffDays + " Days" ;
-        }
-        else {
-            return diffHours + ":" + diffMinutes + ":" + diffSeconds ;
-        }
     }
 }
