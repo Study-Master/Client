@@ -15,9 +15,6 @@
 
  public class AudioView extends ViewController {
 
-
-
-
  	@Override
      public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
          super.initialize(location, resources);

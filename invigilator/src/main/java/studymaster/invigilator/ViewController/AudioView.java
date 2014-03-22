@@ -16,8 +16,6 @@ import studymaster.socket.AudioSS;
 
 public class AudioView extends ViewController implements AudioEventHandler {
 
-
-
 	@Override
 	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);

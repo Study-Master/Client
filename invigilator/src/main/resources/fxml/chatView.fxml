@@ -11,7 +11,7 @@
   <children>
     <TextArea fx:id="histroyArea" disable="false" editable="false" focusTraversable="false" layoutX="14.0" layoutY="14.0" prefHeight="226.0" prefWidth="272.0" wrapText="true" />
     <Button layoutX="14.0" layoutY="248.0" mnemonicParsing="false" onAction="#sendAction" text="Send" />
-    <Button layoutX="72.0" layoutY="248.0" mnemonicParsing="false" onMousePressed="#onVoiceMessagePressed" onMouseReleased="#onVoiceMessageReleased" text="Voice Message" />
+    <Button fx:id="messageButton" layoutX="72.0" layoutY="248.0" mnemonicParsing="false" onMousePressed="#onVoiceMessagePressed" onMouseReleased="#onVoiceMessageReleased" prefWidth="108.0" text="Hold To Talk" />
     <TextArea id="histroyArea" fx:id="sendArea" layoutX="14.0" layoutY="281.0" prefHeight="105.0" prefWidth="272.0" wrapText="true" />
     <Button layoutX="187.0" layoutY="248.0" mnemonicParsing="false" text="Play Message" />
   </children>
