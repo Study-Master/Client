@@ -19,56 +19,56 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 class BookButton extends Button {
-  public BookButton(String examStartTime, String courseCode, int row){
-    setText(" Book ");
-    bindToTime(examStartTime, courseCode, row);
-  }
-  private void bindToTime(final String examStartTime, String courseCode, final int row) {
-    Timeline timeline = new Timeline(
-      new KeyFrame(Duration.seconds(0),
-        new EventHandler<ActionEvent>() {
-          @Override
-          public void handle(ActionEvent actionEvent) {
-            try {
-              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-              Date currentTime = new Date();
-              Date startTime = dateFormat.parse(examStartTime);
-              long diff = startTime.getTime() - currentTime.getTime();
-              long diffDays = diff / (24 * 60 * 60 * 1000);
-              if (diffDays<3) {
+    public BookButton(String examStartTime, String courseCode, int row){
+        setText(" Book ");
+        bindToTime(examStartTime, courseCode, row);
+    }
+    private void bindToTime(final String examStartTime, String courseCode, final int row) {
+        Timeline timeline = new Timeline(
+                                         new KeyFrame(Duration.seconds(0),
+                                                      new EventHandler<ActionEvent>() {
+                                                          @Override
+                                                          public void handle(ActionEvent actionEvent) {
+                                                              try {
+                                                                  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                                                                  Date currentTime = new Date();
+                                                                  Date startTime = dateFormat.parse(examStartTime);
+                                                                  long diff = startTime.getTime() - currentTime.getTime();
+                                                                  long diffDays = diff / (24 * 60 * 60 * 1000);
+                                                                  if (diffDays<3) {
 
 
-              // javafx.application.Platform.runLater(new Runnable() {
-              // @Override
-              // public void run() {
+                                                                      // javafx.application.Platform.runLater(new Runnable() {
+                                                                      // @Override
+                                                                      // public void run() {
 
-                  ObservableList<Node> childrens = CourseView.List.getChildren();
-                  Node button = null;
-                  for(Node node : childrens) {
-                    if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
-                        button = node;
-                        break;
-                    }
-                  }
-                  Label closedLabel = new Label("Closed");
+                                                                      ObservableList<Node> childrens = CourseView.List.getChildren();
+                                                                      Node button = null;
+                                                                      for(Node node : childrens) {
+                                                                          if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
+                                                                              button = node;
+                                                                              break;
+                                                                          }
+                                                                      }
+                                                                      Label closedLabel = new Label("Closed");
 
-                  CourseView.List.getChildren().remove(button);
-                  CourseView.List.add(closedLabel, 2, row);
-              //   }
+                                                                      CourseView.List.getChildren().remove(button);
+                                                                      CourseView.List.add(closedLabel, 2, row);
+                                                                      //   }
                 
-              // });
+                                                                      // });
 
-              }
+                                                                  }
               
-            } catch (ParseException ex) {
-              Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          }
-        }
-      ),
-      new KeyFrame(Duration.seconds(1))
-    );
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-  }
+                                                              } catch (ParseException ex) {
+                                                                  Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
+                                                              }
+                                                          }
+                                                      }
+                                                      ),
+                                         new KeyFrame(Duration.seconds(1))
+                                         );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
 }
