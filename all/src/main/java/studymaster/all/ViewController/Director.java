@@ -7,30 +7,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * Class to control the stage and scene
- */
 public final class Director {
-	private static Director instance;
-	private static Stage localStage;
-	private static Scene localScene;
+	private static Director instance = null;
+	private static Stage localStage = null;
+	private static Scene localScene = null;
 	
-	/**
-	 * Private constructor to prevent creating instance with new keyword
-	 */
 	private Director() {
 		localScene = null;
 		localStage = null;
 	}
 
-	/**
-	 * Get an instance of Director class
-	 * @return instance of Director class
-	 */
 	public static Director getInstance() {
-		if(instance==null) {
+		if (instance==null) {
 			instance = new Director();
 		}
+		else {}
 		return instance;
 	}
 
@@ -51,51 +42,20 @@ public final class Director {
 		return localScene;
 	}
 
-	public static Stage initStageWithFXML(final URL fxmlFile) {
-		Stage stage = null;
-  		try {
-  			stage = new Stage();
-  			FXMLLoader loader = new FXMLLoader();
-  			Parent rootNode = (Parent) loader.load(fxmlFile);
-  			stage.setScene(new Scene(rootNode));
-  		} catch (Exception e) {
-  			System.out.println(e);
-  			System.err.println("[err] (Director) Error when switching scene");
-  		}
-  		return stage;
-  	}
-
-  	public static Stage toggleStage(Stage stage) {
-  		if(stage.isShowing())
-  			stage.hide();
-  		else
-  			stage.show();
-  		return stage;
-  	}
-
-	/**
-	 * Change current stage with a new scene
-	 * @param  newScene new scene
-	 */
 	public static void pushStageWithScene(Scene newScene) {
 		setScene(newScene);
 		localStage.setScene(localScene);
 		showStage();
 	}
 
-	/**
-	 * Change current stage with a fxml file
-	 * @param fxmlFile url to fxml file
-	 */
 	public static void pushStageWithFXML(final URL fxmlFile) {
-       	javafx.application.Platform.runLater(new Runnable() {
-  			@Override
-  			public void run() {
-  				try {
-  					FXMLLoader loader = new FXMLLoader();
-  					Parent rootNode = (Parent) loader.load(fxmlFile);
-  					setScene(new Scene(rootNode));
-  					localStage.setScene(localScene);
+		javafx.application.Platform.runLater(new Runnable() {
+			@Override public void run() {
+				try {
+					FXMLLoader loader = new FXMLLoader();
+					Parent rootNode = (Parent) loader.load(fxmlFile);
+					setScene(new Scene(rootNode));
+					localStage.setScene(localScene);
   					showStage();
   				} catch (Exception e) {
   					System.out.println(e);
@@ -104,4 +64,28 @@ public final class Director {
   			}
   		});
 	}
+
+	public Stage initStageWithFXML(final URL fxmlFile) {
+		Stage stage = null;
+  		try {
+  			stage = new Stage();
+  			FXMLLoader loader = new FXMLLoader();
+  			Parent rootNode = (Parent) loader.load(fxmlFile);
+  			stage.setScene(new Scene(rootNode));
+  		} catch (Exception e) {
+  			System.err.println("[err] (" + getClass().getSimpleName() + ") Error when switching scene.");
+  			e.printStackTrace();
+  		}
+  		return stage;
+  	}
+
+  	public Stage toggleStage(Stage stage) {
+  		if(stage.isShowing()) {
+  			stage.hide();
+  		}
+  		else {
+  			stage.show();
+  		}
+  		return stage;
+  	}
 }
