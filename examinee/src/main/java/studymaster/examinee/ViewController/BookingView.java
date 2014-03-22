@@ -59,8 +59,8 @@ public class BookingView extends ViewController{
         }
     }
 
-    public String book(ToggleGroup bg){
-        return ((RadioButton)bg.getSelectedToggle()).getText();
+    public String book(ToggleGroup buttonGroup){
+        return ((RadioButton)buttonGroup.getSelectedToggle()).getText();
     }
 
     public void selectExamTime(){
@@ -90,14 +90,11 @@ public class BookingView extends ViewController{
                 @Override
                 public void run() {
                     try{
-                        ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
-
                         for(int i=0; i<examTime.length(); i++){
-                            radioButtonList.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
-                            timeTable.add(radioButtonList.get(i), 0, i);
-                            radioButtonList.get(i).setToggleGroup(buttonGroup);
+                            RadioButton tempButton = new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time"));
+                            timeTable.add(tempButton, 0, i);
+                            tempButton.setToggleGroup(buttonGroup);
                         }
-
                     }catch (Exception e) {
                         System.out.println(e);
                         System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
