@@ -43,13 +43,13 @@ public class TestView extends TestViewController {
         director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
     }
 
-    @Override public void test() {
-        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) start audio test");
+     @FXML public final void testAction() {
+        System.out.println("[info] (" + getClass().getSimpleName() + " testAction): Stat testing");
         startRecord();
     }
         
-    @Override public void aftertest() {
-        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) finish audio test");
+    @FXML public void aftertestAction() {
+        System.out.println("[info] ("+ getClass().getSimpleName() +" aftertestAction) Finish testing");
         stopRecord();
         playAudio();
 	}
@@ -65,7 +65,7 @@ public class TestView extends TestViewController {
         return format;
     }
 
-    public void startRecord(){
+    private void startRecord(){
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) start recording");
         try{
             outputStream = null;
@@ -81,7 +81,7 @@ public class TestView extends TestViewController {
         stopper.start();
     }
 
-    public void capture(){
+    private void capture(){
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) start capturing");
             try {
                 AudioFormat format = getAudioFormat();
@@ -106,7 +106,7 @@ public class TestView extends TestViewController {
         }
     }
 
-    public void stopRecord(){
+    private void stopRecord(){
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) stop recording");
     	line.stop();
         line.close();
@@ -116,7 +116,7 @@ public class TestView extends TestViewController {
         System.out.println(byteArray);
     }
 
-    public void playAudio(){
+    private void playAudio(){
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) play audio");
         ByteArrayInputStream baiut = new ByteArrayInputStream(byteArray);
         try {
