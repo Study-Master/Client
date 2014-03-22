@@ -105,11 +105,15 @@ public class CourseView extends HomeViewController {
                 CancelButton button = null;
                 for (Node node : childrens) {
                     if (node instanceof CancelButton) {
-                        if(content.getString("code") == ((CancelButton)node).getCourseCode()) {
+                        if(courseCode == ((CancelButton)node).getCourseCode()) {
                             button = (CancelButton)node;
+                            System.out.println("[Info] Find it!");
                             break;
                         }
                     }
+                }
+                if (button == null) {
+                    System.err.println("[Info] Something wrong! Don't find the node!");
                 }
                 createCountDownLabel(examStartTime, courseCode, button.getRow());
                 List.getChildren().remove(button);
