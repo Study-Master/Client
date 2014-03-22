@@ -48,7 +48,6 @@ public class CourseView extends HomeViewController {
             String event = msg.getString("event");
             String endpoint = msg.getString("endpoint");
             final JSONObject content = msg.getJSONObject("content");
-            Account = content.getString("account");
 
             if(event.equals("profile")) {
                 showCourseList(content);
