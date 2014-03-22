@@ -79,7 +79,7 @@ public class AudioSS extends WebSocketServer {
         SoundUtil.setByteArray(temp);
     }
 
-    public static void playAudio() s{
+    public static void playAudio() {
         SoundUtil.playAudio();
     }
 }
