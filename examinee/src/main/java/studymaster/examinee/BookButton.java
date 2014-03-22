@@ -1,4 +1,4 @@
-package studymaster.examinee.ViewController;
+package studymaster.examinee;
 
 
 import java.text.DateFormat;
@@ -17,8 +17,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+import studymaster.examinee.ViewController.CourseView;
 
-class BookButton extends Button {
+public class BookButton extends Button {
     public BookButton(String examStartTime, String courseCode, int row){
         setText(" Book ");
         bindToTime(examStartTime, courseCode, row);
@@ -42,18 +43,18 @@ class BookButton extends Button {
                                                                       // @Override
                                                                       // public void run() {
 
-                                                                      ObservableList<Node> childrens = CourseView.List.getChildren();
+                                                                      ObservableList<Node> childrens = CourseView.getList().getChildren();
                                                                       Node button = null;
                                                                       for(Node node : childrens) {
-                                                                          if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
+                                                                          if(CourseView.getList().getRowIndex(node) == row && CourseView.getList().getColumnIndex(node) == 2) {
                                                                               button = node;
                                                                               break;
                                                                           }
                                                                       }
                                                                       Label closedLabel = new Label("Closed");
 
-                                                                      CourseView.List.getChildren().remove(button);
-                                                                      CourseView.List.add(closedLabel, 2, row);
+                                                                      CourseView.getList().getChildren().remove(button);
+                                                                      CourseView.getList().add(closedLabel, 2, row);
                                                                       //   }
                 
                                                                       // });

@@ -1,4 +1,4 @@
-package studymaster.examinee.ViewController;
+package studymaster.examinee;
 
 
 import java.text.DateFormat;
@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
-class ExamButton extends Button {
+public class ExamButton extends Button {
     public ExamButton(String examStartTime, String courseCode, int row){
         setText(" Exam ");
         bindToTime(examStartTime, courseCode, row);
@@ -40,21 +40,19 @@ class ExamButton extends Button {
                                                                       // javafx.application.Platform.runLater(new Runnable() {
                                                                       // @Override
                                                                       // public void run() {
-                                                                      ObservableList<Node> childrens = CourseView.List.getChildren();
+                                                                      ObservableList<Node> childrens = CourseView.getList().getChildren();
                                                                       Node button = null;
                                                                       for(Node node : childrens) {
-                                                                          if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
+                                                                          if(CourseView.getList().getRowIndex(node) == row && CourseView.getList().getColumnIndex(node) == 2) {
                                                                               button = node;
                                                                               break;
                                                                           }
                                                                       }
                                                                       Label closedLabel = new Label("Closed");
-    
-                                                                      CourseView.List.add(closedLabel, 2, row);
-                                                                      CourseView.List.getChildren().remove(button);
+                                                                      CourseView.getList().add(closedLabel, 2, row);
+                                                                      CourseView.getList().getChildren().remove(button);
                                                                       //   }
                                                                       // });
-
                                                                   }
                                                               } catch (ParseException ex) {
                                                                   Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);

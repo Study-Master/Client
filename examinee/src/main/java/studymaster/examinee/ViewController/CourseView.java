@@ -1,46 +1,44 @@
 package studymaster.examinee.ViewController;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import studymaster.all.ViewController.HomeViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
-import studymaster.examinee.App;
+import studymaster.examinee.CancelButton;
+import studymaster.examinee.BookButton;
+import studymaster.examinee.CountDown;
+import studymaster.examinee.ExamButton;
 import studymaster.examinee.QuestionDatabase;
 import org.json.JSONObject;
 import org.json.JSONArray;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import org.json.JSONException;
 
 public class CourseView extends HomeViewController {
-    public static GridPane List;
-    public static String Account;
+    protected static GridPane List;
+    protected static String Account;
+
+    public static GridPane getList() {
+        return List;
+    }
+
+    public static String getAccount() {
+        return Account;
+    }
 
     @Override
     public void onMessage(String message) {
@@ -74,7 +72,6 @@ public class CourseView extends HomeViewController {
                     }
                 }
             }
-      
             else if (event.equals("cancel")) {
                 //dialog - inform student
                 final JSONObject cancelInfo = content;
@@ -119,9 +116,7 @@ public class CourseView extends HomeViewController {
                     }
                 }      
                 else {
-                    //alert
-                    alert("Can't cancel this exam. " + cancelInfo.getString("error"));
-            
+                    alert("Can't cancel this exam. " + cancelInfo.getString("error"));         
                 }
             }
         } 
@@ -321,7 +316,6 @@ public class CourseView extends HomeViewController {
                     List.add(button, 2, row);
                 }
             });
-
     }
 
     public static void createExamButton(final String examStartTime, final String courseCode, final int row) {

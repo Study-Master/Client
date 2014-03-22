@@ -1,4 +1,4 @@
-package studymaster.examinee.ViewController;
+package studymaster.examinee;
 
 
 import java.text.DateFormat;
@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
-class CountDown extends Label {
+public class CountDown extends Label {
     public CountDown(String examStartTime, String courseCode, int row) {
         bindToTime(examStartTime, courseCode, row);
     }
@@ -41,10 +41,10 @@ class CountDown extends Label {
                                                                       // @Override
                                                                       // public void run() {
 
-                                                                      ObservableList<Node> childrens = CourseView.List.getChildren();
+                                                                      ObservableList<Node> childrens = CourseView.getList().getChildren();
                                                                       Node label = null;
                                                                       for(Node node : childrens) {
-                                                                          if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
+                                                                          if(CourseView.getList().getRowIndex(node) == row && CourseView.getList().getColumnIndex(node) == 2) {
                                                                               label = node;
                                                                               break;
                                                                           }
@@ -61,8 +61,7 @@ class CountDown extends Label {
                                                                       //   }
                                                                       // });
                                                                       // CourseView.List.add(examButton, 2, row);
-
-                                                                      CourseView.List.getChildren().remove(label);
+                                                                      CourseView.getList().getChildren().remove(label);
                                                                       CourseView.createExamButton(examStartTime, courseCode, row);
                                                                       //   }
                                                                       // });
@@ -75,7 +74,6 @@ class CountDown extends Label {
                                                                           setStyle("-fx-text-fill: red;");
                                                                       }
                                                                   }
-                
                                                               } catch (ParseException ex) {
                                                                   Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
                                                               }

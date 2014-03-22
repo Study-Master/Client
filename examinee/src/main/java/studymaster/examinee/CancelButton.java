@@ -1,4 +1,4 @@
-package studymaster.examinee.ViewController;
+package studymaster.examinee;
 
 
 import java.text.DateFormat;
@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.util.Duration;
 import studymaster.examinee.ViewController.CourseView;
 
-class CancelButton extends Button {
+public class CancelButton extends Button {
   public CancelButton(String examStartTime, String courseCode, int row){
     setText("Cancel");
     bindToTime(examStartTime, courseCode, row);
@@ -39,10 +39,10 @@ class CancelButton extends Button {
                 // javafx.application.Platform.runLater(new Runnable() {
                 // @Override
                 // public void run() {
-                ObservableList<Node> childrens = CourseView.List.getChildren();
+                ObservableList<Node> childrens = CourseView.getList().getChildren();
                 Node button = null;
                 for(Node node : childrens) {
-                  if(CourseView.List.getRowIndex(node) == row && CourseView.List.getColumnIndex(node) == 2) {
+                  if(CourseView.getList().getRowIndex(node) == row && CourseView.getList().getColumnIndex(node) == 2) {
                     button = node;
                     break;
                   }
@@ -50,7 +50,7 @@ class CancelButton extends Button {
                 // CountDown timeLabel = new CountDown(examStartTime, courseCode, row);
                 // CourseView.List.add(timeLabel, 2, row);
                 
-                CourseView.List.getChildren().remove(button);
+                CourseView.getList().getChildren().remove(button);
                 CourseView.createCountDownLabel(examStartTime, courseCode, row);                
               //   }
               // });
