@@ -84,7 +84,6 @@ public class CourseView extends HomeViewController {
                         javafx.application.Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     final CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
                                     cancelButton.setId("Deleted");
                                     int row = List.getRowIndex(cancelButton);
@@ -101,6 +100,15 @@ public class CourseView extends HomeViewController {
                     System.out.println("[Info] Cancel failed");
                     alert("Can't cancel this exam. " + cancelInfo.getString("error"));         
                 }
+            }
+            else if (event.equals("showCountDown")) {
+                
+            }
+            else if (event.equals("showExamButton")) {
+
+            }
+            else if (event.equals("showCloseLabel")) {
+                
             }
         } 
         catch (Exception e) {
