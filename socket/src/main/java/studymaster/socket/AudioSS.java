@@ -36,7 +36,7 @@ public class AudioSS extends WebSocketServer {
     public static AudioSS getInstance() {
         if(instance == null) {
             if(localDelegate == null)
-                localDelegate = new defaultDelegate();
+            localDelegate = new defaultDelegate();
             String localhost = "0.0.0.0";
             int port = 8089;
             InetSocketAddress address = new InetSocketAddress(localhost, port);
@@ -52,8 +52,7 @@ public class AudioSS extends WebSocketServer {
     public static void setDelegate(AudioEventHandler delegate) {
         localDelegate = delegate;
     }
-
-
+        
     //Override methods
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {

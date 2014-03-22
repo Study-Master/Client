@@ -15,8 +15,7 @@ import studymaster.socket.AudioSS;
 import studymaster.socket.AudioCl;
 
 public class ChatView extends ViewController {
-
-
+	
 	@FXML TextArea histroyArea;
 	@FXML TextArea sendArea;
 	@FXML Button messageButton;

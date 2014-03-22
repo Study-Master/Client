@@ -65,7 +65,7 @@ public class AudioView extends ViewController implements AudioEventHandler {
 
 	@Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-    	System.out.println("New connection.");
+		System.out.println("[info] ("+ getClass().getSimpleName() +" onOpen): New connection.");
     }
 
     @Override
