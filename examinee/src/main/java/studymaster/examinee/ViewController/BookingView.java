@@ -66,13 +66,12 @@ public class BookingView extends ViewController{
                 @Override
                 public void run() {
                     try{
-                        ArrayList<RadioButton> tempButton = new ArrayList<RadioButton>();
+                        ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
 
                         for(int i=0; i<examTime.length(); i++){
-                            tempButton.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
-					
-                            timeTable.add(tempButton.get(i), 0, i);
-                            tempButton.get(i).setToggleGroup(buttonGroup);
+                            radioButtonList.add(new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time")));
+                            timeTable.add(radioButtonList.get(i), 0, i);
+                            radioButtonList.get(i).setToggleGroup(buttonGroup);
                         }
 
                     }catch (Exception e) {
