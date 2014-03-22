@@ -105,7 +105,7 @@ public class CourseView extends HomeViewController {
                 CancelButton button = null;
                 for (Node node : childrens) {
                     if (node instanceof CancelButton) {
-                        if(content.getString("course") == ((CancelButton)node).getCourseCode()) {
+                        if(content.getString("code") == ((CancelButton)node).getCourseCode()) {
                             button = (CancelButton)node;
                             break;
                         }
@@ -123,7 +123,7 @@ public class CourseView extends HomeViewController {
                 CountDown label = null;
                 for (Node node : childrens) {
                     if (node instanceof CountDown) {
-                        if(content.getString("course") == ((CountDown)node).getCourseCode()) {
+                        if(content.getString("code") == ((CountDown)node).getCourseCode()) {
                             label = (CountDown)node;
                             break;
                         }
@@ -138,7 +138,7 @@ public class CourseView extends HomeViewController {
                 ObservableList<Node> childrens = CourseView.getList().getChildren();
                 for (Node node : childrens) {
                     if (node instanceof ExamButton) {
-                        if(content.getString("course") == ((ExamButton)node).getCourseCode()) {
+                        if(content.getString("code") == ((ExamButton)node).getCourseCode()) {
                             button = (ExamButton)node;
                             break;
                         }
