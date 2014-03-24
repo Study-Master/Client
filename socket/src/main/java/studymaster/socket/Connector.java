@@ -122,41 +122,6 @@ public final class Connector extends WebSocketClient{
         localDelegate.onError(ex);
     }
 
-    public void login(String password) throws NotYetConnectedException {
-        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        JSONObject msg = new JSONObject();
-        JSONObject content = new JSONObject();
-
-        msg.put("event", "login");
-        msg.put("endpoint", localEndpoint);
-
-        content.put("account", localSender);
-        content.put("password", password);
-        content.put("time", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
-
-        msg.put("content", content);
-
-        super.send(msg.toString());
-    }
-
-    /**
-     * Send get profile request in JSON format
-     * @throws NotYetConnectedException not connected
-     */
-    public void profile() throws NotYetConnectedException{
-        JSONObject msg = new JSONObject();
-        JSONObject content = new JSONObject();
-
-        msg.put("event", "profile");
-        msg.put("endpoint", localEndpoint);
-
-        content.put("account", localSender);
-
-        msg.put("content", content);
-
-        super.send(msg.toString());
-    }
-
     public void auth() throws NotYetConnectedException {
         JSONObject msg = new JSONObject();
         JSONObject content = new JSONObject();
@@ -169,17 +134,5 @@ public final class Connector extends WebSocketClient{
         msg.put("content", content);
 
         super.send(msg.toString());
-    }
-
-    public void talk(String receiver, String text) throws NotYetConnectedException {
-        JSONObject msg = new JSONObject();
-        JSONObject event = new JSONObject();
-        msg.put("sender", localSender);
-        msg.put("receiver", receiver);
-        msg.put("text", text);
-        event.put("event", "talk");
-        event.put("client", localEndpoint);
-        event.put("content", msg);
-        super.send(event.toString());
     }
 }
