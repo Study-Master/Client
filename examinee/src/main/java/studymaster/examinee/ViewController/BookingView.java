@@ -49,7 +49,7 @@ public class BookingView extends ViewController{
             }
             else if(event.equals("booked")){
                 if(content.getString("status").equals("success")){
-                    alert("Exam successfully booked for " + code + "\nTime: " + start_time);
+                    //alert("Exam successfully booked for " + code + "\nTime: " + start_time);
                     backView();
                 }
             }

@@ -27,7 +27,7 @@ public class LoginView extends LoginViewController {
 
 				else if(status.equals("failed")) {
 					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
-					alert(content.getString("reason"));
+					systemErrorAlert(content.getString("reason"));
 				}
 
 				else {

@@ -37,7 +37,7 @@ public abstract class ViewController implements Initializable, Callback {
 
 	@Override public final void onClose(int code, String reason, boolean remote) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onClose) Socket's connection closed");
-		alert("Connection has been closed");
+		systemErrorAlert("Connection has been closed");
 	}
 
 	@Override public final void onError(Exception ex) {
@@ -45,7 +45,7 @@ public abstract class ViewController implements Initializable, Callback {
 		ex.printStackTrace();
 	}
 
-	protected final void alert(final String content) {
+	protected final void systemErrorAlert(final String content) {
 		javafx.application.Platform.runLater(new Runnable() {
 			@Override public void run() {
 				final Stage dialogStage = new Stage();
