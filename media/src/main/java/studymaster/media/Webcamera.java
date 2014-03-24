@@ -7,9 +7,12 @@ import javafx.scene.image.ImageView;
 public class Webcamera {
 	private static Webcamera instance;
 	private static Webcam webcam;
-	private static boolean status;
+	public static volatile boolean isStreaming;
+    public static volatile boolean isOpening;
+    public static volatile boolean isClosing;
 	private static class WebcamThread extends Thread {
-        ImageView view;
+        private ImageView view;
+
 
         public WebcamThread(ImageView view) {
             this.view = view;
@@ -20,24 +23,22 @@ public class Webcamera {
         }
 
         @Override public void run() {
-            while (status) {
-            	wct = null;
-            	try {
-            		Image image = createImage();
-            		view.setImage(image);
-            		sleep(200);
-            	} catch (Exception e) {
-            		e.printStackTrace();
-            	}
+            while (isClosing);
+            while (isStreaming) {
+                Image image = createImage();
+                view.setImage(image);
+                isOpening = false;
             }
         }
     }
     private static class WebcamCloseThread extends Thread {
     	@Override public void run() {
-    		wt = null;
-    		while (!status) {
-    			if(webcam.isOpen()) {
+    		while (isOpening);
+    		if (!isStreaming) {
+    			if(webcam.isOpen() && webcam!=null) {
+                    isClosing = true;
     				webcam.close();
+                    isClosing = false;
     			}
     		}
     	}
@@ -45,10 +46,15 @@ public class Webcamera {
     private static WebcamThread wt;
     private static WebcamCloseThread wct;
 
-	private Webcamera() {}
+	private Webcamera() {
+        isStreaming = false;
+        isOpening = false;
+        isClosing = false;
+        wt = new WebcamThread(null);
+    }
 
 	public static Webcamera getInstance() {
-		if (instance==null) {
+		if (instance == null) {
 			instance = new Webcamera();
 		}
 		else {}
@@ -56,28 +62,28 @@ public class Webcamera {
 	}
 
 	public static Image createImage() {
-		if(webcam==null) {
+		if(webcam == null) {
+            isOpening = true;
 			webcam = Webcam.getDefault();
 		}
 		else {}
 
 		if(!webcam.isOpen()) {
-			webcam.open();
+            isOpening = true;
+			webcam.open(false);
 		}
 		else {}
 		return ImgUtil.createImage(webcam.getImage());
 	}
 
 	public static void stop() {
-		status = false;
-		if (wct==null) {
-			wct = new WebcamCloseThread();
-			wct.start();
-		}
+		isStreaming = false;
+		wct = new WebcamCloseThread();
+		wct.start();
 	}
 
 	public void video(ImageView imageView) {
-    	status = true;
+    	isStreaming = true;
         wt = new WebcamThread(imageView);
         wt.start();
 	}
