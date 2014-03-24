@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 public class Webcamera {
 	private static Webcamera instance;
 	private static Webcam webcam;
+    private static boolean isRunning;
 	public static volatile boolean isStreaming;
     public static volatile boolean isOpening;
     public static volatile boolean isClosing;
@@ -47,6 +48,7 @@ public class Webcamera {
     private static WebcamCloseThread wct;
 
 	private Webcamera() {
+        isRunning = false;
         isStreaming = false;
         isOpening = false;
         isClosing = false;
@@ -77,14 +79,21 @@ public class Webcamera {
 	}
 
 	public static void stop() {
-		isStreaming = false;
-		wct = new WebcamCloseThread();
-		wct.start();
+        if (isStreaming) {
+            isStreaming = false;
+            wct = new WebcamCloseThread();
+            wct.start();
+        }
+		else {}
 	}
 
 	public void start(ImageView imageView) {
-    	isStreaming = true;
-        wt = new WebcamThread(imageView);
-        wt.start();
+        if (isStreaming) {
+            wt.setImageView(imageView);
+        } else {
+            isStreaming = true;
+            wt = new WebcamThread(imageView);
+            wt.start();
+        }
 	}
 }
