@@ -82,7 +82,7 @@ public class Webcamera {
 		wct.start();
 	}
 
-	public void video(ImageView imageView) {
+	public void start(ImageView imageView) {
     	isStreaming = true;
         wt = new WebcamThread(imageView);
         wt.start();

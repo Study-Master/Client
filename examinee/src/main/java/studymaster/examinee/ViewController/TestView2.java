@@ -12,7 +12,7 @@ public class TestView2 extends TestViewController {
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
         Webcamera webcam = Webcamera.getInstance();
-        webcam.video(imageView);
+        webcam.start(imageView);
     }
     
     @Override public void onMessage(String message) {
