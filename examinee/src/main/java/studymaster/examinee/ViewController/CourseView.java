@@ -96,7 +96,7 @@ public class CourseView extends HomeViewController {
         if (cancelInfo.getString("status").equals("successful")) {
             System.out.println("[Info] Successfully cancel the booking!");
             //alert
-            alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
+            //alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
             try{
                 final String examStartTime = cancelInfo.getString("start_time");
                 final String courseCode = cancelInfo.getString("code");
@@ -117,7 +117,7 @@ public class CourseView extends HomeViewController {
         }      
         else {
             System.out.println("[Info] Cancel failed");
-            alert("Can't cancel this exam. " + cancelInfo.getString("error"));         
+            //alert("Can't cancel this exam. " + cancelInfo.getString("error"));         
         }
     }
 
