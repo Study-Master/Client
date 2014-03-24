@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 public interface AudioEventHandler {
 
     public void onMessage(WebSocket conn, String message);
-
+    
     public void onMessage(WebSocket conn, ByteBuffer message );
 
     public void onOpen(WebSocket conn, ClientHandshake handshake);

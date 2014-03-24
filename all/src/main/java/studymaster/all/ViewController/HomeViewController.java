@@ -10,17 +10,12 @@ import javafx.fxml.Initializable;
  */
 public abstract class HomeViewController extends ViewController {
 
-	@FXML
-    public final void gotoTestAction() {
+	@FXML public final void gotoTestAction() {
     	director.pushStageWithFXML(getClass().getResource("/fxml/testView1.fxml"));
     }
 
-	@Override
-	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+	@Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		super.initialize(location, resources);
-
-		if(connector.isOpen()) {
-			connector.profile();
-		}
+		connector.setAndSendMessageContainer("profile", null);
 	}
 }

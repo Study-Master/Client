@@ -10,19 +10,19 @@ import java.nio.channels.NotYetConnectedException;
 public final class Connector extends WebSocketClient{
     private static class defaultDelegate implements Callback {
         public void onOpen(short httpStatus, String httpStatusMessage) {
-            System.out.println("[debug] (Connector.defaultDelegate onOpen): Connection open, using default delegate.");
+            System.out.println("[debug] (" + defaultDelegate.class.getSimpleName() + " onOpen): Connection open, using default delegate.");
         }
 
         public void onClose(int code, String reason, boolean remote) {
-            System.out.println("[debug] (Connector.defaultDelegate onClose): Connection close, using default delegate.");
+            System.out.println("[debug] ("  + defaultDelegate.class.getSimpleName() + " onClose): Connection close, using default delegate.");
         }
 
         public void onMessage(String message) {
-            System.out.println("[debug] (Connector.defaultDelegate onMessage): Receiving message, using default delegate.");
+            System.out.println("[debug] (" + defaultDelegate.class.getSimpleName() + " onMessage): Receiving message, using default delegate.");
         }
 
         public void onError(Exception ex) {
-            System.err.println("[error] (Connector.defaultDelegate onError): An error, using default delegate.");
+            System.err.println("[error] (" + defaultDelegate.class.getSimpleName() + " onError): An error, using default delegate.");
         }
     }
     private static String localServer = "ws://localhost";
@@ -30,10 +30,11 @@ public final class Connector extends WebSocketClient{
     private static Callback localDelegate = null;
     public static String localSender = "Default Sender";
     private static String localEndpoint = "Default Connector";
-    private static String messageContainer = "";
+    private static String messageContainer = "Default Message";
 
     private Connector(URI serverURI) {
         super(serverURI);
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " Connector) Create Connector instance");
     }
 
     public static Connector getInstance() {
@@ -47,104 +48,78 @@ public final class Connector extends WebSocketClient{
                 instance = null;
             }
         }
+        else {}
         return instance;
     }
 
+    public static Connector renew() {
+         System.out.println("[info] (" + Connector.class.getSimpleName() + " renew)");
+        instance = null;
+        return getInstance();
+    }
+
     public static void setServer(String server) {
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " setServer) Set local server to " + server);
         localServer = server;
     }
 
     public static void setDelegate(Callback delegate) {
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " setDelegate) Set Callback to " + delegate.getClass().getSimpleName());
         localDelegate = delegate;
     }
 
     public static void setSender(String sender) {
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " setSender) Set local sender to " + sender);
         localSender = sender;
+    }
+
+    public static void setEndpoint(String endpoint) {
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " setEndpoint) Set local endpoint to " + endpoint);
+        localEndpoint = endpoint;
     }
 
     public static String getSender() {
         return localSender;
     }
-    
-    public static void setEndpoint(String endpoint) {
-        localEndpoint = endpoint;
+
+    public static void setMessageContainer(String event, JSONObject content) {
+        JSONObject msg = new JSONObject();
+        msg.put("event", event);
+        msg.put("endpoint", localEndpoint);
+        if (content==null) {
+            msg.put("content", "null");
+        }
+        else {
+            msg.put("content", content);
+        }
+        messageContainer = msg.toString();
+
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " setMessageContainer) Set messageContainer to " + messageContainer);
     }
 
-    public static void setMessageContainer(String message) {
-        messageContainer = message;
-    }
-
-    public static Connector renew() {
-        instance = null;
-        return getInstance();
-    }
-
-    @Override
-    public void onOpen(ServerHandshake handshakedata) {
-        localDelegate.onOpen(handshakedata.getHttpStatus(), handshakedata.getHttpStatusMessage());
-    }
-
-    @Override
-    public void onClose(int code, String reason, boolean remote) {
-        localDelegate.onClose(code, reason, remote);
-    }
-
-    @Override
-    public void onMessage(String message) {
-        localDelegate.onMessage(message);
-    }
-
-    @Override
-    public void onError(Exception ex) {
-        localDelegate.onError(ex);
-    }
-
-    /**
-     * Send message which is saved in messageContainer
-     * @throws NotYetConnectedException not connected
-     */
     public void sendMessageContainer() throws NotYetConnectedException {
         super.send(messageContainer);
     }
 
-    /**
-     * Send login request in JSON format.
-     * @param  password                 user's password in md5Hex
-     * @throws NotYetConnectedException not connected
-     */
-    public void login(String password) throws NotYetConnectedException {
-        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        JSONObject msg = new JSONObject();
-        JSONObject content = new JSONObject();
-
-        msg.put("event", "login");
-        msg.put("endpoint", localEndpoint);
-
-        content.put("account", localSender);
-        content.put("password", password);
-        content.put("time", df.format(new java.util.Date()));
-
-        msg.put("content", content);
-
-        super.send(msg.toString());
+    public void setAndSendMessageContainer(String event, JSONObject content) throws NotYetConnectedException {
+        setMessageContainer(event, content);
+        sendMessageContainer();
     }
 
-    /**
-     * Send get profile request in JSON format
-     * @throws NotYetConnectedException not connected
-     */
-    public void profile() throws NotYetConnectedException{
-        JSONObject msg = new JSONObject();
-        JSONObject content = new JSONObject();
+    @Override public void onOpen(ServerHandshake handshakedata) {
+        localDelegate.onOpen(handshakedata.getHttpStatus(), handshakedata.getHttpStatusMessage());
+    }
 
-        msg.put("event", "profile");
-        msg.put("endpoint", localEndpoint);
+    @Override public void onClose(int code, String reason, boolean remote) {
+        localDelegate.onClose(code, reason, remote);
+    }
 
-        content.put("account", localSender);
+    @Override public void onMessage(String message) {
+        localDelegate.onMessage(message);
+    }
 
-        msg.put("content", content);
-
-        super.send(msg.toString());
+    @Override public void onError(Exception ex) {
+        localDelegate.onError(ex);
     }
 
     public void auth() throws NotYetConnectedException {
@@ -159,17 +134,5 @@ public final class Connector extends WebSocketClient{
         msg.put("content", content);
 
         super.send(msg.toString());
-    }
-
-    public void talk(String receiver, String text) throws NotYetConnectedException {
-        JSONObject msg = new JSONObject();
-        JSONObject event = new JSONObject();
-        msg.put("sender", localSender);
-        msg.put("receiver", receiver);
-        msg.put("text", text);
-        event.put("event", "talk");
-        event.put("client", localEndpoint);
-        event.put("content", msg);
-        super.send(event.toString());
     }
 }

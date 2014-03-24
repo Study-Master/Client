@@ -32,6 +32,11 @@
       <artifactId>socket</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>studymaster</groupId>
+      <artifactId>media</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
    <build>

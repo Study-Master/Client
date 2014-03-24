@@ -34,13 +34,12 @@
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="407.0" layoutY="436.0" mnemonicParsing="false" onMousePressed="#testAction" onMouseReleased="#aftertestAction" text="WEBCAM TEST" />
     <Label alignment="CENTER" layoutX="218.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" style="-fx-font-size: 15;&#10;" text="*Press start to open webcam. If you can see yourself up here, you are all set!">
       <font>
         <Font size="15.0" />
       </font>
     </Label>
-    <ImageView fitHeight="203.0" fitWidth="203.0" layoutX="407.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="imageView" fitHeight="262.0" fitWidth="262.0" layoutX="381.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/User.png" />
       </image>

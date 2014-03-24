@@ -6,3 +6,6 @@ release.properties
 .classpath
 .project
 .settings/
+*.java#
+
+*.java

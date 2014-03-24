@@ -11,14 +11,13 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.invigilator.ViewController.LoginView">
-<AnchorPane id="AnchorPane" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.invigilator.ViewController.LoginView">
   <children>
     <Group id="Group" layoutX="212.0" layoutY="130.0">
       <children>
         <Group id="Group" layoutX="201.0" layoutY="208.0">
           <children>
-            <TextField fx:id="accountField" alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" prefHeight="35.0" prefWidth="200.0" promptText="Account" />
-            <PasswordField fx:id="passwordField" layoutX="0.0" layoutY="44.0" prefHeight="35.0" prefWidth="200.0" promptText="Password" />
+            <TextField fx:id="accountField" alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" onAction="#onEnter" prefHeight="35.0" prefWidth="200.0" promptText="Account" />
+            <PasswordField fx:id="passwordField" layoutX="0.0" layoutY="44.0" onAction="#onEnter" prefHeight="35.0" prefWidth="200.0" promptText="Password" />
             <Button fx:id="loginButton" layoutX="0.0" layoutY="98.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="30.0" prefWidth="90.0" text="Login" />
             <Button fx:id="exitButton" layoutX="110.0" layoutY="98.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="30.0" prefWidth="90.0" text="Exit" />
           </children>
