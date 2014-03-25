@@ -420,6 +420,7 @@ public class CourseView extends HomeViewController {
     }
 
     public void showAlert(final String title, final String info) {
+        AlertInfo.setCourseView(this);
         javafx.application.Platform.runLater(new Runnable() {
             @Override public void run() {
                 System.out.println("[Info] AlertView created.");
