@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.AlertView">
+  <children>
+    <Button fx:id="closeButton" layoutX="258.0" layoutY="212.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="37.0" prefWidth="85.0" style="" text="OK" />
+    <Label fx:id="title" alignment="CENTER" layoutX="52.0" layoutY="21.0" prefHeight="39.0" prefWidth="496.0" style="" text="Apple" textAlignment="CENTER" wrapText="true">
+      <font>
+        <Font name="Helvetica Neue Bold" size="30.0" />
+      </font>
+    </Label>
+    <Label fx:id="info" layoutX="59.0" layoutY="89.0" prefHeight="98.0" prefWidth="482.0" text="" wrapText="true" />
+  </children>
+  <stylesheets>
+    <URL value="@../stylesheet/alertView.css" />
+  </stylesheets>
+</AnchorPane>

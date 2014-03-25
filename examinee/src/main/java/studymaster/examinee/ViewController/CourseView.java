@@ -17,6 +17,7 @@ import studymaster.examinee.BookButton;
 import studymaster.examinee.CountDown;
 import studymaster.examinee.ExamButton;
 import studymaster.examinee.QuestionDatabase;
+import studymaster.examinee.AlertInfo;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import javafx.scene.layout.AnchorPane;
@@ -28,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import org.json.JSONException;
 
 public class CourseView extends HomeViewController {
@@ -97,6 +99,7 @@ public class CourseView extends HomeViewController {
             System.out.println("[Info] Successfully cancel the booking!");
             //alert
             //alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
+            showAlert("Cancel Exam", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!");
             try{
                 final String examStartTime = cancelInfo.getString("start_time");
                 final String courseCode = cancelInfo.getString("code");
@@ -117,7 +120,7 @@ public class CourseView extends HomeViewController {
         }      
         else {
             System.out.println("[Info] Cancel failed");
-            //alert("Can't cancel this exam. " + cancelInfo.getString("error"));         
+            showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error"));         
         }
     }
 
@@ -390,11 +393,51 @@ public class CourseView extends HomeViewController {
         content.put("code", course);
         Connector.getInstance().setAndSendMessageContainer("exam", content);
     }
+
+    public void showAlert(final String title, final String info) {
+javafx.application.Platform.runLater(new Runnable() {
+        @Override public void run() {
+        Stage alert = new Stage();
+        try {
+        
+        AlertInfo.setTitle(title);
+        AlertInfo.setInfo(info);
+        alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
+        alert.show();
+        }
+        catch (Exception e) {
+            System.err.println("Error when showing alert!");
+        }
+    }
+});
+}
 }
 
 
 
 
+        // javafx.application.Platform.runLater(new Runnable() {
+        //     @Override public void run() {
+        //         final Stage dialogStage = new Stage();
+        //         dialogStage.initModality(Modality.WINDOW_MODAL);
+        //         Button button = new Button("OK");
+        //         Text text = new Text(content);
+        //         dialogStage.initStyle(StageStyle.UNDECORATED);
+        //         dialogStage.setScene(new Scene(VBoxBuilder.create()
+        //                                                   .children(text, button)
+        //                                                   .alignment(Pos.CENTER)
+        //                                                   .padding(new Insets(8))
+        //                                                   .minHeight(100)
+        //                                                   .minWidth(200)
+        //                                                   .maxWidth(400)
+        //                                                   .build()));
+        //         dialogStage.show();
 
-
-
+        //         button.setOnAction(new EventHandler<ActionEvent>() {
+        //             @Override public void handle(ActionEvent event) {
+        //                 dialogStage.close();
+        //                 connector = Connector.renew();
+        //             }
+        //         });
+        //     }
+        // });
