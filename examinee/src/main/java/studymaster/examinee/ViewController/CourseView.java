@@ -99,7 +99,7 @@ public class CourseView extends HomeViewController {
             System.out.println("[Info] Successfully cancel the booking!");
             //alert
             //alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
-            showAlert("Cancel Exam", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!");
+            showAlert("Exam Canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!");
             try{
                 final String examStartTime = cancelInfo.getString("start_time");
                 final String courseCode = cancelInfo.getString("code");
@@ -395,49 +395,15 @@ public class CourseView extends HomeViewController {
     }
 
     public void showAlert(final String title, final String info) {
-javafx.application.Platform.runLater(new Runnable() {
-        @Override public void run() {
-        Stage alert = new Stage();
-        try {
-        
-        AlertInfo.setTitle(title);
-        AlertInfo.setInfo(info);
-        alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
-        alert.show();
-        }
-        catch (Exception e) {
-            System.err.println("Error when showing alert!");
-        }
+        javafx.application.Platform.runLater(new Runnable() {
+            @Override public void run() {
+                System.out.println("[Info] AlertView created.");
+                Stage alert = new Stage();
+                AlertInfo.setTitle(title);
+                AlertInfo.setInfo(info);
+                alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
+                alert.show();
+            }
+        });
     }
-});
 }
-}
-
-
-
-
-        // javafx.application.Platform.runLater(new Runnable() {
-        //     @Override public void run() {
-        //         final Stage dialogStage = new Stage();
-        //         dialogStage.initModality(Modality.WINDOW_MODAL);
-        //         Button button = new Button("OK");
-        //         Text text = new Text(content);
-        //         dialogStage.initStyle(StageStyle.UNDECORATED);
-        //         dialogStage.setScene(new Scene(VBoxBuilder.create()
-        //                                                   .children(text, button)
-        //                                                   .alignment(Pos.CENTER)
-        //                                                   .padding(new Insets(8))
-        //                                                   .minHeight(100)
-        //                                                   .minWidth(200)
-        //                                                   .maxWidth(400)
-        //                                                   .build()));
-        //         dialogStage.show();
-
-        //         button.setOnAction(new EventHandler<ActionEvent>() {
-        //             @Override public void handle(ActionEvent event) {
-        //                 dialogStage.close();
-        //                 connector = Connector.renew();
-        //             }
-        //         });
-        //     }
-        // });
