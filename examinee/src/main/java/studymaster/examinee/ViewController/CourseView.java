@@ -30,6 +30,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.JSONException;
 
 public class CourseView extends HomeViewController {
@@ -107,10 +108,15 @@ public class CourseView extends HomeViewController {
                         @Override
                         public void run() {
                             final CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
-                            cancelButton.setId("Deleted");
-                            int row = List.getRowIndex(cancelButton);
-                            createBookButton(examStartTime, courseCode, row);
-                            List.getChildren().remove(cancelButton);
+                            if (cancelButton == null) {
+                                System.err.println("[Err] Wrong message from server! Don't find the node!");
+                            }
+                            else {
+                                cancelButton.setId("Deleted");
+                                int row = List.getRowIndex(cancelButton);
+                                createBookButton(examStartTime, courseCode, row);
+                                List.getChildren().remove(cancelButton);
+                            }
                         }
                     });
             }
@@ -120,7 +126,14 @@ public class CourseView extends HomeViewController {
         }      
         else {
             System.out.println("[Info] Cancel failed");
-            showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error"));         
+            showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error")); 
+            final CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
+            if (cancelButton == null) {
+                System.err.println("[Err] Wrong message from server! Don't find the node!");
+            }
+            else {
+                cancelButton.setId("");
+            }        
         }
     }
 
@@ -135,16 +148,18 @@ public class CourseView extends HomeViewController {
                 if (node instanceof CancelButton) {
                     if(courseCode == ((CancelButton)node).getCourseCode()) {
                         button = (CancelButton)node;
-                        System.out.println("[Info] Find it!");
+                        System.out.println("[Info] Find the node!");
                         break;
                     }
                 }
             }
             if (button == null) {
-                System.err.println("[Info] Something wrong! Don't find the node!");
+                System.err.println("[Err] Wrong message from server! Don't find the node!");
             }
-            createCountDownLabel(examStartTime, courseCode, button.getRow());
-            List.getChildren().remove(button);
+            else {
+                createCountDownLabel(examStartTime, courseCode, button.getRow());
+                List.getChildren().remove(button);
+            }
         }
         catch (Exception e) {
             System.err.println("Error occurred in cancel_disabled");
@@ -167,8 +182,13 @@ public class CourseView extends HomeViewController {
                     }
                 }
             }
-            createExamButton(examStartTime, courseCode, label.getRow());
-            List.getChildren().remove(label);
+            if (label == null) {
+                System.err.println("[Err] Wrong message from server! Don't find the node!");
+            }
+            else {
+                createExamButton(examStartTime, courseCode, label.getRow());
+                List.getChildren().remove(label);
+            }
         }
         catch (Exception e) {
             System.err.println("Error occurred in exam_enabled");
@@ -188,9 +208,14 @@ public class CourseView extends HomeViewController {
                     }
                 }
             }
-            Label label = new Label("Close");
-            List.add(label, 2, button.getRow());
-            List.getChildren().remove(button);
+            if (button == null) {
+                System.err.println("[Err] Wrong message from server! Don't find the node!");
+            }
+            else {
+                Label label = new Label("Close");
+                List.add(label, 2, button.getRow());
+                List.getChildren().remove(button);
+            }
         }
         catch (Exception e) {
             System.err.println("Error occurred in exam_disabled");
@@ -399,6 +424,7 @@ public class CourseView extends HomeViewController {
             @Override public void run() {
                 System.out.println("[Info] AlertView created.");
                 Stage alert = new Stage();
+                alert.initStyle(StageStyle.UNDECORATED);
                 AlertInfo.setTitle(title);
                 AlertInfo.setInfo(info);
                 alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));

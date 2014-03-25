@@ -19,6 +19,7 @@ import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.ButtonGroup;
 import javax.swing.AbstractButton;
 import studymaster.examinee.AlertInfo;
@@ -110,6 +111,7 @@ public class BookingView extends ViewController{
             @Override public void run() {
                 System.out.println("[Info] AlertView created.");
                 Stage alert = new Stage();
+                alert.initStyle(StageStyle.UNDECORATED);
                 AlertInfo.setTitle(title);
                 AlertInfo.setInfo(info);
                 alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
