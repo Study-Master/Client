@@ -424,7 +424,7 @@ public class CourseView extends HomeViewController {
         javafx.application.Platform.runLater(new Runnable() {
             @Override public void run() {
                 System.out.println("[Info] AlertView created.");
-                Stage alert = new Stage();
+                Stage alert;
                 AlertInfo.setTitle(title);
                 AlertInfo.setInfo(info);
                 alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
