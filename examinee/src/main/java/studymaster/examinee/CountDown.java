@@ -51,10 +51,6 @@ public class CountDown extends Label {
                                                                   long diffHours = diff / (60 * 60 * 1000) % 24;
                                                                   long diffSeconds = diff / 1000 % 60;
                                                                   if (diffDays==0 && diffHours==0 && diffMinutes<15 ) {
-                                                                      // javafx.application.Platform.runLater(new Runnable() {
-                                                                      // @Override
-                                                                      // public void run() {
-
                                                                       ObservableList<Node> childrens = CourseView.getList().getChildren();
                                                                       Node label = null;
                                                                       for(Node node : childrens) {
@@ -65,16 +61,31 @@ public class CountDown extends Label {
                                                                       }
                                                                       CourseView.getList().getChildren().remove(label);
                                                                       CourseView.createExamButton(examStartTime, courseCode, row);
-                                                                      //   }
-                                                                      // });
                                                                   }
                                                                   else {
-                                                                      String remainingTime;
+                                                                      String remainingTime = "";
                                                                       if (diffDays>0) {
                                                                             remainingTime = Long.toString(diffDays) + " Days" ;
                                                                         }
                                                                         else {
-                                                                            remainingTime = Long.toString(diffHours) + ":" + Long.toString(diffMinutes) + ":" + Long.toString(diffSeconds) ;
+                                                                            if (diffHours>9) {
+                                                                                remainingTime += Long.toString(diffHours);
+                                                                            }
+                                                                            else {
+                                                                                remainingTime += "0" + Long.toString(diffHours);
+                                                                            }
+                                                                            if (diffMinutes>9) {
+                                                                                remainingTime += ":" + Long.toString(diffMinutes);
+                                                                            }
+                                                                            else {
+                                                                                remainingTime += ":0" + Long.toString(diffMinutes);
+                                                                            }
+                                                                            if (diffSeconds>9) {
+                                                                                remainingTime += ":" + Long.toString(diffSeconds);
+                                                                            }
+                                                                            else {
+                                                                                remainingTime += ":0" + Long.toString(diffSeconds);
+                                                                            }
                                                                         }
                                                                       setText(remainingTime);
                                                                       if (remainingTime.contains(":")) {

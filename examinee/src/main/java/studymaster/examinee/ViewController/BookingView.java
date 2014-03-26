@@ -111,10 +111,10 @@ public class BookingView extends ViewController{
             @Override public void run() {
                 System.out.println("[Info] AlertView created.");
                 Stage alert = new Stage();
-                alert.initStyle(StageStyle.UNDECORATED);
                 AlertInfo.setTitle(title);
                 AlertInfo.setInfo(info);
                 alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
+                alert.initStyle(StageStyle.UNDECORATED);
                 alert.show();
             }
         });

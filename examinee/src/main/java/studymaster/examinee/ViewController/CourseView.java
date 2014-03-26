@@ -317,7 +317,7 @@ public class CourseView extends HomeViewController {
                                         //Cancel button
                                         createCancelButton(examStartTime, courseCode, i);
                                     }
-                                    else if (diffMinutes>=15) {
+                                    else if (diffDays>0 || diffMinutes>=15) {
                                         //Countdown label
                                         createCountDownLabel(examStartTime, courseCode, i);
                                     }
@@ -425,10 +425,10 @@ public class CourseView extends HomeViewController {
             @Override public void run() {
                 System.out.println("[Info] AlertView created.");
                 Stage alert = new Stage();
-                alert.initStyle(StageStyle.UNDECORATED);
                 AlertInfo.setTitle(title);
                 AlertInfo.setInfo(info);
                 alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
+                alert.initStyle(StageStyle.UNDECORATED);
                 alert.show();
             }
         });
