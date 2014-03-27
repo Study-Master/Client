@@ -1,20 +1,12 @@
 package studymaster.examinee.ViewController;
 
-import javafx.scene.control.TextArea;
 import studymaster.all.ViewController.ViewController;
-import studymaster.examinee.App;
 import javafx.fxml.FXML;
-import org.json.JSONObject;
-import javafx.fxml.FXML;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import studymaster.examinee.AlertInfo;
 import studymaster.socket.Connector;
-import studymaster.examinee.ViewController.CourseView;
 
 public class AlertView extends ViewController {
 
