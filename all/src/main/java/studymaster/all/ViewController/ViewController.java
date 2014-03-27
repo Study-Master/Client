@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public abstract class ViewController implements Initializable, Callback, AlertAction {
+public abstract class ViewController implements Initializable, Callback {
     protected Director director = null;
     protected Connector connector = null;
 
@@ -37,13 +37,14 @@ public abstract class ViewController implements Initializable, Callback, AlertAc
         System.err.println("[err] ("+ getClass().getSimpleName() +" onError) An socket error has been caught");
         ex.printStackTrace();
     }
-
-    @Override public void onAction(Stage stage) {
-        System.out.println("button clicked");
-        stage.close();
-    }
     
     protected final void systemErrorAlert(final String content) {
-        director.invokeErrorAlert(content, this);
+        AlertAction action = new AlertAction() {
+            @Override public void onAction(Stage stage) {
+                connector.renew();
+                stage.close();
+            }
+        };
+        director.invokeErrorAlert(content, action);
     }
 }
