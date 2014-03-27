@@ -31,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Modality;
 import org.json.JSONException;
 
 public class CourseView extends HomeViewController {
@@ -429,6 +430,8 @@ public class CourseView extends HomeViewController {
                 AlertInfo.setInfo(info);
                 alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
                 alert.initStyle(StageStyle.UNDECORATED);
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.requestFocus();
                 alert.show();
             }
         });
