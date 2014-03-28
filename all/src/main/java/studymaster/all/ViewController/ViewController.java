@@ -6,6 +6,9 @@ import studymaster.socket.Callback;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.control.Label;
 
 public abstract class ViewController implements Initializable, Callback {
@@ -40,6 +43,16 @@ public abstract class ViewController implements Initializable, Callback {
     
     protected final void systemErrorAlert(final String content) {
         AlertAction action = new AlertAction() {
+            @Override public void sceneStyle(Scene scene) {
+                scene.getStylesheets().add("stylesheet/alert.css");
+            }
+
+            @Override public void gridPaneStyle(GridPane gridPane) {
+                gridPane.getColumnConstraints().add(new ColumnConstraints(300));
+                gridPane.setAlignment(javafx.geometry.Pos.CENTER);
+                gridPane.setHgap(20);
+            }
+
             @Override public void onAction(Stage stage) {
                 connector.renew();
                 stage.close();

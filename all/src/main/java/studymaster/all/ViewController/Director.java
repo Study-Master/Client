@@ -6,9 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Modality;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
@@ -104,17 +106,38 @@ public final class Director {
         javafx.application.Platform.runLater(new Runnable() {
             @Override public void run() {
                 final Stage alert = new Stage();
+                action.alertStyle(alert);
+                alert.setFullScreen(false);
+                alert.initStyle(StageStyle.UNDECORATED);
                 alert.initModality(Modality.APPLICATION_MODAL);
+                alert.setResizable(false);
+
+                Pane up = new Pane();
+                up.setPrefSize(30, 30);
                 Button button = new Button("OK");
+                Pane in = new Pane();
+                in.setPrefSize(20, 20);
                 Label message = new Label(error);
+                message.setWrapText(true);
+                Pane down = new Pane();
+                down.setPrefSize(30, 30);
+
                 GridPane gridPane = new GridPane();
+                action.gridPaneStyle(gridPane);
 
-                GridPane.setConstraints(message, 1, 0);
-                GridPane.setConstraints(button, 1, 1);
+                GridPane.setConstraints(up, 0, 0);
+                GridPane.setConstraints(message, 0, 1);
+                GridPane.setHalignment(message, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(in, 0, 2);
+                GridPane.setConstraints(button, 0, 3);
+                GridPane.setHalignment(button, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(down, 0, 4);
 
-                gridPane.getChildren().addAll(button, message);
+                gridPane.getChildren().addAll(up, button, in, message, down);
                 
                 Scene alertScene = new Scene(gridPane);
+                action.sceneStyle(alertScene);
+
                 alert.setScene(alertScene);
                 alert.show();
                 button.setOnAction(new EventHandler<ActionEvent>() {
