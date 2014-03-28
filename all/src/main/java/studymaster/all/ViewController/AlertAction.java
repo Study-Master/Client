@@ -7,13 +7,7 @@ import javafx.scene.control.Button;
 
 public abstract class AlertAction {
 
-    public void sceneStyle(Scene scene){}
-
-    public void alertStyle(Stage stage){}
-
-    public void gridPaneStyle(GridPane gridPane){}
-
-    public abstract void onAction(Stage stage);
+    public abstract void ok(Stage stage);
 
     public void cancel(Stage stage){}
 
