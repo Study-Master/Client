@@ -64,7 +64,6 @@ public class CourseView extends HomeViewController {
             }
             else if (event.equals("exam_enabled")) {
                 enableExam(content);
-
             }
             else if (event.equals("exam_disabled")) {
                 disableExam(content);
@@ -140,27 +139,33 @@ public class CourseView extends HomeViewController {
 
     private void disableCancel(final JSONObject content) {
         //Remove cancel button, add count dwon label
-        String courseCode = content.getString("code");
-        String examStartTime = content.getString("start_time");
+        final String courseCode = content.getString("code");
+        final String examStartTime = content.getString("start_time");
         try {
-            ObservableList<Node> childrens = CourseView.getList().getChildren();
-            CancelButton button = null;
-            for (Node node : childrens) {
-                if (node instanceof CancelButton) {
-                    if(courseCode == ((CancelButton)node).getCourseCode()) {
-                        button = (CancelButton)node;
-                        System.out.println("[Info] Find the node!");
-                        break;
+            javafx.application.Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ObservableList<Node> childrens = CourseView.getList().getChildren();
+                    CancelButton button = null;
+                    for (Node node : childrens) {
+                        if (node instanceof CancelButton) {
+                            System.out.println("[Info] Find a cancel button.");
+                            if(courseCode.equals(((CancelButton)node).getCourseCode())) {
+                                button = (CancelButton)node;
+                                System.out.println("[Info] Find the node!");
+                                break;
+                            }
+                        }
+                    }
+                    if (button == null) {
+                        System.err.println("[Err] Wrong message from server! Don't find the node!");
+                    }
+                    else {
+                        createCountDownLabel(examStartTime, courseCode, button.getRow());
+                        List.getChildren().remove(button);
                     }
                 }
-            }
-            if (button == null) {
-                System.err.println("[Err] Wrong message from server! Don't find the node!");
-            }
-            else {
-                createCountDownLabel(examStartTime, courseCode, button.getRow());
-                List.getChildren().remove(button);
-            }
+            });                        
         }
         catch (Exception e) {
             System.err.println("Error occurred in cancel_disabled");
@@ -170,26 +175,31 @@ public class CourseView extends HomeViewController {
     private void enableExam(final JSONObject content) {
         //Remove count dwon label, add exam button
         //createExamButton(examStartTime, courseCode, row);
-        String courseCode = content.getString("code");
-        String examStartTime = content.getString("start_time");
+        final String courseCode = content.getString("code");
+        final String examStartTime = content.getString("start_time");
         try {
-            ObservableList<Node> childrens = CourseView.getList().getChildren();
-            CountDown label = null;
-            for (Node node : childrens) {
-                if (node instanceof CountDown) {
-                    if(content.getString("code") == ((CountDown)node).getCourseCode()) {
-                        label = (CountDown)node;
-                        break;
+            javafx.application.Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ObservableList<Node> childrens = CourseView.getList().getChildren();
+                    CountDown label = null;
+                    for (Node node : childrens) {
+                        if (node instanceof CountDown) {
+                            if(content.getString("code").equals(((CountDown)node).getCourseCode())) {
+                                label = (CountDown)node;
+                                break;
+                            }
+                        }
+                    }
+                    if (label == null) {
+                        System.err.println("[Err] Wrong message from server! Don't find the node!");
+                    }
+                    else {
+                        createExamButton(examStartTime, courseCode, label.getRow());
+                        List.getChildren().remove(label);
                     }
                 }
-            }
-            if (label == null) {
-                System.err.println("[Err] Wrong message from server! Don't find the node!");
-            }
-            else {
-                createExamButton(examStartTime, courseCode, label.getRow());
-                List.getChildren().remove(label);
-            }
+            });
         }
         catch (Exception e) {
             System.err.println("Error occurred in exam_enabled");
@@ -199,24 +209,29 @@ public class CourseView extends HomeViewController {
     private void disableExam(final JSONObject content) {
         //Remove cance button, add exam button
         try {
-            ExamButton button = null;
-            ObservableList<Node> childrens = CourseView.getList().getChildren();
-            for (Node node : childrens) {
-                if (node instanceof ExamButton) {
-                    if(content.getString("code") == ((ExamButton)node).getCourseCode()) {
-                        button = (ExamButton)node;
-                        break;
+            javafx.application.Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ExamButton button = null;
+                    ObservableList<Node> childrens = CourseView.getList().getChildren();
+                    for (Node node : childrens) {
+                        if (node instanceof ExamButton) {
+                            if(content.getString("code").equals(((ExamButton)node).getCourseCode())) {
+                                button = (ExamButton)node;
+                                break;
+                            }
+                        }
+                    }
+                    if (button == null) {
+                        System.err.println("[Err] Wrong message from server! Don't find the node!");
+                    }
+                    else {
+                        Label label = new Label("Close");
+                        List.add(label, 2, button.getRow());
+                        List.getChildren().remove(button);
                     }
                 }
-            }
-            if (button == null) {
-                System.err.println("[Err] Wrong message from server! Don't find the node!");
-            }
-            else {
-                Label label = new Label("Close");
-                List.add(label, 2, button.getRow());
-                List.getChildren().remove(button);
-            }
+            });
         }
         catch (Exception e) {
             System.err.println("Error occurred in exam_disabled");
