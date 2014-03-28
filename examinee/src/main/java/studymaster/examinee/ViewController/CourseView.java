@@ -139,6 +139,7 @@ public class CourseView extends HomeViewController {
 
     private void disableCancel(final JSONObject content) {
         //Remove cancel button, add count dwon label
+        //Pass the testing
         final String courseCode = content.getString("code");
         final String examStartTime = content.getString("start_time");
         try {
@@ -174,7 +175,7 @@ public class CourseView extends HomeViewController {
 
     private void enableExam(final JSONObject content) {
         //Remove count dwon label, add exam button
-        //createExamButton(examStartTime, courseCode, row);
+        //pass the test
         final String courseCode = content.getString("code");
         final String examStartTime = content.getString("start_time");
         try {
@@ -207,7 +208,7 @@ public class CourseView extends HomeViewController {
     }
 
     private void disableExam(final JSONObject content) {
-        //Remove cance button, add exam button
+        //Remove cancel button, add exam button
         try {
             javafx.application.Platform.runLater(new Runnable() {
                 @Override
@@ -226,7 +227,7 @@ public class CourseView extends HomeViewController {
                         System.err.println("[Err] Wrong message from server! Don't find the node!");
                     }
                     else {
-                        Label label = new Label("Close");
+                        Label label = new Label("Finished");
                         List.add(label, 2, button.getRow());
                         List.getChildren().remove(button);
                     }
@@ -322,29 +323,16 @@ public class CourseView extends HomeViewController {
                                 createBookButton(examStartTime, courseCode, i);
                             }
                             else if (status.equals("booked")) {
-                                try {
-                                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                    Date currentTime = new Date();
-                                    Date startTime = dateFormat.parse(examStartTime);
-                                    long diff = Math.abs(startTime.getTime() - currentTime.getTime());
-                                    long diffDays = diff / (24 * 60 * 60 * 1000);
-                                    long diffMinutes = diff / (60 * 1000) % 60;
-                                    long diffHours = diff / (60 * 60 * 1000) % 24;
-                                    if (diffDays>=3) {
-                                        //Cancel button
-                                        createCancelButton(examStartTime, courseCode, i);
-                                    }
-                                    else if (diffDays>0 || diffMinutes>=15) {
-                                        //Countdown label
-                                        createCountDownLabel(examStartTime, courseCode, i);
-                                    }
-                                    else {
-                                        //Exam button
-                                        createExamButton(examStartTime, courseCode, i);
-                                    }
-                                } catch (Exception e){
-                                    System.err.println("[err] ("+ getClass().getSimpleName() +")Error when parsing string");
-                                }
+                                //Cancel button
+                                createCancelButton(examStartTime, courseCode, i);
+                            }
+                            else if (status.equals("confirmed")) {
+                                //Countdown label
+                                createCountDownLabel(examStartTime, courseCode, i);
+                            }
+                            else if (status.equals("exam")) {
+                                //Exam button
+                                createExamButton(examStartTime, courseCode, i);
                             }
                         }
                         ap.getChildren().addAll(courseList);
