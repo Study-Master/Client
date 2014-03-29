@@ -19,17 +19,23 @@ import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javax.swing.ButtonGroup;
 import javax.swing.AbstractButton;
+import javafx.stage.StageStyle;
 import studymaster.all.ViewController.AlertAction;
+
+import javafx.scene.control.ScrollPane;
+
+import studymaster.examinee.AlertInfo;
+
 
 public class BookingView extends ViewController{
 
     @FXML protected Label titleLabel;
-    @FXML protected GridPane timeTable;
+    protected GridPane timeTable;
     protected ToggleGroup buttonGroup = new ToggleGroup();
     private static String code;
+    private static String name;
     private static String start_time;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -47,19 +53,21 @@ public class BookingView extends ViewController{
 
             if(event.equals("booking")) {
                 code = content.getString("code");
-                titleLabel.setText(code);
-                //Director.invokeInfoAlert("Exam canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!", this);
-                showTimeTable(content.getJSONArray("examTime"), timeTable, buttonGroup);
+                name = content.getString("name");
+                titleLabel.setText(code + " " + name);
+                showTimeTable(content.getJSONArray("examTime"), buttonGroup);
             }
             else if(event.equals("booked")){
                 if(content.getString("status").equals("success")){
-                    AlertAction action = new AlertAction() {
+                     AlertAction action = new AlertAction() {
                         @Override public void ok(Stage stage) {
                             stage.close();
                             backView();
                         }
                     };
-                    Director.invokeOneButtonAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time, action);                    
+                    Director.invokeOneButtonAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time, action);
+                    showAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time);
+                    backView();
                 }
             }
 
@@ -93,22 +101,52 @@ public class BookingView extends ViewController{
         Connector.setMessageContainer("booked", content);
     }
 
-    private void showTimeTable(final JSONArray examTime, final GridPane timeTable, final ToggleGroup buttonGroup){
-        final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+    private void showTimeTable(final JSONArray examTime, final ToggleGroup buttonGroup){
+
         javafx.application.Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     try{
+
+                        final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+                        final ScrollPane sp = (ScrollPane) pane.lookup("#scrollpane");
+                        final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
+
+                        timeTable = new GridPane();
+                        // List = courseList;
+                        AnchorPane.setTopAnchor(timeTable, 20.0);
+                        AnchorPane.setLeftAnchor(timeTable, 20.0);
+                        AnchorPane.setRightAnchor(timeTable, 10.0);
+                        AnchorPane.setBottomAnchor(timeTable, 25.0);
+                        //
+                        timeTable.setVgap(25);
+
                         for(int i=0; i<examTime.length(); i++){
                             RadioButton tempButton = new RadioButton(((JSONObject)examTime.getJSONObject(i)).getString("start_time"));
                             timeTable.add(tempButton, 0, i);
                             tempButton.setToggleGroup(buttonGroup);
+
                         }
+                        ap.getChildren().addAll(timeTable);
                     }catch (Exception e) {
                         System.out.println(e);
                         System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
                     }
+
                 }
             });
+    }
+
+    public void showAlert(final String title, final String info) {
+        javafx.application.Platform.runLater(new Runnable() {
+            @Override public void run() {
+                System.out.println("[Info] AlertView created.");
+                Stage alert = new Stage();
+                AlertInfo.setTitle(title);
+                AlertInfo.setInfo(info);
+                alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
+                alert.show();
+            }
+        });
     }
 }
