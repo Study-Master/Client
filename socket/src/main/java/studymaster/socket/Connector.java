@@ -7,7 +7,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import java.nio.channels.NotYetConnectedException;
 
-public final class Connector extends WebSocketClient{
+public final class Connector extends WebSocketClient {
     private static class defaultDelegate implements Callback {
         public void onOpen(short httpStatus, String httpStatusMessage) {
             System.out.println("[debug] (" + defaultDelegate.class.getSimpleName() + " onOpen): Connection open, using default delegate.");
@@ -80,6 +80,10 @@ public final class Connector extends WebSocketClient{
 
     public static String getSender() {
         return localSender;
+    }
+
+    public static String getEndpoint() {
+        return localEndpoint;
     }
 
     public static void setMessageContainer(String event, JSONObject content) {

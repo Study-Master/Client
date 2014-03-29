@@ -1,23 +1,35 @@
 #titleLabel {
 	-fx-alignment: center;
 	-fx-font-family: 'HelveticaNeue LT 25 UltLight';
-	-fx-font-size: 80;
+	-fx-font-size: 45;
+}
+
+.label {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-font-size: 25;
+	-fx-text-fill: rgba(0, 102, 153, 1);
+}
+.radio-button {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-font-size: 25;
+	-fx-text-fill: rgba(0, 102, 153, 1);
+	-fx-border-color: transparent;
 }
 
 .button {
 	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-font-size: 25;
+	-fx-text-fill: rgba(0, 102, 153, 1);
 	-fx-border-radius: 3px;
-    -fx-border-color: rgba(0, 102, 153, 1);
-    -fx-background-color: rgba(255, 255, 255, 0.5);
+	-fx-border-color: rgba(0, 102, 153, 1);
+	-fx-background-color: rgba(255, 255, 255, 0.5);
 }
 
-.button:pressed, .button:hover{
-    -fx-background-color: rgba(0, 102, 153, 1);
-    -fx-text-fill: white;
+.button:pressed, .button:hover {
+	-fx-background-color: rgba(0, 102, 153, 1);
+	-fx-text-fill: white;
 }
-#gridPane {
-	-fx-border: 2px solid; 
-	-fx-border-color: red; 
-	-fx-border-insets: 5;
-    -fx-grid-lines-visible: true;
+
+.button:disabled, .button:default:disabled {
+	-fx-opacity: 0.8;
 }

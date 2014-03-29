@@ -1,0 +1,47 @@
+#titleLabel {
+	-fx-alignment: center;
+	-fx-font-family: 'HelveticaNeue LT 25 Light';
+	-fx-font-size: 45;
+}
+
+#timer {
+	-fx-font-family: 'HelveticaNeue LT 25 Light';
+	-fx-font-size: 45;
+}
+
+
+.label {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-font-size: 30;
+	-fx-text-fill: rgba(0, 102, 153, 1);
+}
+
+
+.button {
+	-fx-font-size: 20;
+	-fx-text-fill: rgba(0, 102, 153, 1);
+	-fx-border-radius: 3px;
+    -fx-border-color: rgba(0, 102, 153, 1);
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+.button:pressed, .button:hover {
+    -fx-background-color: rgba(0, 102, 153, 1);
+    -fx-text-fill: white;
+}
+
+
+.radio-button {
+	-fx-font-family: 'HelveticaNeue LT 45 Light';
+	-fx-font-size: 25;
+	-fx-text-fill: rgba(0, 102, 153, 1);
+}
+.radio-button .dot {
+	/* this is to adjust the size of the circle*/
+    -fx-padding: 3px;
+}
+
+#msgArea {
+	-fx-background-color: rgba(155, 155, 155, 0.5);
+}

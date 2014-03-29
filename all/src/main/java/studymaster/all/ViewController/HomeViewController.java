@@ -2,6 +2,7 @@ package studymaster.all.ViewController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
 /**
  * LoginViewController class is the super class of both examinee 
