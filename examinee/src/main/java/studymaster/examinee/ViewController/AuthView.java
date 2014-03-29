@@ -1,31 +1,29 @@
 package studymaster.examinee.ViewController;
 
 import studymaster.all.ViewController.ViewController;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javafx.fxml.FXML;
-import studymaster.examinee.App;
-import studymaster.socket.Connector;
 import studymaster.socket.VideoCl;
+import studymaster.socket.VideoEventHandler;
+import studymaster.media.Webcamera;
+import javafx.scene.image.ImageView;
+import javafx.fxml.FXML;
+import studymaster.examinee.Configure;
 
-public class AuthView extends ViewController {
+public class AuthView extends ViewController implements VideoEventHandler {
 
-	@FXML protected ImageView imgView;
+    @FXML private ImageView imgView;
+    private VideoCl videoCl;
 
-	@Override
-	public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-		super.initialize(location, resources);
-		connector.auth();
-	}
-	
-	@Override
-	public void onMessage(String message) {
-		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
-		VideoCl.setServer("ws://localhost:8089");
-		VideoCl.setImageView(imgView);
-		VideoCl videoClient = VideoCl.getInstance();
-		videoClient.connect();
-	}
+    @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        super.initialize(location, resources);
+        VideoCl.setServer(Configure.VIDEOSERVER);
+        videoCl = VideoCl.getInstance(this);
+        videoCl.connect();
+    }
+    
+    @Override public void onMessage(String message) {}
+
+    @Override public void onVideoClientOpen() {
+        Webcamera camera = Webcamera.getInstance();
+        camera.startStreaming(imgView, videoCl);
+    }
 }

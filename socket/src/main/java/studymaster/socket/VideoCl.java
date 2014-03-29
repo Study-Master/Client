@@ -18,23 +18,23 @@ public class VideoCl extends WebSocketClient implements Sendable {
     private static String localSender = "Default Sender";
     private static String localEndpoint = "Default VideoCl";
     private ImageView imgView = null;
-    private volatile boolean isStreaming; 
+    private VideoEventHandler handler;
 
-    private VideoCl(URI serverURI) {
+    private VideoCl(URI serverURI, VideoEventHandler handler) {
         super(serverURI);
         localSender = Connector.getSender();
         localEndpoint = Connector.getEndpoint();
-        isStreaming = false;
+        this.handler = handler;
     }
 
-    public static VideoCl getInstance() {
+    public static VideoCl getInstance(VideoEventHandler handler) {
         if(localServer == null) {
             return null;
         }
         else {
             VideoCl instance = null;
             try { 
-                instance = new VideoCl(new URI(localServer));
+                instance = new VideoCl(new URI(localServer), handler);
             } catch(Exception e) {
                 e.printStackTrace();
             }
