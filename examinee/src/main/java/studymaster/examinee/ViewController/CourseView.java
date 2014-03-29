@@ -77,9 +77,7 @@ public class CourseView extends HomeViewController {
     private void getExamQuestion(final JSONObject content) {
         JSONArray question_set = content.getJSONArray("question_set");
         QuestionDatabase database = QuestionDatabase.getInstance();
-        //sort according to question number
-        //from first to last, add the question from the question_set to the QuestionDatabase
-        //once we add it, remove it from the jsonArray
+        
         database.setCourseCode(content.getString("code"));
         System.out.println("\nset course code:" + content.getString("code") + "\n");
         while (question_set.length() != 0) {
@@ -433,6 +431,6 @@ public class CourseView extends HomeViewController {
     public static void setExamMsg(String course) {
         JSONObject content = new JSONObject();
         content.put("code", course);
-        Connector.getInstance().setAndSendMessageContainer("exam", content);
+        Connector.getInstance().setAndSendMessageContainer("exam_question", content);
     }
 }

@@ -5,6 +5,7 @@ import studymaster.socket.Connector;
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.all.ViewController.AlertAction;
+
 import studymaster.examinee.App;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -74,11 +75,11 @@ public class ExamView extends ViewController {
 			if (content.getString("submission_status").equals("successful")) {
 				AlertAction action = new AlertAction() {
                 	@Override public void ok(Stage stage) {
-                    	Director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                    	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                     	stage.close();
                 	}
             	};
-            	Director.invokeOneButtonAlert("", "Your submission is successful", action);
+            	director.invokeOneButtonAlert("", "Your submission is successful", action);
 			}
 			else {
 				AlertAction action = new AlertAction() {
@@ -86,7 +87,7 @@ public class ExamView extends ViewController {
                     	stage.close();
                 	}
             	};
-            	Director.invokeOneButtonAlert("Submission message", "Unfortunately, your submission failed", action);
+            	director.invokeOneButtonAlert("Submission message", "Unfortunately, your submission failed", action);
 			}
     	}
     	else {
@@ -214,11 +215,11 @@ public class ExamView extends ViewController {
 														database.getNextQuestion();
 													}
 													content.put("question_set", question_set);
-                                                    setAndSendMessageContainer("exam_question_answer", content);
+                                                    connector.setAndSendMessageContainer("exam_question_answer", content);
                     								stage.close();
                 								}
             								};
-            								Director.invokeOneButtonAlert("Time is up!", "Your answers will be submitted automatically.", action);
+            								director.invokeOneButtonAlert("Time is up!", "Your answers will be submitted automatically.", action);
     									}
     									else {
     										formatCountdown(duration);
@@ -307,11 +308,11 @@ public class ExamView extends ViewController {
                             database.getNextQuestion();
                         }
                         content.put("question_set", question_set);
-                        setAndSendMessageContainer("exam_question_answer", content);
+                        connector.setAndSendMessageContainer("exam_question_answer", content);
                     	stage.close();
                 	}
             	};
-            	Director.invokeOneButtonAlert("", "Are you sure that you want to submit?", action);
+            	director.invokeOneButtonAlert("", "Are you sure that you want to submit?", action);
 			}
 		});
 	}
