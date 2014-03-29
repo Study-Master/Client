@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.ButtonGroup;
 import javax.swing.AbstractButton;
+import studymaster.all.ViewController.AlertAction;
 import studymaster.examinee.AlertInfo;
 
 public class BookingView extends ViewController{
@@ -53,8 +54,13 @@ public class BookingView extends ViewController{
             }
             else if(event.equals("booked")){
                 if(content.getString("status").equals("success")){
-                    //showAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time);
-                    backView();
+                    AlertAction action = new AlertAction() {
+                        @Override public void ok(Stage stage) {
+                            stage.close();
+                            backView();
+                        }
+                    };
+                    Director.invokeOneButtonAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time, action);                    
                 }
             }
 
@@ -105,19 +111,5 @@ public class BookingView extends ViewController{
                     }
                 }
             });
-    }
-
-    public void showAlert(final String title, final String info) {
-        javafx.application.Platform.runLater(new Runnable() {
-            @Override public void run() {
-                System.out.println("[Info] AlertView created.");
-                Stage alert;
-                AlertInfo.setTitle(title);
-                AlertInfo.setInfo(info);
-                alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
-                alert.initStyle(StageStyle.UNDECORATED);
-                alert.show();
-            }
-        });
     }
 }

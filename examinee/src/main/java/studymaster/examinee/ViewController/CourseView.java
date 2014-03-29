@@ -104,7 +104,6 @@ public class CourseView extends HomeViewController {
             //showAlert("Exam Canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!");
             AlertAction action = new AlertAction() {
                 @Override public void ok(Stage stage) {
-                    connector.renew();
                     stage.close();
                 }
             };
@@ -137,7 +136,6 @@ public class CourseView extends HomeViewController {
             //showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error")); 
             AlertAction action = new AlertAction() {
                 @Override public void ok(Stage stage) {
-                    connector.renew();
                     stage.close();
                 }
             };
