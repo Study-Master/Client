@@ -7,8 +7,9 @@ import java.util.ArrayList;
 public final class QuestionDatabase {
 
 	private static QuestionDatabase instance;
-	private static int index = 0; //indexing the question number
+	private static int index = 0;
     private static String course_code = null;
+    private static int exam_pk;
 	private ArrayList<JSONObject> question_set = new ArrayList<JSONObject>();
 
 	public static QuestionDatabase getInstance() {
@@ -18,11 +19,19 @@ public final class QuestionDatabase {
         return instance;
     }
 
-    public static void setCourseCode(String courseCode) {
+    public void setExamPk(int examPk) {
+        exam_pk = examPk;
+    }
+
+    public int getExamPk() {
+        return exam_pk;
+    }
+
+    public void setCourseCode(String courseCode) {
         course_code = courseCode;
     }
 
-    public static String getCourseCode() {
+    public String getCourseCode() {
         return course_code;
     }
 
@@ -74,5 +83,19 @@ public final class QuestionDatabase {
 
     public void getLastQuestion() {
         index = question_set.size()-1;
+    }
+
+    public int getNumberOfQuestionsAnswered() {
+        int number=getTotalNumberOfQuestions();
+        for (int i=0; i<question_set.size() ;i++ ) {
+            if (question_set.get(i).getJSONObject("question_content").getString("answer").equals("")) {
+                number--;
+            }
+        }
+        return number;
+    }
+
+    public int getTotalNumberOfQuestions() {
+        return question_set.size();
     }
 }

@@ -43,6 +43,7 @@ public class ExamView extends ViewController {
 	@FXML protected Label titleLabel;
 	@FXML protected Label questionDescription;
 	@FXML protected Label timer;
+    @FXML protected Label numberOfQuestionsAnswered;
 	@FXML protected RadioButton choiceA;
 	@FXML protected RadioButton choiceB;
 	@FXML protected RadioButton choiceC;
@@ -59,7 +60,7 @@ public class ExamView extends ViewController {
     @FXML protected Button sendTextButton;
     private boolean created = false;
     private boolean status = false;
-	private Integer duration = 15;//time duration of the exam in minutes
+	private Integer duration = 120;//time duration of the exam in minutes
 	private Timeline timeline;
 
   	@Override public void onMessage(String message) {
@@ -117,11 +118,10 @@ public class ExamView extends ViewController {
         }
 
 		QuestionDatabase database = QuestionDatabase.getInstance();
-		//load in the question_set that is stored in database which is setup in the courseView
-		//and put the text to where they belong
 		titleLabel.setText(database.getCourseCode() + " Online Exam");//course code is stored at position 0!!!
 		questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
 		questionDescription.setTextOverrun(OverrunStyle.CLIP);
+        numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
 
 		ToggleGroup group = new ToggleGroup();
 		choiceA.setToggleGroup(group);
@@ -155,7 +155,8 @@ public class ExamView extends ViewController {
                 								@Override public void ok(Stage stage) {
                     								QuestionDatabase database = QuestionDatabase.getInstance();
 													JSONObject content = new JSONObject();
-													content.put("code", database.getCourseCode());
+													content.put("course_code", database.getCourseCode());
+                                                    content.put("exam_pk", database.getExamPk());
 													database.getFirstQuestion();
 													Set<JSONObject> question_set = new HashSet();
 													for (int i=0; i<(database.getQuestionSetSize()); i++) {
@@ -180,24 +181,28 @@ public class ExamView extends ViewController {
 			@Override public void handle(ActionEvent e) {
 				QuestionDatabase database = QuestionDatabase.getInstance();
 				database.setAnswer("a");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
 			}
 		});
 		choiceB.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				QuestionDatabase database = QuestionDatabase.getInstance();
 				database.setAnswer("b");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
 			}
 		});
 		choiceC.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				QuestionDatabase database = QuestionDatabase.getInstance();
 				database.setAnswer("c");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
 			}
 		});
 		choiceD.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				QuestionDatabase database = QuestionDatabase.getInstance();
 				database.setAnswer("d");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
 			}
 		});
 
@@ -248,7 +253,8 @@ public class ExamView extends ViewController {
                 	@Override public void ok(Stage stage) {
                     	QuestionDatabase database = QuestionDatabase.getInstance();
                         JSONObject content = new JSONObject();
-                        content.put("code", database.getCourseCode());
+                        content.put("course_code", database.getCourseCode());
+                        content.put("exam_pk", database.getExamPk());
                         database.getFirstQuestion();
                         Set<JSONObject> question_set = new HashSet();
                         for (int i=0; i<(database.getQuestionSetSize()); i++) {
