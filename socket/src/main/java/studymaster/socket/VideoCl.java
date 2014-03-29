@@ -50,7 +50,9 @@ public class VideoCl extends WebSocketClient implements Sendable {
         imgView = imageView;
     }
 
-    @Override public void onOpen(ServerHandshake handshakedata) {}
+    @Override public void onOpen(ServerHandshake handshakedata) {
+        handler.onVideoClientOpen();
+    }
 
     @Override public void onClose(int code, String reason, boolean remote) {}
 
@@ -67,6 +69,10 @@ public class VideoCl extends WebSocketClient implements Sendable {
             }
             else {}
         }
+    }
+
+    @Override public boolean isConnected() {
+        return this.isOpen();
     }
 
     @Override public void sendMedia(byte[] media) {
