@@ -4,6 +4,11 @@
 	-fx-font-size: 45;
 }
 
+#timer {
+	-fx-font-family: 'HelveticaNeue LT 25 Light';
+	-fx-font-size: 45;
+}
+
 
 .label {
 	-fx-font-family: 'HelveticaNeue LT 45 Light';
