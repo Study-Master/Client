@@ -89,6 +89,7 @@ public class CourseView extends HomeViewController {
                 }
             }
         }
+        Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
     }
 
     private void cancel(final JSONObject content) {
@@ -414,7 +415,7 @@ public class CourseView extends HomeViewController {
                                 button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
                                 button.setDisable(true);
                                 setExamMsg(courseCode);
-                                Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+                                
                             }
                         });
                     List.add(button, 2, row);
