@@ -4,6 +4,7 @@ import studymaster.examinee.QuestionDatabase;
 import studymaster.socket.Connector;
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.Director;
+import studymaster.all.ViewController.AlertAction;
 import studymaster.examinee.App;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,15 +52,13 @@ public class ExamView extends ViewController {
 	@FXML protected Button lastQuestion;
 	@FXML protected Button submit;
 	@FXML protected GridPane gridPane;
-
-    boolean created = false;
-    boolean status = false;
-	@FXML AnchorPane msgArea;
-    @FXML TextArea receiveTextArea;
-    @FXML TextArea sendTextArea;
-    @FXML Button sendTextButton;
-
-	private Integer duration = 1000;//time duration of the exam in minutes
+	@FXML protected AnchorPane msgArea;
+    @FXML protected TextArea receiveTextArea;
+    @FXML protected TextArea sendTextArea;
+    @FXML protected Button sendTextButton;
+    private boolean created = false;
+    private boolean status = false;
+	private Integer duration = 15;//time duration of the exam in minutes
 	private Timeline timeline;
 
   	@Override public void onMessage(String message) {
@@ -73,65 +72,26 @@ public class ExamView extends ViewController {
     	//if submission is successful, pop up a window, then jump to course view
     	if (event.equals("submission_message")) {
 			if (content.getString("submission_status").equals("successful")) {
-				javafx.application.Platform.runLater(new Runnable() {
-					@Override public void run() {
-        				final Stage submissionPopup = new Stage();
-		        		VBox vbox = new VBox(10);
-						Button ok = new Button("OK");
-						Text text = new Text("Submission successful!");
-						submissionPopup.initStyle(StageStyle.UNDECORATED);
-						vbox.getChildren().add(text);
-						vbox.getChildren().add(ok);
-						vbox.setAlignment(Pos.CENTER);
-						vbox.setStyle("-fx-border-style: solid;"
-		                			+ "-fx-border-width: 1;"
-		               				+ "-fx-border-color: black");
-						Scene scene = new Scene(vbox, 180, 90);
-						submissionPopup.setScene(scene);
-						submissionPopup.show();
-
-						ok.setOnAction(new EventHandler<ActionEvent>() {
-							@Override public void handle(ActionEvent event) {
-								submissionPopup.close();
-								director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
-							}
-						});
-        			}
-   				});
+				AlertAction action = new AlertAction() {
+                	@Override public void ok(Stage stage) {
+                    	Director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                    	stage.close();
+                	}
+            	};
+            	Director.invokeOneButtonAlert("", "Your submission is successful", action);
 			}
 			else {
-				//pop up window telling user submission is failed
-				//then user clicks "ok" button and stays on this page
-				javafx.application.Platform.runLater(new Runnable() {
-					@Override public void run() {
-        				final Stage submissionPopup = new Stage();
-		        		VBox vbox = new VBox(10);
-						Button ok = new Button("OK");
-						Text text = new Text("Submission failed!");
-						submissionPopup.initStyle(StageStyle.UNDECORATED);
-						vbox.getChildren().add(text);
-						vbox.getChildren().add(ok);
-						vbox.setAlignment(Pos.CENTER);
-						vbox.setStyle("-fx-border-style: solid;"
-		                			+ "-fx-border-width: 1;"
-		               				+ "-fx-border-color: black");
-						Scene scene = new Scene(vbox, 180, 90);
-						submissionPopup.setScene(scene);
-						submissionPopup.show();
-
-						ok.setOnAction(new EventHandler<ActionEvent>() {
-							@Override public void handle(ActionEvent event) {
-								submissionPopup.close();
-							}
-						});
-        			}
-   				});
+				AlertAction action = new AlertAction() {
+                	@Override public void ok(Stage stage) {
+                    	stage.close();
+                	}
+            	};
+            	Director.invokeOneButtonAlert("Submission message", "Unfortunately, your submission failed", action);
 			}
     	}
     	else {
     	}
     }
-// copy from textview controller      
 
     @FXML public void textAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " textAction): text chat with invigilator...");
@@ -145,19 +105,19 @@ public class ExamView extends ViewController {
         }
     }
 
-// end of copy
  	@Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 		System.out.println("[info] (" + getClass().getSimpleName() + " initializing page \n\n");
 		super.initialize(location, resources);
-//
-		        setAttribute();
+
+		setAttribute();
         if (created == false) {
             msgArea.setVisible(false);
             created = true;
         }
-//
+
 		QuestionDatabase database = QuestionDatabase.getInstance();
 
+		/*
 		database.setCourseCode("EE8086");
         JSONObject question1 = new JSONObject();
         question1.put("number", 1);
@@ -207,12 +167,12 @@ public class ExamView extends ViewController {
         database.addQuestion(question1);
         database.addQuestion(question2);
         database.addQuestion(question3);
+        */
 
 		//load in the question_set that is stored in database which is setup in the courseView
 		//and put the text to where they belong
 		titleLabel.setText(database.getCourseCode() + " Online Exam");//course code is stored at position 0!!!
 		questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
-		questionDescription.setMaxWidth(850);
 		questionDescription.setTextOverrun(OverrunStyle.CLIP);
 
 		ToggleGroup group = new ToggleGroup();
@@ -229,9 +189,7 @@ public class ExamView extends ViewController {
 		choiceD.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("d"));
 		choiceD.setTextOverrun(OverrunStyle.CLIP);
 
-
-
-
+		//code below is responsible for the countdown function
 		formatCountdown(duration);
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -244,24 +202,9 @@ public class ExamView extends ViewController {
     									}
     									if (duration == 0) {
     										timer.setText("Time is up!");
-    										javafx.application.Platform.runLater(new Runnable() {
-												@Override public void run() {
-							        				final Stage submissionPopup = new Stage();
-									        		VBox vbox = new VBox(10);
-													Button ok = new Button("OK");
-													Text text = new Text("Time is up! Your answers will be submitted.");
-													submissionPopup.initStyle(StageStyle.UNDECORATED);
-													vbox.getChildren().add(text);
-													vbox.getChildren().add(ok);
-													vbox.setAlignment(Pos.CENTER);
-													vbox.setStyle("-fx-border-style: solid;"
-									                			+ "-fx-border-width: 1;"
-									               				+ "-fx-border-color: black");
-													Scene scene = new Scene(vbox, 310, 90);
-													submissionPopup.setScene(scene);
-													submissionPopup.show();
-													//put answers into a jsonobject
-													QuestionDatabase database = QuestionDatabase.getInstance();
+    										AlertAction action = new AlertAction() {
+                								@Override public void ok(Stage stage) {
+                    								QuestionDatabase database = QuestionDatabase.getInstance();
 													JSONObject msg = new JSONObject();
 													msg.put("event", "exam_question_answer");
 													msg.put("endpoint", "Java Client");
@@ -276,14 +219,10 @@ public class ExamView extends ViewController {
 													content.put("question_set", question_set);
 													msg.put("content", content);
 													connector.send(msg.toString());
-
-													ok.setOnAction(new EventHandler<ActionEvent>() {
-														@Override public void handle(ActionEvent event) {
-															submissionPopup.close();
-														}
-													});
-							        			}
-							   				});
+                    								stage.close();
+                								}
+            								};
+            								Director.invokeOneButtonAlert("Time is up!", "Your answers will be submitted automatically.", action);
     									}
     									else {
     										formatCountdown(duration);
@@ -291,7 +230,6 @@ public class ExamView extends ViewController {
     								}
     							}));
         timeline.playFromStart();
-
 
 		choiceA.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -361,45 +299,15 @@ public class ExamView extends ViewController {
 
         submit.setOnAction(new EventHandler<ActionEvent>() {
         	@Override public void handle(ActionEvent e) {
-        		final Stage submitPopup = new Stage();
-        		VBox vbox = new VBox(10);
-				Button yes = new Button("Yes");
-				Button no = new Button("No");
-				Text text = new Text("Are you sure you want to submit?");
-				HBox hbox = new HBox();
-				hbox.getChildren().add(yes);
-				hbox.getChildren().add(no);
-				hbox.setAlignment(Pos.CENTER);
-        		hbox.setSpacing(20);
-				submitPopup.initStyle(StageStyle.UNDECORATED);
-				vbox.getChildren().add(text);
-				vbox.getChildren().add(hbox);
-				vbox.setAlignment(Pos.CENTER);
-				vbox.setStyle("-fx-border-style: solid;"
-                			+ "-fx-border-width: 1;"
-               				+ "-fx-border-color: black");
-				Scene scene = new Scene(vbox, 260, 90);
-				submitPopup.setScene(scene);
-				submitPopup.show();
-				
-				no.setOnAction(new EventHandler<ActionEvent>() {
-					@Override public void handle(ActionEvent event) {
-						submitPopup.close();
-					}
-				});
-
-				//send the answers to server and wait for server's reply
-				yes.setOnAction(new EventHandler<ActionEvent>() {
-					@Override public void handle(ActionEvent event) {
-						QuestionDatabase database = QuestionDatabase.getInstance();
-						
-						//put the answers of the examinee into a JSONObject and send to server
+        		AlertAction action = new AlertAction() {
+                	@Override public void ok(Stage stage) {
+                    	QuestionDatabase database = QuestionDatabase.getInstance();
 						JSONObject msg = new JSONObject();
 						msg.put("event", "exam_question_answer");
 						msg.put("endpoint", "Java Client");
 						JSONObject content = new JSONObject();
 						content.put("code", database.getCourseCode());
-						database.getFirstQuestion();//set index pointing to the first question
+						database.getFirstQuestion();
 						Set<JSONObject> question_set = new HashSet();
 						for (int i=0; i<(database.getQuestionSetSize()); i++) {
 							question_set.add(database.getCurrentQuestion());
@@ -407,12 +315,11 @@ public class ExamView extends ViewController {
 						}
 						content.put("question_set", question_set);
 						msg.put("content", content);
-						submitPopup.close();
-
-						//send answers to server
 						connector.send(msg.toString());
-					}
-				});
+                    	stage.close();
+                	}
+            	};
+            	Director.invokeOneButtonAlert("", "Are you sure that you want to submit?", action);
 			}
 		});
 	}
@@ -460,9 +367,6 @@ public class ExamView extends ViewController {
 		}
 	}
 
-// copy from text view
-
-
     public void setAttribute() {
         receiveTextArea.setEditable(false);
     }
@@ -476,10 +380,11 @@ public class ExamView extends ViewController {
             
         Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
+
+        String sendingName = Connector.getSender();
         String s = df.format(date);
         String sendingText = sendTextArea.getText();
-        String sendingName = Connector.getSender();
-            
+                    
         Content.put("account", sendingName); 
         Content.put("exam_pk", 3); // need to be modified
         Content.put("system_time", s); 
@@ -491,6 +396,5 @@ public class ExamView extends ViewController {
         receiveTextArea.appendText(sendingName + ":(" + s + ")\n");
         receiveTextArea.appendText(sendingText + "\n");
     }
-// end of copy
 }
 
