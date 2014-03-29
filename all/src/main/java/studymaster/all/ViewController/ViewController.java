@@ -46,6 +46,10 @@ public abstract class ViewController implements Initializable, Callback {
                 connector.renew();
                 stage.close();
             }
+
+            public void cancel(Stage stage) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
         };
         director.invokeErrorAlert("This is an error message", action);
     }

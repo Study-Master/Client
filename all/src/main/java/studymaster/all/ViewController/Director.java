@@ -135,7 +135,6 @@ public final class Director {
                 GridPane.setHalignment(button, javafx.geometry.HPos.CENTER);
                 GridPane.setConstraints(down, 1, 4);
 
-
                 gridPane.getChildren().addAll(up, button, in, message, down);
                 
                 Scene alertScene = new Scene(gridPane);
@@ -179,9 +178,11 @@ public final class Director {
                 buttonPane.setAlignment(javafx.geometry.Pos.CENTER);
                 buttonPane.setHgap(20);
                 Button buttonOK = new Button("OK");
+                buttonOK.setPrefWidth(100);
                 Button buttonCancel = new Button("Cancel");
-                GridPane.setConstraints(buttonCancel, 1, 0);
-                GridPane.setConstraints(buttonOK, 2, 0);
+                buttonCancel.setPrefWidth(100);
+                GridPane.setConstraints(buttonCancel, 2, 0);
+                GridPane.setConstraints(buttonOK, 1, 0);
                 buttonPane.getChildren().addAll(buttonCancel, buttonOK);
 
                 GridPane gridPane = new GridPane();
@@ -213,6 +214,7 @@ public final class Director {
                 buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent event) {
                         action.cancel(alert);
+                        alert.close();
                     }
                 });
             }

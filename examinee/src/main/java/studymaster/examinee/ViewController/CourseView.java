@@ -100,7 +100,8 @@ public class CourseView extends HomeViewController {
             System.out.println("[Info] Successfully cancel the booking!");
             //alert
             //alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
-            showAlert("Exam Canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!");
+            //showAlert("Exam Canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!");
+            Director.invokeInfoAlert("Exam canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!", (HomeViewController)this);
             try{
                 final String examStartTime = cancelInfo.getString("start_time");
                 final String courseCode = cancelInfo.getString("code");
@@ -126,7 +127,8 @@ public class CourseView extends HomeViewController {
         }      
         else {
             System.out.println("[Info] Cancel failed");
-            showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error")); 
+            //showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error")); 
+            Director.invokeInfoAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error"), this);
             final CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
             if (cancelButton == null) {
                 System.err.println("[Err] Wrong message from server! Don't find the node!");
@@ -240,7 +242,7 @@ public class CourseView extends HomeViewController {
     }
 
     private void showCourseList(final JSONObject content) {
-        AlertInfo.setCourseView(this);
+        //AlertInfo.setCourseView(this);
         javafx.application.Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
