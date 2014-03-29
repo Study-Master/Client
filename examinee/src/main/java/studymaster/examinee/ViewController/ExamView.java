@@ -205,9 +205,6 @@ public class ExamView extends ViewController {
     										AlertAction action = new AlertAction() {
                 								@Override public void ok(Stage stage) {
                     								QuestionDatabase database = QuestionDatabase.getInstance();
-													JSONObject msg = new JSONObject();
-													msg.put("event", "exam_question_answer");
-													msg.put("endpoint", "Java Client");
 													JSONObject content = new JSONObject();
 													content.put("code", database.getCourseCode());
 													database.getFirstQuestion();
@@ -217,8 +214,7 @@ public class ExamView extends ViewController {
 														database.getNextQuestion();
 													}
 													content.put("question_set", question_set);
-													msg.put("content", content);
-													connector.send(msg.toString());
+                                                    setAndSendMessageContainer("exam_question_answer", content);
                     								stage.close();
                 								}
             								};
@@ -302,20 +298,16 @@ public class ExamView extends ViewController {
         		AlertAction action = new AlertAction() {
                 	@Override public void ok(Stage stage) {
                     	QuestionDatabase database = QuestionDatabase.getInstance();
-						JSONObject msg = new JSONObject();
-						msg.put("event", "exam_question_answer");
-						msg.put("endpoint", "Java Client");
-						JSONObject content = new JSONObject();
-						content.put("code", database.getCourseCode());
-						database.getFirstQuestion();
-						Set<JSONObject> question_set = new HashSet();
-						for (int i=0; i<(database.getQuestionSetSize()); i++) {
-							question_set.add(database.getCurrentQuestion());
-							database.getNextQuestion();
-						}
-						content.put("question_set", question_set);
-						msg.put("content", content);
-						connector.send(msg.toString());
+                        JSONObject content = new JSONObject();
+                        content.put("code", database.getCourseCode());
+                        database.getFirstQuestion();
+                        Set<JSONObject> question_set = new HashSet();
+                        for (int i=0; i<(database.getQuestionSetSize()); i++) {
+                            question_set.add(database.getCurrentQuestion());
+                            database.getNextQuestion();
+                        }
+                        content.put("question_set", question_set);
+                        setAndSendMessageContainer("exam_question_answer", content);
                     	stage.close();
                 	}
             	};
