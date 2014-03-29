@@ -17,7 +17,6 @@ import studymaster.examinee.BookButton;
 import studymaster.examinee.CountDown;
 import studymaster.examinee.ExamButton;
 import studymaster.examinee.QuestionDatabase;
-import studymaster.examinee.AlertInfo;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import javafx.scene.layout.AnchorPane;

@@ -23,7 +23,6 @@ import javafx.stage.StageStyle;
 import javax.swing.ButtonGroup;
 import javax.swing.AbstractButton;
 import studymaster.all.ViewController.AlertAction;
-import studymaster.examinee.AlertInfo;
 
 public class BookingView extends ViewController{
 
