@@ -81,8 +81,8 @@ public class CourseView extends HomeViewController {
         //sort according to question number
         //from first to last, add the question from the question_set to the QuestionDatabase
         //once we add it, remove it from the jsonArray
-        database.setCourseCode(content.getString("code"));//course code is put at database[0]
-        System.out.println("set course code:" + content.getString("code") + "\n\n");
+        database.setCourseCode(content.getString("code"));
+        System.out.println("\nset course code:" + content.getString("code") + "\n");
         while (question_set.length() != 0) {
             for (int i=0; i<question_set.length(); i++) {
                 if ((question_set.getJSONObject(i).getInt("number")-1) == database.getQuestionSetSize()) {
