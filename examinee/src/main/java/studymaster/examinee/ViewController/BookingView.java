@@ -63,7 +63,6 @@ public class BookingView extends ViewController{
                         }
                     };
                     Director.invokeOneButtonAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time, action);
-                    backView();
                 }
             }
 
