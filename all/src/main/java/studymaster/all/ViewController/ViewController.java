@@ -31,7 +31,7 @@ public abstract class ViewController implements Initializable, Callback {
 
     @Override public final void onClose(int code, String reason, boolean remote) {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onClose) Socket's connection closed");
-        systemErrorAlert("Connection has been closed");
+        systemErrorAlert("Connection lost.");
     }
 
     @Override public final void onError(Exception ex) {
@@ -40,17 +40,17 @@ public abstract class ViewController implements Initializable, Callback {
     }
     
     protected final void systemErrorAlert(final String content) {
+        final ViewController controller = this;
         AlertAction action = new AlertAction() {
-
             @Override public void ok(Stage stage) {
+                if(!(controller instanceof LoginViewController)) {
+                    director.pushStageWithFXML(ViewController.class.getResource("/fxml/loginView.fxml"));
+                }
+                else{}
                 connector.renew();
                 stage.close();
             }
-
-            public void cancel(Stage stage) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         };
-        director.invokeErrorAlert("This is an error message", action);
+        director.invokeErrorAlert(content, action);
     }
 }
