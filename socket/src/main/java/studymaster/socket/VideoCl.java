@@ -6,33 +6,37 @@ import org.json.JSONObject;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import studymaster.media.ImgUtil;
+import studymaster.media.Sendable;
 import java.nio.ByteBuffer;
 import java.awt.image.BufferedImage;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import java.nio.channels.NotYetConnectedException;
 
-public class VideoCl extends WebSocketClient {
+public class VideoCl extends WebSocketClient implements Sendable {
     private static String localServer = null;
     private static String localSender = "Default Sender";
     private static String localEndpoint = "Default VideoCl";
-    private static ImageView imgView = null;
+    private ImageView imgView = null;
+    private volatile boolean isStreaming; 
 
     private VideoCl(URI serverURI) {
         super(serverURI);
         localSender = Connector.getSender();
         localEndpoint = Connector.getEndpoint();
+        isStreaming = false;
     }
 
     public static VideoCl getInstance() {
-        if(localServer == null && imgView == null)
+        if(localServer == null) {
             return null;
+        }
         else {
             VideoCl instance = null;
             try { 
                 instance = new VideoCl(new URI(localServer));
             } catch(Exception e) {
-                instance = null;
+                e.printStackTrace();
             }
             return instance;
         }
@@ -42,7 +46,7 @@ public class VideoCl extends WebSocketClient {
         localServer = server;
     }
 
-    public static void setImageView(ImageView imageView) {
+    public void setImageView(ImageView imageView) {
         imgView = imageView;
     }
 
@@ -63,5 +67,9 @@ public class VideoCl extends WebSocketClient {
             }
             else {}
         }
+    }
+
+    @Override public void sendMedia(byte[] media) {
+        send(media);
     }
 }

@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 public class Webcamera {
     private static Webcamera instance;
     private static Webcam webcam;
-    private static boolean isRunning;
     public static volatile boolean isStreaming;
     public static volatile boolean isOpening;
     public static volatile boolean isClosing;
@@ -28,7 +27,38 @@ public class Webcamera {
             while (isClosing);
             while (isStreaming) {
                 Image image = ImgUtil.createImage(createImage());
-                view.setImage(image);
+                if(view!=null) {
+                    view.setImage(image);
+                }
+                else {}
+                isOpening = false;
+            }
+        }
+    }
+    private static class WebcamStreamThread extends Thread {
+        private ImageView view;
+        private Sendable videoCl;
+
+        public WebcamStreamThread(ImageView view, Sendable videoCl) {
+            this.videoCl = videoCl;
+            this.view = view;
+        }
+
+        public void setImageView(ImageView view) {
+            this.view = view;
+        }
+
+        @Override public void run() {
+            while (isClosing);
+            while (isStreaming) {
+                BufferedImage bufferedImage = createImage();
+                Image image = ImgUtil.createImage(bufferedImage);
+                byte[] byteImage = ImgUtil.toByte(bufferedImage);
+                videoCl.sendMedia(byteImage);
+                if(view!=null) {
+                    view.setImage(image);
+                }
+                else {}
                 isOpening = false;
             }
         }
@@ -46,10 +76,10 @@ public class Webcamera {
         }
     }
     private static WebcamThread wt;
+    private static WebcamStreamThread wst;
     private static WebcamCloseThread wct;
 
     private Webcamera() {
-        isRunning = false;
         isStreaming = false;
         isOpening = false;
         isClosing = false;
@@ -98,4 +128,12 @@ public class Webcamera {
         }
     }
 
+    public void startStreaming(ImageView imageView, Sendable client) {
+       if (isStreaming) {}
+       else {
+           isStreaming = true;
+           wst = new WebcamStreamThread(imageView, client);
+           wst.start();
+       }
+    }
 }
