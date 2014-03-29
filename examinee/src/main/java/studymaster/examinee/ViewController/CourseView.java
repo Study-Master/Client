@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Modality;
 import org.json.JSONException;
+import studymaster.all.ViewController.AlertAction;
 
 public class CourseView extends HomeViewController {
     protected static GridPane List;
@@ -101,7 +102,13 @@ public class CourseView extends HomeViewController {
             //alert
             //alert("Your " + cancelInfo.getString("code") + " exam booking is successfully canceled.");
             //showAlert("Exam Canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!");
-            Director.invokeInfoAlert("Exam canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!", (HomeViewController)this);
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {
+                    connector.renew();
+                    stage.close();
+                }
+            };
+            Director.invokeOneButtonAlert("Exam canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!", action);
             try{
                 final String examStartTime = cancelInfo.getString("start_time");
                 final String courseCode = cancelInfo.getString("code");
@@ -128,7 +135,13 @@ public class CourseView extends HomeViewController {
         else {
             System.out.println("[Info] Cancel failed");
             //showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error")); 
-            Director.invokeInfoAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error"), this);
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {
+                    connector.renew();
+                    stage.close();
+                }
+            };
+            Director.invokeOneButtonAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error"), action);
             final CancelButton cancelButton = (CancelButton) List.lookup("#toDelete");
             if (cancelButton == null) {
                 System.err.println("[Err] Wrong message from server! Don't find the node!");
@@ -424,21 +437,5 @@ public class CourseView extends HomeViewController {
         JSONObject content = new JSONObject();
         content.put("code", course);
         Connector.getInstance().setAndSendMessageContainer("exam", content);
-    }
-
-    public void showAlert(final String title, final String info) {
-        javafx.application.Platform.runLater(new Runnable() {
-            @Override public void run() {
-                System.out.println("[Info] AlertView created.");
-                Stage alert;
-                AlertInfo.setTitle(title);
-                AlertInfo.setInfo(info);
-                alert = director.initStageWithFXML(getClass().getResource("/fxml/alertView.fxml"));
-                alert.initStyle(StageStyle.UNDECORATED);
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.requestFocus();
-                alert.show();
-            }
-        });
     }
 }

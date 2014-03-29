@@ -48,11 +48,12 @@ public class BookingView extends ViewController{
             if(event.equals("booking")) {
                 code = content.getString("code");
                 titleLabel.setText(code);
+                //Director.invokeInfoAlert("Exam canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!", this);
                 showTimeTable(content.getJSONArray("examTime"), timeTable, buttonGroup);
             }
             else if(event.equals("booked")){
                 if(content.getString("status").equals("success")){
-                    showAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time);
+                    //showAlert("Exam Booking","Exam successfully booked for " + code + "\nTime: " + start_time);
                     backView();
                 }
             }

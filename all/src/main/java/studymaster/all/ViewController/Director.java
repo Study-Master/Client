@@ -151,7 +151,68 @@ public final class Director {
         });
     }
 
-    public static void invokeInfoAlert(final String title, final String content, final AlertAction action) {
+    public static void invokeOneButtonAlert(final String title, final String content, final AlertAction action) {
+        javafx.application.Platform.runLater(new Runnable() {
+            @Override public void run() {
+                final Stage alert = new Stage();
+                alert.setFullScreen(false);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.setResizable(false);
+
+                Pane up = new Pane();
+                up.setPrefSize(30, 30);
+                
+                Pane in = new Pane();
+                in.setPrefSize(20, 20);
+                Label titleLabel = new Label(title);
+                titleLabel.setWrapText(true);
+                titleLabel.setId("title");
+                Label contentLabel = new Label(content);
+                contentLabel.setWrapText(true);
+                Pane down = new Pane();
+                down.setPrefSize(30, 30);
+               
+                GridPane buttonPane = new GridPane();
+                buttonPane.getColumnConstraints().addAll(new ColumnConstraints(15), new ColumnConstraints(100), new ColumnConstraints(15));
+                buttonPane.setAlignment(javafx.geometry.Pos.CENTER);
+                buttonPane.setHgap(20);
+                Button buttonOK = new Button("OK");
+                buttonOK.setPrefWidth(100);
+                GridPane.setConstraints(buttonOK, 1, 0);
+                buttonPane.getChildren().addAll(buttonOK);
+
+                GridPane gridPane = new GridPane();
+                gridPane.getColumnConstraints().addAll(new ColumnConstraints(30), new ColumnConstraints(300), new ColumnConstraints(30));
+                gridPane.setAlignment(javafx.geometry.Pos.CENTER);
+                gridPane.setVgap(20);
+
+                GridPane.setConstraints(up, 1, 0);
+                GridPane.setConstraints(titleLabel, 1, 1);
+                GridPane.setHalignment(titleLabel, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(contentLabel, 1, 2);
+                GridPane.setHalignment(contentLabel, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(buttonPane, 1, 3);
+                GridPane.setHalignment(buttonPane, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(down, 1, 4);
+                gridPane.getChildren().addAll(up, titleLabel, contentLabel, buttonPane, down);
+
+                Scene alertScene = new Scene(gridPane);
+                alertScene.getStylesheets().add("stylesheet/alert.css");
+
+                alert.setScene(alertScene);
+                alert.show();
+
+                buttonOK.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override public void handle(ActionEvent event) {
+                        action.ok(alert);
+                    }
+                });
+            }
+        });
+    }
+
+    public static void invokeTwoButtonAlert(final String title, final String content, final AlertAction action) {
         javafx.application.Platform.runLater(new Runnable() {
             @Override public void run() {
                 final Stage alert = new Stage();
