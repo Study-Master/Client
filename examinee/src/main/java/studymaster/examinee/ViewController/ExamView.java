@@ -79,7 +79,7 @@ public class ExamView extends ViewController {
                     	stage.close();
                 	}
             	};
-            	director.invokeOneButtonAlert("", "Your submission is successful", action);
+            	director.invokeOneButtonAlert("Submission message", "Your submission is successful", action);
 			}
 			else {
 				AlertAction action = new AlertAction() {
@@ -117,59 +117,6 @@ public class ExamView extends ViewController {
         }
 
 		QuestionDatabase database = QuestionDatabase.getInstance();
-
-		/*
-		database.setCourseCode("EE8086");
-        JSONObject question1 = new JSONObject();
-        question1.put("number", 1);
-        question1.put("pk", 13);
-        question1.put("type", "multi");
-        JSONObject question1_content = new JSONObject();
-        question1_content.put("description", "now i am programming, today i might be programming, but the day after tmr it's confirmed that I'll be programming because of this stupid project. Based on this, which of the following is correct?");
-        JSONObject question1_choice = new JSONObject();
-        question1_choice.put("a", "I am a computer science undergradute who is suffering because final exams are coming and i'm totally not prepared for it");
-        question1_choice.put("b", "i am handsome and cool and hansum and yandao and i indeed know it but it seems that people around me are not aware of this");
-        question1_choice.put("c", "maybe i should find a way to let them know this, oh my god...");
-        question1_choice.put("d", "i am handsome and cool and hansum and yandao and i indeed know it but it seems that people around me are not aware of this");
-        question1_content.put("choices", question1_choice);
-        question1_content.put("answer", "");
-        question1.put("question_content", question1_content);
-
-        JSONObject question2 = new JSONObject();
-        question2.put("number", 2);
-        question2.put("pk", 14);
-        question2.put("type", "multi");
-        JSONObject question2_content = new JSONObject();
-        question2_content.put("description", "How much do you like computer science?");
-        JSONObject question2_choice = new JSONObject();
-        question2_choice.put("a", "Very much");
-        question2_choice.put("b", "So so");
-        question2_choice.put("c", "Only a little bit");
-        question2_choice.put("d", "Not at all");
-        question2_content.put("choices", question2_choice);
-        question2_content.put("answer", "");
-        question2.put("question_content", question2_content);
-        
-        JSONObject question3 = new JSONObject();
-        question3.put("number", 3);
-        question3.put("pk", 15);
-        question3.put("type", "multi");
-        JSONObject question3_content = new JSONObject();
-        question3_content.put("description", "Which is the best university in the world?");
-        JSONObject question3_choice = new JSONObject();
-        question3_choice.put("a", "Nanyang Technological University");
-        question3_choice.put("b", "National University of Singapore");
-        question3_choice.put("c", "Harvard University");
-        question3_choice.put("d", "MIT");
-        question3_content.put("choices", question3_choice);
-        question3_content.put("answer", "");
-        question3.put("question_content", question3_content);
-
-        database.addQuestion(question1);
-        database.addQuestion(question2);
-        database.addQuestion(question3);
-        */
-
 		//load in the question_set that is stored in database which is setup in the courseView
 		//and put the text to where they belong
 		titleLabel.setText(database.getCourseCode() + " Online Exam");//course code is stored at position 0!!!
@@ -312,7 +259,7 @@ public class ExamView extends ViewController {
                     	stage.close();
                 	}
             	};
-            	director.invokeOneButtonAlert("", "Are you sure that you want to submit?", action);
+            	director.invokeTwoButtonAlert("", "Are you sure that you want to submit?", action);
 			}
 		});
 	}

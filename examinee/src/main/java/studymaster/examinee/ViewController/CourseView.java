@@ -75,21 +75,26 @@ public class CourseView extends HomeViewController {
     }
 
     private void getExamQuestion(final JSONObject content) {
+        try {
         JSONArray question_set = content.getJSONArray("question_set");
         QuestionDatabase database = QuestionDatabase.getInstance();
-        
-        database.setCourseCode(content.getString("code"));
-        System.out.println("\nset course code:" + content.getString("code") + "\n");
+        database.setCourseCode(content.getString("course_code"));
+        System.out.println("\n set course code:" + content.getString("course_code") + "\n");
+        System.out.println(question_set.length());
         while (question_set.length() != 0) {
             for (int i=0; i<question_set.length(); i++) {
-                if ((question_set.getJSONObject(i).getInt("number")-1) == database.getQuestionSetSize()) {
+                if ((question_set.getJSONObject(i).getInt("num")-1) == database.getQuestionSetSize()) {
                     database.addQuestion(question_set.getJSONObject(i));
                     System.out.println("\n" + question_set.getJSONObject(i).toString() + "\n");
                     question_set.remove(i);
                 }
             }
         }
-        Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+        director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void cancel(final JSONObject content) {
@@ -415,7 +420,6 @@ public class CourseView extends HomeViewController {
                                 button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
                                 button.setDisable(true);
                                 setExamMsg(courseCode);
-                                
                             }
                         });
                     List.add(button, 2, row);
@@ -433,5 +437,6 @@ public class CourseView extends HomeViewController {
         JSONObject content = new JSONObject();
         content.put("code", course);
         Connector.getInstance().setAndSendMessageContainer("exam_question", content);
+        System.out.println("\n"+content+"\n");
     }
 }
