@@ -4,7 +4,6 @@ import com.github.sarxos.webcam.Webcam;
 import java.awt.image.BufferedImage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import studymaster.socket.VideoCl;
 
 public class Webcamera {
     private static Webcamera instance;
@@ -34,32 +33,6 @@ public class Webcamera {
             }
         }
     }
-    private static class WebcamStreamThread extends Thread {
-        private ImageView view;
-        private VideoCl videoCl;
-
-        public WebcamStreamThread(ImageView view) {
-            videoCl = VideoCl.getInstance();
-            this.view = view;
-        }
-
-        public void setImageView(ImageView view) {
-            this.view = view;
-        }
-
-        @Override public void run() {
-            while (isClosing);
-            while (isStreaming) {
-                BufferedImage bufferedImage = createImage();
-                Image image = ImgUtil.createImage(bufferedImage);
-                byte[] byteImage = ImgUtil.toByte(bufferedImage);
-                videoCl.send(byteImage);
-                view.setImage(image);
-                
-                isOpening = false;
-            }
-        }
-    }
     private static class WebcamCloseThread extends Thread {
         @Override public void run() {
             while (isOpening);
@@ -73,7 +46,6 @@ public class Webcamera {
         }
     }
     private static WebcamThread wt;
-    private static WebcamStreamThread wst;
     private static WebcamCloseThread wct;
 
     private Webcamera() {
@@ -126,12 +98,4 @@ public class Webcamera {
         }
     }
 
-    public void startStreaming(ImageView imageView) {
-       if (isStreaming) {}
-       else {
-           isStreaming = true;
-           wst = new WebcamStreamThread(imageView);
-           wst.start();
-       }
-    }
 }

@@ -12,11 +12,11 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.json.JSONObject;
 import javafx.scene.image.Image;
-import studymaster.socket.ImgUtil;
 import studymaster.all.ViewController.ViewController;
 import studymaster.socket.VideoEventHandler;
 import studymaster.socket.VideoSS;
 import studymaster.invigilator.Slot;
+import studymaster.media.ImgUtil;
 
 public class AuthView extends ViewController implements VideoEventHandler {
 	@FXML ImageView imgView0;
