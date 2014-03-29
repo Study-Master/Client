@@ -149,6 +149,7 @@ public class ExamView extends ViewController {
     										timer.setTextFill(Color.RED);
     									}
     									if (duration == 0) {
+                                            timeline.stop();
     										timer.setText("Time is up!");
     										AlertAction action = new AlertAction() {
                 								@Override public void ok(Stage stage) {
@@ -259,7 +260,7 @@ public class ExamView extends ViewController {
                     	stage.close();
                 	}
             	};
-            	director.invokeTwoButtonAlert("", "Are you sure that you want to submit?", action);
+            	director.invokeTwoButtonAlert("Submit?", "Are you sure that you want to submit?", action);
 			}
 		});
 	}
@@ -298,11 +299,14 @@ public class ExamView extends ViewController {
 
 	private void formatCountdown(int duration){
 		if (duration >= 60) {
-			timer.setText("1:" + (duration-60));
+			timer.setText("01:" + (duration-60));
 		}
-		else if (duration < 60 && duration > 0) {
-			timer.setText("0:" + duration);
+		else if (duration < 60 && duration >= 10) {
+			timer.setText("00:" + duration);
 		}
+        else if (duration < 10) {
+            timer.setText("00:0" + duration);
+        }
 		else {
 		}
 	}
