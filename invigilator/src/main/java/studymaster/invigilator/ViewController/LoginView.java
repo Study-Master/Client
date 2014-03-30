@@ -22,7 +22,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
-					director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
+					director.pushStageWithFXML(getClass().getResource("/fxml/courseViewView.fxml"));
 				}
 
 				else if(status.equals("failed")) {
@@ -63,6 +63,5 @@ public class LoginView extends LoginViewController {
 			e.printStackTrace();
 		}
 	}
-	
-}
 
+}
