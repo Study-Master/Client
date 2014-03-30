@@ -38,14 +38,14 @@ public class CourseView extends HomeViewController {
 		return List;
 	}
 
-	@Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-		super.initialize(location, resources);
-		JSONObject content = new JSONObject();
-		JSONObject course = new JSONObject("{'courses': [{'code': 'CZ2001','name': 'Java','status': 'waiting','start_time': '2014/05/01 00:00:00'},{'code': 'CZ2002','name': 'Java2','status': 'finished','start_time': '2014/05/03 00:00:00'},{'code': 'CZ2006', 'name': 'Java6','status': 'invigilate','start_time': '2014/05/03 00:00:00'}]}");
-		content.put("profile", course);
-		Connector.getInstance().setAndSendMessageContainer("profile_invigilator", content);
-		System.out.println(content);
-	}
+	// @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+	// 	super.initialize(location, resources);
+	// 	JSONObject content = new JSONObject();
+	// 	JSONObject course = new JSONObject("{'courses': [{'code': 'CZ2001','name': 'Java','status': 'waiting','start_time': '2014/05/01 00:00:00'},{'code': 'CZ2002','name': 'Java2','status': 'finished','start_time': '2014/05/03 00:00:00'},{'code': 'CZ2006', 'name': 'Java6','status': 'invigilate','start_time': '2014/05/03 00:00:00'}]}");
+	// 	content.put("profile", course);
+	// 	Connector.getInstance().setAndSendMessageContainer("profile_invigilator", content);
+	// 	System.out.println(content);
+	// }
 	@Override public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		try {
@@ -194,23 +194,6 @@ public class CourseView extends HomeViewController {
 			});
 	}
 
-	// public static void createBookButton(final String examStartTime, final String courseCode, final int row) {
-	// 	javafx.application.Platform.runLater(new Runnable() {
-	// 			@Override
-	// 			public void run() {
-	// 				BookButton button = new BookButton(examStartTime, courseCode, row);
-	// 				button.setPrefWidth(120);
-	// 				button.setOnAction(new EventHandler<ActionEvent>() {
-	// 						@Override public void handle(ActionEvent e) {
-	// 							setBookingMsg(courseCode);
-	// 							Director.pushStageWithFXML(getClass().getResource("/fxml/bookingView.fxml"));
-	// 						}
-	// 					});
-	// 				List.add(button, 2, row);
-	// 			}
-	// 		});
-	// }
-
 	public static void createCountDownLabel(String examStartTime, String courseCode, int row) {
 		CountDown timeLabel = new CountDown(examStartTime, courseCode, row);
 		List.add(timeLabel, 2, row);
@@ -229,7 +212,8 @@ public class CourseView extends HomeViewController {
 								button.setGraphic(new ImageView(LoadingIcon));
 								button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
 								button.setDisable(true);
-								setInvigilationMsg(courseCode);
+								setAndSendInvigilationMsg(courseCode);
+								Director.pushStageWithFXML(getClass().getResource("/fxml/invigilatorView.fxml"));
 							}
 						});
 					List.add(button, 2, row);
@@ -237,13 +221,7 @@ public class CourseView extends HomeViewController {
 			});
 	}
 
-	// public static void setBookingMsg(String course) {
-	// 	JSONObject content = new JSONObject();
-	// 	content.put("code", course);
-	// 	Connector.setMessageContainer("booking", content);
-	// }
-
-	public static void setInvigilationMsg(String course) {
+	public static void setAndSendInvigilationMsg(String course) {
 		JSONObject content = new JSONObject();
 		content.put("code", course);
 		Connector.getInstance().setAndSendMessageContainer("start_invigilation", content);
