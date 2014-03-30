@@ -68,6 +68,7 @@ public class BookingView extends ViewController{
 
         } catch (Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+            e.printStackTrace();
         }
     }
 
@@ -108,12 +109,7 @@ public class BookingView extends ViewController{
                     final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
 
                     timeTable = new GridPane();
-                    // List = courseList;
-                    AnchorPane.setTopAnchor(timeTable, 20.0);
-                    AnchorPane.setLeftAnchor(timeTable, 20.0);
-                    AnchorPane.setRightAnchor(timeTable, 10.0);
-                    AnchorPane.setBottomAnchor(timeTable, 25.0);
-                    //
+
                     timeTable.setVgap(25);
 
                     for(int i=0; i<examTime.length(); i++){
