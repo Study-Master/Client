@@ -50,8 +50,7 @@ public class BookingView extends ViewController{
             if(event.equals("booking")) {
                 code = content.getString("code");
                 name = content.getString("name");
-                titleLabel.setText(code + " " + name);
-                showTimeTable(content.getJSONArray("examTime"), buttonGroup);
+                show(code, name, titleLabel, content.getJSONArray("examTime"), buttonGroup);
             }
             else if(event.equals("booked")) {
                 if(content.getString("status").equals("success")) {
@@ -97,13 +96,12 @@ public class BookingView extends ViewController{
         Connector.setMessageContainer("booked", content);
     }
 
-    private void showTimeTable(final JSONArray examTime, final ToggleGroup buttonGroup){
-
+    private void show(final String code, final String name, final Label titleLabel, final JSONArray examTime, final ToggleGroup buttonGroup){
         javafx.application.Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try{
-
+                    titleLabel.setText(code + " " + name);
                     final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
                     final ScrollPane sp = (ScrollPane) pane.lookup("#scrollpane");
                     final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
