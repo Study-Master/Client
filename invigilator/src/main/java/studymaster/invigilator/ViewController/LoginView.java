@@ -22,7 +22,7 @@ public class LoginView extends LoginViewController {
 
 				if(status.equals("success")) {
 					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
-					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+					director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
 				}
 
 				else if(status.equals("failed")) {
@@ -46,7 +46,7 @@ public class LoginView extends LoginViewController {
 
 	@Override
 	public void login(String account, String password) {
-
+		Connector.setSender(account);
 		try {
 			boolean connected = true;
 			if(!connector.isOpen())
@@ -56,12 +56,13 @@ public class LoginView extends LoginViewController {
 				content.put("account", account);
         		content.put("password", password);
         		content.put("time", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
-        		Connector.getInstance().setAndSendMessageContainer("login", content);
+        		connector.setAndSendMessageContainer("login", content);
 			}
 		} catch(Exception e) {
 			System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
 			e.printStackTrace();
 		}
 	}
-
+	
 }
+
