@@ -28,8 +28,8 @@ public class VideoCl extends WebSocketClient implements Sendable {
     }
 
     public static VideoCl getInstance(VideoEventHandler handler) {
-        if(localServer == null) {
-            return null;
+        if(localServer == null || handler == null) {
+            throw new NullPointerException();
         }
         else {
             VideoCl instance = null;
