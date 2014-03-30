@@ -18,6 +18,7 @@ public class ChatView extends ViewController implements AudioEventHandler {
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
+        connector.retain(this);
         voiceMessageButton.setDisable(true);
         playButton.setDisable(true);
     }
