@@ -34,7 +34,7 @@
         <Image url="@../image/user.png" />
       </image>
     </ImageView>
-    <Button fx:id="chatButton0" layoutX="140.0" layoutY="357.0" minWidth="31.0" mnemonicParsing="false" onAction="#chatAction0" prefWidth="65.0" text="chat" />
+    <Button id="chatButton0" fx:id="button0" layoutX="140.0" layoutY="357.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="pass" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/invigilatorView.css" />

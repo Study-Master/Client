@@ -79,7 +79,8 @@ public class CourseView extends HomeViewController {
         JSONArray question_set = content.getJSONArray("question_set");
         QuestionDatabase database = QuestionDatabase.getInstance();
         database.setCourseCode(content.getString("course_code"));
-        System.out.println("\n set course code:" + content.getString("course_code") + "\n");
+        database.setExamPk(content.getInt("exam_pk"));
+        System.out.println("\n\nexam pk is " + content.getInt("exam_pk") + "\n\n");
         System.out.println(question_set.length());
         while (question_set.length() != 0) {
             for (int i=0; i<question_set.length(); i++) {

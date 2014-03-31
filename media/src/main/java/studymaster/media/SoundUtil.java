@@ -56,9 +56,9 @@ public class SoundUtil  {
         return byteArray;
     }
 
-    public static void playAudio() {
+    public static void playAudio(byte[] byteAudio) {
         System.out.println("[info] ("+ SoundUtil.class.getSimpleName() +" playAudio)");
-        ByteArrayInputStream baiut = new ByteArrayInputStream(byteArray);
+        ByteArrayInputStream baiut = new ByteArrayInputStream(byteAudio);
 
         try {
             audioStream = AudioSystem.getAudioInputStream(baiut);
@@ -99,6 +99,10 @@ public class SoundUtil  {
 
         sourceLine.drain();
         sourceLine.close();
+    }
+
+    public static void playAudio() {
+        playAudio(byteArray);
     }
 
     public static void setByteArray(ByteBuffer byteBuffer) {

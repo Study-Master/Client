@@ -2,6 +2,8 @@ package studymaster.socket;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Set;
+import java.util.HashSet;
 import org.json.JSONObject;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -27,6 +29,7 @@ public final class Connector extends WebSocketClient {
     }
     private static String localServer = "ws://localhost";
     private static Connector instance = null;
+    private static Set<Callback> localDelegateList;
     private static Callback localDelegate = null;
     public static String localSender = "Default Sender";
     private static String localEndpoint = "Default Connector";
@@ -34,6 +37,7 @@ public final class Connector extends WebSocketClient {
 
     private Connector(URI serverURI) {
         super(serverURI);
+        localDelegateList = new HashSet<Callback>();
         System.out.println("[info] (" + Connector.class.getSimpleName() + " Connector) Create Connector instance");
     }
 
@@ -53,7 +57,7 @@ public final class Connector extends WebSocketClient {
     }
 
     public static Connector renew() {
-         System.out.println("[info] (" + Connector.class.getSimpleName() + " renew)");
+        System.out.println("[info] (" + Connector.class.getSimpleName() + " renew)");
         instance = null;
         return getInstance();
     }
@@ -66,6 +70,22 @@ public final class Connector extends WebSocketClient {
     public static void setDelegate(Callback delegate) {
         System.out.println("[info] (" + Connector.class.getSimpleName() + " setDelegate) Set Callback to " + delegate.getClass().getSimpleName());
         localDelegate = delegate;
+    }
+
+    public static boolean retain(){
+        return localDelegateList.add(localDelegate);
+    }
+
+    public static boolean retain(Callback delegate) {
+        return localDelegateList.add(delegate);
+    }
+
+    public static boolean release() {
+        return localDelegateList.remove(localDelegate);
+    }
+
+    public static boolean release(Callback delegate) {
+        return localDelegateList.remove(delegate);
     }
 
     public static void setSender(String sender) {
@@ -112,31 +132,75 @@ public final class Connector extends WebSocketClient {
 
     @Override public void onOpen(ServerHandshake handshakedata) {
         localDelegate.onOpen(handshakedata.getHttpStatus(), handshakedata.getHttpStatusMessage());
+        for(Callback delegate : localDelegateList) {
+            if(delegate==localDelegate) {
+                continue;
+            }
+            else {
+                if(delegate == null) {
+                    localDelegateList.remove(delegate);
+                    continue;
+                }
+                else {
+                    delegate.onOpen(handshakedata.getHttpStatus(), handshakedata.getHttpStatusMessage());
+                }
+            }
+        }
     }
 
     @Override public void onClose(int code, String reason, boolean remote) {
         localDelegate.onClose(code, reason, remote);
+        for(Callback delegate : localDelegateList) {
+            if(delegate==localDelegate) {
+                continue;
+            }
+            else {
+                if(delegate == null) {
+                    localDelegateList.remove(delegate);
+                    continue;
+                }
+                else {
+                    delegate.onClose(code, reason, remote);
+                }
+            }
+        }
     }
 
     @Override public void onMessage(String message) {
         localDelegate.onMessage(message);
+        for(Callback delegate : localDelegateList) {
+            if(delegate==localDelegate) {
+                continue;
+            }
+            else {
+                if(delegate == null) {
+                    localDelegateList.remove(delegate);
+                    continue;
+                }
+                else {
+                    delegate.onMessage(message);
+                }
+            }
+        }
+
     }
 
     @Override public void onError(Exception ex) {
         localDelegate.onError(ex);
-    }
+        for(Callback delegate : localDelegateList) {
+            if(delegate==localDelegate) {
+                continue;
+            }
+            else {
+                if(delegate == null) {
+                    localDelegateList.remove(delegate);
+                    continue;
+                }
+                else {
+                    delegate.onError(ex);
+                }
+            }
+        }
 
-    public void auth() throws NotYetConnectedException {
-        JSONObject msg = new JSONObject();
-        JSONObject content = new JSONObject();
-
-        msg.put("event", "auth");
-        msg.put("endpoint", localEndpoint);
-
-        content.put("account", localSender);
-
-        msg.put("content", content);
-
-        super.send(msg.toString());
     }
 }

@@ -56,3 +56,4 @@ release.properties
 .classpath
 .project
 .settings/
+.vpprefdata/

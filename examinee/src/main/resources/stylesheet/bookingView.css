@@ -3,6 +3,10 @@
 	-fx-font-family: 'HelveticaNeue LT 25 UltLight';
 	-fx-font-size: 45;
 }
+#copyrightLabel {
+		-fx-font-family: 'HelveticaNeue LT 45 Light';
+		-fx-text-fill: rgba(0, 0, 0, 1);
+}
 
 .label {
 	-fx-font-family: 'HelveticaNeue LT 45 Light';

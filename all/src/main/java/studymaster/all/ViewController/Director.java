@@ -93,7 +93,7 @@ public final class Director {
         return stage;
     }
 
-    public Stage toggleStage(Stage stage) {
+    public static Stage toggleStage(Stage stage) {
         if(stage.isShowing()) {
             stage.hide();
         }
