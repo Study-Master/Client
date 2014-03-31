@@ -8,60 +8,59 @@ import org.json.JSONObject;
 
 public class LoginView extends LoginViewController {
 
-	@Override
-	public void onMessage(String message) {
-		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
-		try {
-			JSONObject msg = new JSONObject(message);
-        	String event = msg.getString("event");
-        	String endpoint = msg.getString("endpoint");
-        	final JSONObject content = msg.getJSONObject("content");
+    @Override public void onMessage(String message) {
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+        try {
+            JSONObject msg = new JSONObject(message);
+            String event = msg.getString("event");
+            String endpoint = msg.getString("endpoint");
+            final JSONObject content = msg.getJSONObject("content");
 
-			if(event.equals("login")) {
-				String status = content.getString("status");
+            if(event.equals("login")) {
+                String status = content.getString("status");
 
-				if(status.equals("success")) {
-					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
-					director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
-				}
+                if(status.equals("success")) {
+                    System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                }
 
-				else if(status.equals("failed")) {
-					System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
-					systemErrorAlert(content.getString("reason"));
-				}
+                else if(status.equals("failed")) {
+                    System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
+                    systemErrorAlert(content.getString("reason"));
+                }
 
-				else {
-					System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Unexpected JSON response string.");
-				}
-			}
-		} catch (Exception e) {
-			System.err.println(e);
-			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
-		}
-	}
+                else {
+                    System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Unexpected JSON response string.");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+        }
+    }
 
-	@Override
-	public void login(String account, String password) {
-		Connector.setSender(account);
+    @Override public void login(String account, String password) {
+        Connector.setSender(account);
 
-		try {
-			boolean connected = true;
-			if(!connector.isOpen())
-				connected = connector.connectBlocking();
-			if(connected) {
-				JSONObject content = new JSONObject();
-				content.put("account", account);
-        		content.put("password", password);
-        		content.put("time", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
-        		connector.setAndSendMessageContainer("login", content);
-			}
-		} catch(Exception e) {
-			System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
-			e.printStackTrace();
-		}
-	}
+        try {
+            boolean connected = true;
+            if(!connector.isOpen())
+                connected = connector.connectBlocking();
+            if(connected) {
+                JSONObject content = new JSONObject();
+                content.put("account", account);
+                content.put("password", password);
+                content.put("time", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
+                connector.setAndSendMessageContainer("login", content);
+            }
+        } catch(Exception e) {
+            System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
+            e.printStackTrace();
+            loginFailed();
+        }
+    }
 
-	public void onEnter() {
-		loginAction();
-	}
+    public void onEnter() {
+        loginAction();
+    }
 }
