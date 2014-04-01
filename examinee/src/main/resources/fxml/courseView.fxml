@@ -10,29 +10,36 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.CourseView">
   <children>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="704.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="671.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Label fx:id="titleLabel" layoutX="75.0" layoutY="100.0" text="Course" />
-    <Button layoutX="51.0" layoutY="14.0" onAction="#gotoTestAction" style="-fx-border-color: transparent;&#10;&#10;" text="Testing">
+    <Label fx:id="titleLabel" layoutX="64.0" layoutY="57.0" text="Course" />
+    <Button fx:id="testButton" contentDisplay="TOP" graphicTextGap="0.0" layoutX="758.0" layoutY="14.0" minHeight="74.0" onAction="gotoTestAction" prefHeight="85.99990000000253" prefWidth="86.0" style="-fx-border-color: transparent;&#10;&#10;" text="Testing" textAlignment="CENTER">
       <graphic>
-        <ImageView>
+        <ImageView fitHeight="52.0" fitWidth="52.0" style="">
           <Image url="@../image/testing.png" />
         </ImageView>
       </graphic>
     </Button>
-    <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="62.0" layoutY="184.0" prefHeight="504.0" prefWidth="921.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
+    <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="62.0" layoutY="146.0" prefHeight="504.0" prefWidth="921.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
       <content>
         <AnchorPane id="ap" maxHeight="1.7976931348623157E308" opacity="1.0" prefHeight="489.0" prefWidth="865.0" style="" visible="true" />
       </content>
     </ScrollPane>
+    <Button fx:id="logoutButton" contentDisplay="TOP" graphicTextGap="0.0" layoutX="854.0" layoutY="16.0" minHeight="74.0" onAction="onLogout" prefHeight="85.99990000000253" prefWidth="86.0" style="-fx-border-color: transparent;&#10;&#10;" text="Logout" textAlignment="CENTER">
+      <graphic>
+        <ImageView fitHeight="52.0" fitWidth="46.0" style="">
+          <Image url="@../image/Logout.png" />
+        </ImageView>
+      </graphic>
+    </Button>
   </children>
   <stylesheets>
     <URL value="@../stylesheet/courseView.css" />

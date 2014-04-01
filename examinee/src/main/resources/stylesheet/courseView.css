@@ -41,3 +41,11 @@
     -fx-background-color: derive(black,100%);
     -fx-opacity: 0.5;
 }
+
+#logoutButton {
+	-fx-font-size: 15;
+}
+
+#testButton {
+	-fx-font-size: 15;
+}

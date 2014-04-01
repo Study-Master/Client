@@ -19,4 +19,8 @@ public abstract class HomeViewController extends ViewController {
 		super.initialize(location, resources);
 		connector.setAndSendMessageContainer("profile", null);
 	}
+        
+    @FXML public final void onLogout() {
+    connector.setAndSendMessageContainer("logout", null);
+    }
 }
