@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  */
 public abstract class HomeViewController extends ViewController {
 
-	@FXML public final void gotoTestAction() {
+	public final void gotoTestAction() {
     	director.pushStageWithFXML(getClass().getResource("/fxml/testView1.fxml"));
     }
 
@@ -20,7 +20,7 @@ public abstract class HomeViewController extends ViewController {
 		connector.setAndSendMessageContainer("profile", null);
 	}
         
-    @FXML public final void onLogout() {
+    public final void onLogout() {
     connector.setAndSendMessageContainer("logout", null);
     }
 }

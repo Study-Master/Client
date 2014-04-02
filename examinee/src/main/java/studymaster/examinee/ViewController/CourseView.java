@@ -80,7 +80,7 @@ public class CourseView extends HomeViewController {
 
     private void logout(JSONObject content) {
         String status = content.getString("status");
-
+        System.out.println("[Info] Logout success.");
         if(status.equals("success")) {
             System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
             AlertAction action = new AlertAction() {

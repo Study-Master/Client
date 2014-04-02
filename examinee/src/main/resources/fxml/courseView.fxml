@@ -21,25 +21,29 @@
       </image>
     </ImageView>
     <Label fx:id="titleLabel" layoutX="64.0" layoutY="57.0" text="Course" />
-    <Button fx:id="testButton" contentDisplay="TOP" graphicTextGap="0.0" layoutX="758.0" layoutY="14.0" minHeight="74.0" onAction="gotoTestAction" prefHeight="85.99990000000253" prefWidth="86.0" style="-fx-border-color: transparent;&#10;&#10;" text="Testing" textAlignment="CENTER">
-      <graphic>
-        <ImageView fitHeight="52.0" fitWidth="52.0" style="">
-          <Image url="@../image/testing.png" />
-        </ImageView>
-      </graphic>
-    </Button>
-    <Button fx:id="logoutButton" contentDisplay="TOP" graphicTextGap="0.0" layoutX="854.0" layoutY="16.0" minHeight="74.0" onAction="onLogout" prefHeight="85.99990000000253" prefWidth="86.0" style="-fx-border-color: transparent;&#10;&#10;" text="Logout" textAlignment="CENTER">
-      <graphic>
-        <ImageView fitHeight="50.0" fitWidth="45.0" style="">
-          <Image url="@../image/Logout.png" />
-        </ImageView>
-      </graphic>
-    </Button>
     <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="62.0" layoutY="146.0" prefHeight="504.0" prefWidth="921.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
       <content>
         <AnchorPane id="ap" maxHeight="1.7976931348623157E308" opacity="1.0" prefHeight="489.0" prefWidth="865.0" style="" visible="true" />
       </content>
     </ScrollPane>
+    <Button contentDisplay="TOP" graphicTextGap="0.0" layoutX="721.0" layoutY="33.0" mnemonicParsing="false" onAction="#gotoTestAction" style="-fx-border-color: transparent;&#10;-fx-font-size: 15;" text="Testing" textAlignment="CENTER">
+      <graphic>
+        <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/testing.png" />
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button contentDisplay="TOP" graphicTextGap="2.0" layoutX="824.0" layoutY="33.0" mnemonicParsing="false" onAction="#onLogout" style="-fx-border-color: transparent;&#10;-fx-font-size: 15;" text="Quit" textAlignment="CENTER">
+      <graphic>
+        <ImageView fitHeight="50.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/Logout.png" />
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
   </children>
   <stylesheets>
     <URL value="@../stylesheet/courseView.css" />

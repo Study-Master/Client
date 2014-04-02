@@ -45,6 +45,10 @@ public abstract class LoginViewController extends ViewController{
             @Override public void ok(Stage stage) {
                 connector.renew();
                 stage.close();
+                loginButton.setDisable(false);
+                loginButton.setText("Login");
+                loginButton.setGraphic(null);
+                loginButton.setStyle("-fx-background-color: white;");
             }
         };
         director.invokeErrorAlert("Error, please check your Internet connection or restart the program.", action);
