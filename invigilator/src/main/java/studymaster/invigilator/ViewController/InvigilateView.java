@@ -51,7 +51,10 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         slots.add(new Slot(imgView2, screenView2, button2, terminateButton2, chatWindow2));
 
         for(int i=0; i<slots.size(); i++) {
-            final Button  button = slots.get(i).button; 
+            final int id = i;
+            final Button button = slots.get(i).button;
+            final Button terminateButton = slots.get(i).terminate;
+            final Stage alert = slots.get(i).chatWindow;
             button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
                     AlertAction action = new AlertAction() {
@@ -61,14 +64,27 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             button.setText("Chat");
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
-                                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction)");
-                                    director.toggleStage(chatWindow0);
+                                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction" + id +")");
+                                    director.toggleStage(alert);
                                 }
                             });
                             stage.close();
                         }
                     };
                     director.invokeTwoButtonAlert("Auth", "Confirm to auth", action);
+                }
+            });
+            terminateButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " terminateAction" + id + ")");
+                    AlertAction action = new AlertAction() {
+                        @Override public void ok(Stage stage, TextArea textarea) {
+                            System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " reason" + id + ") " + textarea.getText());
+                            //TODO: Send message that auth successfully
+                            stage.close();
+                        }
+                    };
+                    director.invokeInputAlert("Reason", action);
                 }
             });
         }
@@ -79,18 +95,6 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     @Override public void onVideoClientOpen() {}
 
     @Override public void onAudioClientOpen() {}
-
-    @FXML public void terminateAction() {
-        System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction0)");
-        AlertAction action = new AlertAction() {
-            @Override public void ok(Stage stage, TextArea textarea) {
-                System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " reason) " + textarea.getText());
-                //TODO: Send message that auth successfully
-                stage.close();
-            }
-        };
-        director.invokeInputAlert("Reason", action);
-    }
 
 }
 
