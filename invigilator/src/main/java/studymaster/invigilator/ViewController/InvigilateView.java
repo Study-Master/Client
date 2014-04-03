@@ -2,9 +2,9 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
-import studymaster.all.ViewController.Director;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import studymaster.socket.VideoEventHandler;
@@ -39,9 +39,9 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         super.initialize(location, resources);
         connector.retain(this);
         slots = new ArrayList();
-        chatWindow0 = Director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
-        chatWindow1 = Director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
-        chatWindow2 = Director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
+        chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
+        chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
+        chatWindow2 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow0.setResizable(false);
         chatWindow1.setResizable(false);
         chatWindow2.setResizable(false);
@@ -61,14 +61,14 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             button.setText("Chat");
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
-                                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction0)");
-                                    Director.toggleStage(chatWindow0);
+                                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction)");
+                                    director.toggleStage(chatWindow0);
                                 }
                             });
                             stage.close();
                         }
                     };
-                    Director.invokeTwoButtonAlert("Auth", "Confirm to auth", action);
+                    director.invokeTwoButtonAlert("Auth", "Confirm to auth", action);
                 }
             });
         }
@@ -79,6 +79,18 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     @Override public void onVideoClientOpen() {}
 
     @Override public void onAudioClientOpen() {}
+
+    @FXML public void terminateAction() {
+        System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction0)");
+        AlertAction action = new AlertAction() {
+            @Override public void ok(Stage stage, TextArea textarea) {
+                System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " reason) " + textarea.getText());
+                //TODO: Send message that auth successfully
+                stage.close();
+            }
+        };
+        director.invokeInputAlert("Reason", action);
+    }
 
 }
 

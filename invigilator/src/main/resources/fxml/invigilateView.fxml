@@ -30,7 +30,7 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button fx:id="terminateButton0" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <Button fx:id="terminateButton0" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" onAction="#terminateAction" prefWidth="110.0" text="Terminate" />
         <ImageView fx:id="screenView0" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
@@ -46,7 +46,7 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="terminateButton0" fx:id="terminateButton1" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <Button id="terminateButton0" fx:id="terminateButton1" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" onAction="#terminateAction" prefWidth="110.0" text="Terminate" />
         <ImageView id="screenView0" fx:id="screenView1" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
@@ -62,7 +62,7 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="terminateButton0" fx:id="terminateButton2" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <Button id="terminateButton0" fx:id="terminateButton2" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" onAction="#terminateAction" prefWidth="110.0" text="Terminate" />
         <ImageView id="screenView0" fx:id="screenView2" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
