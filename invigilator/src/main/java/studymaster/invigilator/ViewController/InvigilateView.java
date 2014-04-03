@@ -2,9 +2,9 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
-import studymaster.all.ViewController.Director;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import studymaster.socket.VideoEventHandler;
@@ -21,7 +21,17 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     @FXML private Button button0;
     @FXML private Button terminateButton0;
     private Stage chatWindow0;
+
+    @FXML private ImageView imgView1;
+    @FXML private ImageView screenView1;
+    @FXML private Button button1;
+    @FXML private Button terminateButton1;
     private Stage chatWindow1;
+
+    @FXML private ImageView imgView2;
+    @FXML private ImageView screenView2;
+    @FXML private Button button2;
+    @FXML private Button terminateButton2;
     private Stage chatWindow2;
     ArrayList<Slot> slots;
 
@@ -29,34 +39,52 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         super.initialize(location, resources);
         connector.retain(this);
         slots = new ArrayList();
-        chatWindow0 = Director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
-        chatWindow1 = Director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
-        chatWindow2 = Director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
+        chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
+        chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
+        chatWindow2 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow0.setResizable(false);
         chatWindow1.setResizable(false);
         chatWindow2.setResizable(false);
         
         slots.add(new Slot(imgView0, screenView0, button0, terminateButton0, chatWindow0));
+        slots.add(new Slot(imgView1, screenView1, button1, terminateButton1, chatWindow1));
+        slots.add(new Slot(imgView2, screenView2, button2, terminateButton2, chatWindow2));
 
         for(int i=0; i<slots.size(); i++) {
-            final Button  button = slots.get(i).button; 
+            final int id = i;
+            final Button button = slots.get(i).button;
+            final Button terminateButton = slots.get(i).terminate;
+            final Stage alert = slots.get(i).chatWindow;
             button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
                     AlertAction action = new AlertAction() {
                         @Override public void ok(Stage stage) {
+                            //TODO: Send message that auth successfully
+                            
                             button.setText("Chat");
-
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
-                                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction0)");
-                                    Director.toggleStage(chatWindow0);
+                                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction" + id +")");
+                                    director.toggleStage(alert);
                                 }
                             });
-
                             stage.close();
                         }
                     };
-                    Director.invokeTwoButtonAlert("Auth", "Confirm to auth", action);
+                    director.invokeTwoButtonAlert("Auth", "Confirm to auth", action);
+                }
+            });
+            terminateButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " terminateAction" + id + ")");
+                    AlertAction action = new AlertAction() {
+                        @Override public void ok(Stage stage, TextArea textarea) {
+                            System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " reason" + id + ") " + textarea.getText());
+                            //TODO: Send message that auth successfully
+                            stage.close();
+                        }
+                    };
+                    director.invokeInputAlert("Reason", action);
                 }
             });
         }

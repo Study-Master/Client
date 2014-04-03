@@ -9,6 +9,7 @@ import java.util.Date;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import studymaster.all.ViewController.HomeViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.socket.Connector;
@@ -50,8 +51,11 @@ public class CourseView extends HomeViewController {
             String endpoint = msg.getString("endpoint");
             final JSONObject content = msg.getJSONObject("content");
 
-            if(event.equals("profile")) {
+            if (event.equals("profile")) {
                 showCourseList(content);
+            }
+            else if (event.equals("logout")) {
+                logout(content);
             }
             else if(event.equals("exam_question")) {
                 getExamQuestion(content);
@@ -74,6 +78,27 @@ public class CourseView extends HomeViewController {
         }
     }
 
+    private void logout(JSONObject content) {
+        String status = content.getString("status");
+        System.out.println("[Info] Logout success.");
+        if(status.equals("success")) {
+            System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {                        
+                    Director.pushStageWithFXML(getClass().getResource("/fxml/loginView.fxml")); 
+                    connector.renew();
+                    stage.close();
+                }
+            };
+            Director.invokeOneButtonAlert("Logout", "You have logged out the system!", action);
+        }
+
+        else if(status.equals("failed")) {
+            System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
+            systemErrorAlert(content.getString("reason"));
+        }
+    }
+
     private void getExamQuestion(final JSONObject content) {
         try {
         JSONArray question_set = content.getJSONArray("question_set");
@@ -91,7 +116,7 @@ public class CourseView extends HomeViewController {
                 }
             }
         }
-        director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
+        Director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -263,7 +288,7 @@ public class CourseView extends HomeViewController {
                 public void run() {
                     try {
                         //Find the node #ap from FXML
-                        final AnchorPane pane = (AnchorPane) director.getScene().getRoot();
+                        final AnchorPane pane = (AnchorPane) Director.getScene().getRoot();
                         final ScrollPane sp = (ScrollPane) pane.lookup("#scrollpane");
                         final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
                         //Create a gridpane - courseList

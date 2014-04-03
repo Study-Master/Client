@@ -10,6 +10,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Modality;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
 import javafx.event.EventHandler;
@@ -270,6 +271,76 @@ public final class Director {
                 buttonOK.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent event) {
                         action.ok(alert);
+                    }
+                });
+                buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override public void handle(ActionEvent event) {
+                        action.cancel(alert);
+                        alert.close();
+                    }
+                });
+            }
+        });
+    }
+
+    public static void invokeInputAlert(final String message, final AlertAction action) {
+        javafx.application.Platform.runLater(new Runnable() {
+            @Override public void run() {
+                final Stage alert = new Stage();
+                alert.setFullScreen(false);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.setResizable(false);
+
+                Pane up = new Pane();
+                up.setPrefSize(30, 30);
+                
+                Pane in = new Pane();
+                in.setPrefSize(20, 20);
+                Label messageLabel = new Label(message);
+                messageLabel.setWrapText(true);
+                messageLabel.setId("title");
+                final TextArea content = new TextArea();
+                content.setWrapText(true);
+                Pane down = new Pane();
+                down.setPrefSize(30, 30);
+               
+                GridPane buttonPane = new GridPane();
+                buttonPane.getColumnConstraints().addAll(new ColumnConstraints(15), new ColumnConstraints(100), new ColumnConstraints(100), new ColumnConstraints(15));
+                buttonPane.setAlignment(javafx.geometry.Pos.CENTER);
+                buttonPane.setHgap(20);
+                Button buttonOK = new Button("OK");
+                buttonOK.setPrefWidth(100);
+                Button buttonCancel = new Button("Cancel");
+                buttonCancel.setPrefWidth(100);
+                GridPane.setConstraints(buttonCancel, 2, 0);
+                GridPane.setConstraints(buttonOK, 1, 0);
+                buttonPane.getChildren().addAll(buttonCancel, buttonOK);
+
+                GridPane gridPane = new GridPane();
+                gridPane.getColumnConstraints().addAll(new ColumnConstraints(30), new ColumnConstraints(300), new ColumnConstraints(30));
+                gridPane.setAlignment(javafx.geometry.Pos.CENTER);
+                gridPane.setVgap(20);
+
+                GridPane.setConstraints(up, 1, 0);
+                GridPane.setConstraints(messageLabel, 1, 1);
+                GridPane.setHalignment(messageLabel, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(content, 1, 2);
+                GridPane.setHalignment(content, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(buttonPane, 1, 3);
+                GridPane.setHalignment(buttonPane, javafx.geometry.HPos.CENTER);
+                GridPane.setConstraints(down, 1, 4);
+                gridPane.getChildren().addAll(up, messageLabel, content, buttonPane, down);
+
+                Scene alertScene = new Scene(gridPane);
+                alertScene.getStylesheets().add("stylesheet/alert.css");
+
+                alert.setScene(alertScene);
+                alert.show();
+
+                buttonOK.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override public void handle(ActionEvent event) {
+                        action.ok(alert, content);
                     }
                 });
                 buttonCancel.setOnAction(new EventHandler<ActionEvent>() {

@@ -26,7 +26,7 @@ public class LoginView extends LoginViewController {
 
                 else if(status.equals("failed")) {
                     System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
-                    systemErrorAlert(content.getString("reason"));
+                    loginFailed(content.getString("reason"));
                 }
 
                 else {
@@ -56,7 +56,7 @@ public class LoginView extends LoginViewController {
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" login) An error is caught, no connection.");
             e.printStackTrace();
-            loginFailed();
+            loginFailed("Error, please check your Internet connection or restart the program.");
         }
     }
 
