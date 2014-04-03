@@ -23,18 +23,54 @@
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <ImageView fx:id="imgView0" fitHeight="207.0" fitWidth="207.0" layoutX="132.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/user.png" />
-      </image>
-    </ImageView>
-    <Button fx:id="terminateButton0" layoutX="221.0" layoutY="357.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
-    <ImageView fx:id="screenView0" fitHeight="207.0" fitWidth="207.0" layoutX="132.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/user.png" />
-      </image>
-    </ImageView>
-    <Button id="chatButton0" fx:id="button0" layoutX="140.0" layoutY="357.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="pass" />
+    <Group id="Group" layoutX="159.0" layoutY="138.0">
+      <children>
+        <ImageView fx:id="imgView0" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <Button fx:id="terminateButton0" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <ImageView fx:id="screenView0" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <Button id="chatButton0" fx:id="button0" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
+      </children>
+    </Group>
+    <Group id="Group" layoutX="424.0" layoutY="138.0">
+      <children>
+        <ImageView id="imgView0" fx:id="imgView1" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <Button id="terminateButton0" fx:id="terminateButton1" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <ImageView id="screenView0" fx:id="screenView1" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <Button id="chatButton0" fx:id="button1" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
+      </children>
+    </Group>
+    <Group id="Group" layoutX="690.0" layoutY="138.0">
+      <children>
+        <ImageView id="imgView0" fx:id="imgView2" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <Button id="terminateButton0" fx:id="terminateButton2" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <ImageView id="screenView0" fx:id="screenView2" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../image/user.png" />
+          </image>
+        </ImageView>
+        <Button id="chatButton0" fx:id="button2" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
+      </children>
+    </Group>
   </children>
   <stylesheets>
     <URL value="@../stylesheet/invigilatorView.css" />

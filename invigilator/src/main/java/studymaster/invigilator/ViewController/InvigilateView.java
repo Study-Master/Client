@@ -21,7 +21,17 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     @FXML private Button button0;
     @FXML private Button terminateButton0;
     private Stage chatWindow0;
+
+    @FXML private ImageView imgView1;
+    @FXML private ImageView screenView1;
+    @FXML private Button button1;
+    @FXML private Button terminateButton1;
     private Stage chatWindow1;
+
+    @FXML private ImageView imgView2;
+    @FXML private ImageView screenView2;
+    @FXML private Button button2;
+    @FXML private Button terminateButton2;
     private Stage chatWindow2;
     ArrayList<Slot> slots;
 
@@ -37,6 +47,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         chatWindow2.setResizable(false);
         
         slots.add(new Slot(imgView0, screenView0, button0, terminateButton0, chatWindow0));
+        slots.add(new Slot(imgView1, screenView1, button1, terminateButton1, chatWindow1));
+        slots.add(new Slot(imgView2, screenView2, button2, terminateButton2, chatWindow2));
 
         for(int i=0; i<slots.size(); i++) {
             final Button  button = slots.get(i).button; 
@@ -44,15 +56,15 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 @Override public void handle(ActionEvent e) {
                     AlertAction action = new AlertAction() {
                         @Override public void ok(Stage stage) {
+                            //TODO: Send message that auth successfully
+                            
                             button.setText("Chat");
-
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
                                     System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction0)");
                                     Director.toggleStage(chatWindow0);
                                 }
                             });
-
                             stage.close();
                         }
                     };
