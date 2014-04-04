@@ -80,8 +80,14 @@ public class VideoCl extends WebSocketClient implements Sendable {
 
     @Override public void sendMedia(byte[] media) {
         byte[] header = new byte[100];
-        byte[] sender = localSender.getBytes(Charset.forName("UTF-8"));
-        System.arraycopy(sender, 0, header, 0, sender.length);
+
+        byte[] senderByte = localSender.getBytes(Charset.forName("UTF-8"));
+        System.arraycopy(senderByte, 0, header, 0, senderByte.length);
+
+        String flag = "v";
+        byte[] flagByte = flag.getBytes(Charset.forName("UTF-8"));
+        System.arraycopy(flagByte, 0, header, 50, flagByte.length);
+
         byte[] info = new byte[media.length + header.length];
         System.arraycopy(header, 0, info, 0, header.length);
         System.arraycopy(media, 0, info, header.length, media.length);
