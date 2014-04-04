@@ -248,7 +248,7 @@ public class CourseView extends HomeViewController {
                                 button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
                                 button.setDisable(true);
                                 setAndSendInvigilationMsg(button.getCourseCode(), button.getExamStartTime());
-                                Director.pushStageWithFXML(getClass().getResource("/fxml/invigilatorView.fxml"));
+                                Director.pushStageWithFXML(getClass().getResource("/fxml/invigilateView.fxml"));
                             }
                         });
                     List.add(button, 3, row);
