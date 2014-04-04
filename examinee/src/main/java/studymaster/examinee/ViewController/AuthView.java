@@ -24,11 +24,12 @@ public class AuthView extends ViewController implements VideoEventHandler {
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
-        videoCl = VideoCl.getInstance(this);
         startButton.setVisible(false);
         label1.setText("Please keep facing the webcam.");
         label2.setText("Authentication takes about one minute.");
+        videoCl = VideoCl.getInstance(this, "video");
         videoCl.connect();
+        startButton.setDisable(true);
     }
     
     @Override public void onMessage(String message) {

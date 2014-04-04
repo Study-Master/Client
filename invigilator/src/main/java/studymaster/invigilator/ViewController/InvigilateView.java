@@ -2,6 +2,7 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
+import studymaster.socket.VideoCl;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -9,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import studymaster.socket.VideoEventHandler;
 import studymaster.socket.AudioEventHandler;
+import org.json.JSONObject; 
 import java.nio.ByteBuffer;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
@@ -35,9 +37,13 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     private Stage chatWindow2;
     ArrayList<Slot> slots;
 
+    private VideoCl videoCl;
+
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
         connector.retain(this);
+        videoCl = VideoCl.getInstance(this, "receiver");
+        videoCl.connect();
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
@@ -90,7 +96,28 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         }
     }
 
-    @Override public void onMessage(String message){}
+    @Override public void onMessage(String message){
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+        try {
+            JSONObject msg = new JSONObject(message);
+            String event = msg.getString("event");
+            String endpoint = msg.getString("endpoint");
+            final JSONObject content = msg.getJSONObject("content");
+
+            if (event.equals("examinee_come_in")) {
+                String name = content.getString("name");
+                for(int i=0; i<3; i++) {
+                    if( videoCl.containsImageView(slots.get(i).imgView) || videoCl.containsImageView(slots.get(i).screenView)) {}
+                    else {
+                        slots.get(i).name = name;
+                        videoCl.setImageView(name, slots.get(i).imgView, slots.get(i).screenView);
+                    }
+                }
+            }
+        } catch(Exception e) {
+            System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+        }
+    }
 
     @Override public void onVideoClientOpen() {}
 
@@ -99,6 +126,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
 }
 
 class Slot {
+    protected String name;
     protected ImageView imgView;
     protected ImageView screenView;
     protected Button button;
