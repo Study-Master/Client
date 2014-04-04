@@ -46,6 +46,12 @@ public class CourseView extends HomeViewController {
 	// 	Connector.getInstance().setAndSendMessageContainer("profile_invigilator", content);
 	// 	System.out.println(content);
 	// }
+
+	@Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+		super.initialize(location, resources);
+		connector.setAndSendMessageContainer("profile_invigilator", null);
+	}
+
 	@Override public void onMessage(String message) {
 		System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
 		try {
@@ -60,9 +66,33 @@ public class CourseView extends HomeViewController {
 			else if(event.equals("enable_invigilation")) {
 				enableInvigilation(content);
 			}
+			else if (event.equals("logout")) {
+				logout(content);
+			}
 		}
 		catch (Exception e) {
 			System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+		}
+	}
+
+	private void logout(JSONObject content) {
+		String status = content.getString("status");
+		System.out.println("[Info] Logout success.");
+		if(status.equals("success")) {
+			System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
+			AlertAction action = new AlertAction() {
+				@Override public void ok(Stage stage) {
+					Director.pushStageWithFXML(getClass().getResource("/fxml/loginView.fxml"));
+					connector.renew();
+					stage.close();
+				}
+			};
+			Director.invokeOneButtonAlert("Logout", "You have logged out the system!", action);
+		}
+
+		else if(status.equals("failed")) {
+			System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login failed.");
+			systemErrorAlert(content.getString("reason"));
 		}
 	}
 
@@ -124,14 +154,14 @@ public class CourseView extends HomeViewController {
 						ColumnConstraints col1 = new ColumnConstraints();
 						col1.setPercentWidth(15);
 						ColumnConstraints col2 = new ColumnConstraints();
-						col2.setPercentWidth(20);
+						col2.setPercentWidth(35);
 						ColumnConstraints col3 = new ColumnConstraints();
-						col3.setPercentWidth(45);
+						col3.setPercentWidth(30);
 						ColumnConstraints col4 = new ColumnConstraints();
 						col4.setPercentWidth(20);
 						examList.getColumnConstraints().addAll(col1,col2,col3,col4);
 						examList.setVgap(25);
-						col3.setHalignment(HPos.RIGHT);
+						col3.setHalignment(HPos.LEFT);
 						//Add exams into an ArrayList
 						for (int i=0; i<exams.length(); i++) {
 							examsArray.add(exams.getJSONObject(i));
@@ -164,7 +194,9 @@ public class CourseView extends HomeViewController {
 							code.setStyle("-fx-text-fill: black;");
 							Label name = new Label(exam.getString("name"));
 							name.setStyle("-fx-text-fill: black;");
-							Label start_time = new Label(exam.getString("start_time"));
+							Label start_time = new Label("@" + exam.getString("start_time"));
+							start_time.setStyle("-fx-text-fill: purple;-fx-font-size: 20;");
+
 
 							examList.add(code, 0, i);
 							examList.add(name, 1, i);
