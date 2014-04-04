@@ -58,7 +58,7 @@ public class CourseView extends HomeViewController {
                 logout(content);
             }
             else if(event.equals("exam_question")) {
-                getExamQuestion(content);
+                setExamQuestion(content);
             }
             else if (event.equals("cancel")) {
                 cancel(content);
@@ -99,7 +99,7 @@ public class CourseView extends HomeViewController {
         }
     }
 
-    private void getExamQuestion(final JSONObject content) {
+    private void setExamQuestion(final JSONObject content) {
         try {
         JSONArray question_set = content.getJSONArray("question_set");
         QuestionDatabase database = QuestionDatabase.getInstance();
