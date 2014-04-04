@@ -260,7 +260,7 @@ public class CourseView extends HomeViewController {
         JSONObject content = new JSONObject();
         content.put("code", exam);
         content.put("start_time", start_time);
-        Connector.getInstance().setAndSendMessageContainer("Invigilate", content);
+        Connector.getInstance().setAndSendMessageContainer("invigilate", content);
         System.out.println("\n"+content+"\n");
     }
 }
