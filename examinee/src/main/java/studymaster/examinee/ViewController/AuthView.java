@@ -17,7 +17,7 @@ public class AuthView extends ViewController implements VideoEventHandler {
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
-        videoCl = VideoCl.getInstance(this);
+        videoCl = VideoCl.getInstance(this, "video");
         startButton.setDisable(true);
         videoCl.connect();
     }

@@ -54,7 +54,7 @@ public class Webcamera {
                 BufferedImage bufferedImage = createImage();
                 Image image = ImgUtil.createImage(bufferedImage);
                 byte[] byteImage = ImgUtil.toByte(bufferedImage);
-                if(!videoCl.isConnected()) {
+                if(videoCl.isConnected()) {
                     videoCl.sendMedia(byteImage);
                 }
                 else{}
