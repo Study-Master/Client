@@ -84,7 +84,7 @@ public class VideoCl extends WebSocketClient implements Sendable {
             System.arraycopy(info, 50, type, 0, 50);
             System.arraycopy(info, 100, img, 0, info.length-100);
             
-            String senderName = "yes";
+            String senderName = "s";
             String typeFlag = "video";
             
             ImageView imgView;
