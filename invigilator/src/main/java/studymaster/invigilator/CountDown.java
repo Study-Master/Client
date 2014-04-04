@@ -22,6 +22,7 @@ import studymaster.invigilator.ViewController.CourseView;
 public class CountDown extends Label {
     int row;
     String courseCode;
+    String examStartTime;
 
     public int getRow() {
         return row;
@@ -31,9 +32,14 @@ public class CountDown extends Label {
         return courseCode;
     }
 
-    public CountDown(String examStartTime, String courseCode, int row) {
+    public String getStartTime() {
+        return examStartTime;
+    }
+
+    public CountDown(String courseCode, String examStartTime, int row) {
         this.row = row;
         this.courseCode = courseCode;
+        this.examStartTime = examStartTime;
         bindToTime(examStartTime, courseCode, row);
         System.out.println("[Info] A CountDown Label created!");
     }

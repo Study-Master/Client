@@ -41,8 +41,8 @@ public class CourseView extends HomeViewController {
 	// @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 	// 	super.initialize(location, resources);
 	// 	JSONObject content = new JSONObject();
-	// 	JSONObject course = new JSONObject("{'courses': [{'code': 'CZ2001','name': 'Java','status': 'waiting','start_time': '2014/05/01 00:00:00'},{'code': 'CZ2002','name': 'Java2','status': 'finished','start_time': '2014/05/03 00:00:00'},{'code': 'CZ2006', 'name': 'Java6','status': 'invigilate','start_time': '2014/05/03 00:00:00'}]}");
-	// 	content.put("profile", course);
+	// 	JSONObject exam = new JSONObject("{'exams': [{'code': 'CZ2001','name': 'Java','status': 'waiting','start_time': '2014/05/01 00:00:00'},{'code': 'CZ2002','name': 'Java2','status': 'finished','start_time': '2014/05/03 00:00:00'},{'code': 'CZ2006', 'name': 'Java6','status': 'invigilate','start_time': '2014/05/03 00:00:00'}]}");
+	// 	content.put("profile", exam);
 	// 	Connector.getInstance().setAndSendMessageContainer("profile_invigilator", content);
 	// 	System.out.println(content);
 	// }
@@ -69,7 +69,7 @@ public class CourseView extends HomeViewController {
 	private void enableInvigilation(final JSONObject content) {
 		//Remove count dwon label, add exam button
 		//pass the test
-		final String courseCode = content.getString("code");
+		final String examCode = content.getString("code");
 		final String examStartTime = content.getString("start_time");
 		try {
 			javafx.application.Platform.runLater(new Runnable() {
@@ -79,7 +79,7 @@ public class CourseView extends HomeViewController {
 					CountDown label = null;
 					for (Node node : childrens) {
 						if (node instanceof CountDown) {
-							if(content.getString("code").equals(((CountDown)node).getCourseCode())) {
+							if(content.getString("code").equals(((CountDown)node).getCourseCode()) && content.getString("start_time").equals(((CountDown)node).getStartTime())) {
 								label = (CountDown)node;
 								break;
 							}
@@ -89,7 +89,7 @@ public class CourseView extends HomeViewController {
 						System.err.println("[Err] Wrong message from server! Don't find the node!");
 					}
 					else {
-						createInvigilationButton(courseCode, label.getRow());
+						createInvigilationButton(examCode, examStartTime, label.getRow());
 						List.getChildren().remove(label);
 					}
 				}
@@ -112,80 +112,83 @@ public class CourseView extends HomeViewController {
 						final AnchorPane ap = (AnchorPane) (sp.lookup("#ap"));
 						//Create a gridpane - courseList
 						final JSONObject profile = content.getJSONObject("profile");
-						JSONArray courses = profile.getJSONArray("courses");
-						System.out.println("test");
-						ArrayList<JSONObject> coursesArray = new ArrayList<JSONObject>();
+						JSONArray exams = profile.getJSONArray("exams");
+						ArrayList<JSONObject> examsArray = new ArrayList<JSONObject>();
 						String status;
-						GridPane courseList = new GridPane();
-						List = courseList;
-						AnchorPane.setTopAnchor(courseList, 20.0);
-						AnchorPane.setLeftAnchor(courseList, 20.0);
-						AnchorPane.setRightAnchor(courseList, 10.0);
-						AnchorPane.setBottomAnchor(courseList, 25.0);
+						GridPane examList = new GridPane();
+						List = examList;
+						AnchorPane.setTopAnchor(examList, 20.0);
+						AnchorPane.setLeftAnchor(examList, 20.0);
+						AnchorPane.setRightAnchor(examList, 10.0);
+						AnchorPane.setBottomAnchor(examList, 25.0);
 						ColumnConstraints col1 = new ColumnConstraints();
 						col1.setPercentWidth(15);
 						ColumnConstraints col2 = new ColumnConstraints();
-						col2.setPercentWidth(65);
+						col2.setPercentWidth(20);
 						ColumnConstraints col3 = new ColumnConstraints();
-						col3.setPercentWidth(20);
-						courseList.getColumnConstraints().addAll(col1,col2,col3);
-						courseList.setVgap(25);
+						col3.setPercentWidth(45);
+						ColumnConstraints col4 = new ColumnConstraints();
+						col4.setPercentWidth(20);
+						examList.getColumnConstraints().addAll(col1,col2,col3,col4);
+						examList.setVgap(25);
 						col3.setHalignment(HPos.RIGHT);
-						//Add courses into an ArrayList
-						for (int i=0; i<courses.length(); i++) {
-							coursesArray.add(courses.getJSONObject(i));
+						//Add exams into an ArrayList
+						for (int i=0; i<exams.length(); i++) {
+							examsArray.add(exams.getJSONObject(i));
 						}
 
 						//Sort the ArrayList
-						// Collections.sort(coursesArray, new Comparator<JSONObject>() {
-						// 		@Override public int compare(JSONObject course1, JSONObject course2)
+						// Collections.sort(examsArray, new Comparator<JSONObject>() {
+						// 		@Override public int compare(JSONObject exam1, JSONObject exam2)
 						// 		{
-						// 			if ( ("closed".equals(course1.getString("status")) || "finished".equals(course1.getString("status"))) &&
-						// 				("closed".equals(course2.getString("status")) || "finished".equals(course2.getString("status"))) ) {
-						// 				return course1.getString("code").compareTo(course2.getString("code"));
+						// 			if ( ("closed".equals(exam1.getString("status")) || "finished".equals(exam1.getString("status"))) &&
+						// 				("closed".equals(exam2.getString("status")) || "finished".equals(exam2.getString("status"))) ) {
+						// 				return exam1.getString("code").compareTo(exam2.getString("code"));
 						// 			}
-						// 			else if ("closed".equals(course1.getString("status")) || "finished".equals(course1.getString("status"))) {
+						// 			else if ("closed".equals(exam1.getString("status")) || "finished".equals(exam1.getString("status"))) {
 						// 				return 1;
 						// 			}
-						// 			else if ("closed".equals(course2.getString("status")) || "finished".equals(course2.getString("status"))) {
+						// 			else if ("closed".equals(exam2.getString("status")) || "finished".equals(exam2.getString("status"))) {
 						// 				return -1;
 						// 			}
 						// 			else {
-						// 				return course1.getString("code").compareTo(course2.getString("code"));
+						// 				return exam1.getString("code").compareTo(exam2.getString("code"));
 						// 			}
 						// 		}
 						// 	});
-						//Display the courses
-						for(int i=0; i<coursesArray.size(); i++) {
-							final JSONObject course = (JSONObject)coursesArray.get(i);
+						//Display the exams
+						for(int i=0; i<examsArray.size(); i++) {
+							final JSONObject exam = (JSONObject)examsArray.get(i);
 							//First 2 columns
-							Label code = new Label(course.getString("code"));
+							Label code = new Label(exam.getString("code"));
 							code.setStyle("-fx-text-fill: black;");
-							Label name = new Label(course.getString("name"));
+							Label name = new Label(exam.getString("name"));
 							name.setStyle("-fx-text-fill: black;");
+							Label start_time = new Label(exam.getString("start_time"));
 
-							courseList.add(code, 0, i);
-							courseList.add(name, 1, i);
+							examList.add(code, 0, i);
+							examList.add(name, 1, i);
+							examList.add(start_time, 2, i);
 
-							status = course.getString("status");
-							String examStartTime = course.getString("start_time");
-							String courseCode = course.getString("code");
+							status = exam.getString("status");
+							String examCode = exam.getString("code");
+							String examStartTime = exam.getString("start_time");
 
 							if (status.equals("waiting")) {
 								//Countdown label
-								createCountDownLabel(examStartTime, courseCode, i);
+								createCountDownLabel(examCode, examStartTime, i);
 							}
 							else if (status.equals("finished")) {
 								//Finish label
 								Label label = new Label("Finished");
-								courseList.add(label, 2, i);
+								examList.add(label, 3, i);
 							}
 							else if (status.equals("invigilate")) {
 								//invigilation button
-								createInvigilationButton(courseCode, i);
+								createInvigilationButton(examCode, examStartTime, i);
 							}
 						}
-						ap.getChildren().addAll(courseList);
+						ap.getChildren().addAll(examList);
 					} catch (JSONException e) {
 						System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when adding component.");
 						e.printStackTrace();
@@ -194,16 +197,16 @@ public class CourseView extends HomeViewController {
 			});
 	}
 
-	public static void createCountDownLabel(String examStartTime, String courseCode, int row) {
-		CountDown timeLabel = new CountDown(examStartTime, courseCode, row);
-		List.add(timeLabel, 2, row);
+	public static void createCountDownLabel(String examCode, String examStartTime, int row) {
+		CountDown timeLabel = new CountDown(examCode, examStartTime, row);
+		List.add(timeLabel, 3, row);
 	}
 
-	public static void createInvigilationButton(final String courseCode, final int row) {
+	public static void createInvigilationButton(final String examCode, final String examStartTime, final int row) {
 		javafx.application.Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					final InvigilateButton button = new InvigilateButton(courseCode, row);
+					final InvigilateButton button = new InvigilateButton(examCode, examStartTime, row);
 					button.setPrefWidth(150);
 					button.setOnAction(new EventHandler<ActionEvent>() {
 							@Override public void handle(ActionEvent e) {
@@ -212,19 +215,20 @@ public class CourseView extends HomeViewController {
 								button.setGraphic(new ImageView(LoadingIcon));
 								button.setStyle("-fx-padding-left: 0; -fx-background-color: rgba(0, 102, 153, 1);");
 								button.setDisable(true);
-								setAndSendInvigilationMsg(courseCode);
+								setAndSendInvigilationMsg(button.getCourseCode(), button.getExamStartTime());
 								Director.pushStageWithFXML(getClass().getResource("/fxml/invigilatorView.fxml"));
 							}
 						});
-					List.add(button, 2, row);
+					List.add(button, 3, row);
 				}
 			});
 	}
 
-	public static void setAndSendInvigilationMsg(String course) {
+	public static void setAndSendInvigilationMsg(String exam, String start_time) {
 		JSONObject content = new JSONObject();
-		content.put("code", course);
-		Connector.getInstance().setAndSendMessageContainer("start_invigilation", content);
+		content.put("code", exam);
+		content.put("start_time", start_time);
+		Connector.getInstance().setAndSendMessageContainer("Invigilate", content);
 		System.out.println("\n"+content+"\n");
 	}
 }
