@@ -63,6 +63,148 @@ public class ExamView extends ViewController {
 	private Integer duration = 120;//time duration of the exam in minutes
 	private Timeline timeline;
 
+    @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        System.out.println("[info] (" + getClass().getSimpleName() + " initializing page \n\n");
+        super.initialize(location, resources);
+
+        setAttribute();
+        if (created == false) {
+            msgArea.setVisible(false);
+            created = true;
+        }
+
+        QuestionDatabase database = QuestionDatabase.getInstance();
+        titleLabel.setText(database.getCourseCode() + " Online Exam");//course code is stored at position 0!!!
+        questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
+        questionDescription.setTextOverrun(OverrunStyle.CLIP);
+        numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
+
+        ToggleGroup group = new ToggleGroup();
+        choiceA.setToggleGroup(group);
+        choiceB.setToggleGroup(group);
+        choiceC.setToggleGroup(group);
+        choiceD.setToggleGroup(group);
+        choiceA.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("a"));
+        choiceA.setTextOverrun(OverrunStyle.CLIP);
+        choiceB.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("b"));
+        choiceB.setTextOverrun(OverrunStyle.CLIP);
+        choiceC.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("c"));
+        choiceC.setTextOverrun(OverrunStyle.CLIP);
+        choiceD.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("d"));
+        choiceD.setTextOverrun(OverrunStyle.CLIP);
+
+        //code below is responsible for the countdown function
+        formatCountdown(duration);
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.minutes(1),
+                                    new EventHandler<ActionEvent>() {
+                                    public void handle(ActionEvent event) {     
+                                        duration--;
+                                        if (duration <= 10) {
+                                            timer.setTextFill(Color.RED);
+                                        }
+                                        if (duration == 0) {
+                                            timeline.stop();
+                                            timer.setText("Time is up!");
+                                            AlertAction action = new AlertAction() {
+                                                @Override public void ok(Stage stage) {
+                                                    submitAnswer();
+                                                    stage.close();
+                                                }
+                                            };
+                                            director.invokeOneButtonAlert("Time is up!", "Your answers will be submitted automatically.", action);
+                                        }
+                                        else {
+                                            formatCountdown(duration);
+                                        }
+                                    }
+                                }));
+        timeline.playFromStart();
+
+        choiceA.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.setAnswer("a");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
+            }
+        });
+        choiceB.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.setAnswer("b");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
+            }
+        });
+        choiceC.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.setAnswer("c");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
+            }
+        });
+        choiceD.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.setAnswer("d");
+                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
+            }
+        });
+
+        //pre-select the answer that examinee chooses already
+        if (database.getAnswer() == "a") {
+            choiceA.setSelected(true);
+        } else if (database.getAnswer() == "b") {
+                choiceB.setSelected(true);
+            } else if (database.getAnswer() == "c") {
+                    choiceC.setSelected(true);
+                } else if (database.getAnswer() == "d") {
+                        choiceD.setSelected(true);
+                    } else {
+                        }
+
+        firstQuestion.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.getFirstQuestion();
+                updataStage();
+            }
+        });
+        previousQuestion.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.getPreviousQuestion();
+                updataStage();
+            }
+        });
+        nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.getNextQuestion();
+                updataStage();
+            }
+        });
+        lastQuestion.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                QuestionDatabase database = QuestionDatabase.getInstance();
+                database.getLastQuestion();
+                updataStage();
+            }
+        });
+
+        submit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                AlertAction action = new AlertAction() {
+                    @Override public void ok(Stage stage) {
+                        submitAnswer();
+                        stage.close();
+                    }
+                };
+                director.invokeTwoButtonAlert("Submit?", "Are you sure that you want to submit?", action);
+            }
+        });
+    }
+
   	@Override public void onMessage(String message) {
 	    System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message + "\n\n");
 
@@ -80,7 +222,7 @@ public class ExamView extends ViewController {
                     	stage.close();
                 	}
             	};
-            	director.invokeOneButtonAlert("Submission message", "Your submission is successful", action);
+            	director.invokeOneButtonAlert("Successful!", "Your submission is successful", action);
 			}
 			else {
 				AlertAction action = new AlertAction() {
@@ -95,7 +237,7 @@ public class ExamView extends ViewController {
     	}
     }
 
-    @FXML public void textAction() {
+    @FXML protected void textAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " textAction): text chat with invigilator...");
         if (status == true) {
             msgArea.setVisible(false);       
@@ -107,153 +249,8 @@ public class ExamView extends ViewController {
         }
     }
 
- 	@Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-		System.out.println("[info] (" + getClass().getSimpleName() + " initializing page \n\n");
-		super.initialize(location, resources);
-
-		setAttribute();
-        if (created == false) {
-            msgArea.setVisible(false);
-            created = true;
-        }
-
-		QuestionDatabase database = QuestionDatabase.getInstance();
-		titleLabel.setText(database.getCourseCode() + " Online Exam");//course code is stored at position 0!!!
-		questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
-		questionDescription.setTextOverrun(OverrunStyle.CLIP);
-        numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
-
-		ToggleGroup group = new ToggleGroup();
-		choiceA.setToggleGroup(group);
-		choiceB.setToggleGroup(group);
-		choiceC.setToggleGroup(group);
-		choiceD.setToggleGroup(group);
-		choiceA.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("a"));
-		choiceA.setTextOverrun(OverrunStyle.CLIP);
-		choiceB.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("b"));
-		choiceB.setTextOverrun(OverrunStyle.CLIP);
-		choiceC.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("c"));
-		choiceC.setTextOverrun(OverrunStyle.CLIP);
-		choiceD.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("d"));
-		choiceD.setTextOverrun(OverrunStyle.CLIP);
-
-		//code below is responsible for the countdown function
-		formatCountdown(duration);
-        timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
-        							new EventHandler<ActionEvent>() {
-        							public void handle(ActionEvent event) {		
-    									duration--;
-    									if (duration <= 10) {
-    										timer.setTextFill(Color.RED);
-    									}
-    									if (duration == 0) {
-                                            timeline.stop();
-    										timer.setText("Time is up!");
-    										AlertAction action = new AlertAction() {
-                								@Override public void ok(Stage stage) {
-                    								submitAnswer();
-                    								stage.close();
-                								}
-            								};
-            								director.invokeOneButtonAlert("Time is up!", "Your answers will be submitted automatically.", action);
-    									}
-    									else {
-    										formatCountdown(duration);
-    									}
-    								}
-    							}));
-        timeline.playFromStart();
-
-		choiceA.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
-				QuestionDatabase database = QuestionDatabase.getInstance();
-				database.setAnswer("a");
-                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
-			}
-		});
-		choiceB.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
-				QuestionDatabase database = QuestionDatabase.getInstance();
-				database.setAnswer("b");
-                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
-			}
-		});
-		choiceC.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
-				QuestionDatabase database = QuestionDatabase.getInstance();
-				database.setAnswer("c");
-                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
-			}
-		});
-		choiceD.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
-				QuestionDatabase database = QuestionDatabase.getInstance();
-				database.setAnswer("d");
-                numberOfQuestionsAnswered.setText(database.getNumberOfQuestionsAnswered() + " of " + database.getTotalNumberOfQuestions() + " answered");
-			}
-		});
-
-		//pre-select the answer that examinee chooses already
-		if (database.getAnswer() == "a") {
-			choiceA.setSelected(true);
-		} else if (database.getAnswer() == "b") {
-				choiceB.setSelected(true);
-			} else if (database.getAnswer() == "c") {
-					choiceC.setSelected(true);
-				} else if (database.getAnswer() == "d") {
-						choiceD.setSelected(true);
-					} else {
-						}
-
-		firstQuestion.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
-            	QuestionDatabase database = QuestionDatabase.getInstance();
-            	database.getFirstQuestion();
-            	updataStage();
-            }
-        });
-        previousQuestion.setOnAction(new EventHandler<ActionEvent>() {
-        	@Override public void handle(ActionEvent e) {
-        		QuestionDatabase database = QuestionDatabase.getInstance();
-        		database.getPreviousQuestion();
-        		updataStage();
-        	}
-        });
-        nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
-        	@Override public void handle(ActionEvent e) {
-        		QuestionDatabase database = QuestionDatabase.getInstance();
-        		database.getNextQuestion();
-        		updataStage();
-        	}
-        });
-        lastQuestion.setOnAction(new EventHandler<ActionEvent>() {
-        	@Override public void handle(ActionEvent e) {
-        		QuestionDatabase database = QuestionDatabase.getInstance();
-        		database.getLastQuestion();
-        		updataStage();
-        	}
-        });
-
-        submit.setOnAction(new EventHandler<ActionEvent>() {
-        	@Override public void handle(ActionEvent e) {
-        		AlertAction action = new AlertAction() {
-                	@Override public void ok(Stage stage) {
-                    	submitAnswer();
-                    	stage.close();
-                	}
-            	};
-            	director.invokeTwoButtonAlert("Submit?", "Are you sure that you want to submit?", action);
-			}
-		});
-	}
-
-	//function used to refresh the screen
-	//the elements don't change dynamicly, they just reload the content
 	private void updataStage() {
 		System.out.println("[info] (" + getClass().getSimpleName() + " updataStage) reload content \n");
-		//first set all the radio buttons unselected
 		choiceA.setSelected(false);
 		choiceB.setSelected(false);
 		choiceC.setSelected(false);
@@ -282,7 +279,10 @@ public class ExamView extends ViewController {
 	}
 
 	private void formatCountdown(int duration){
-		if (duration >= 60) {
+        if (duration >= 120) {
+            timer.setText("02:00");
+        }
+		else if (duration >= 60) {
 			timer.setText("01:" + (duration-60));
 		}
 		else if (duration < 60 && duration >= 10) {
@@ -295,31 +295,29 @@ public class ExamView extends ViewController {
 		}
 	}
 
-    public void setAttribute() {
+    private void setAttribute() {
         receiveTextArea.setEditable(false);
     }
 
-    public void sendTextAction() {
+    private void sendTextAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " sendtextAction): sending text...");
-        JSONObject Msg = new JSONObject();
-        JSONObject Content = new JSONObject();
-        Msg.put("event", "exam_chat");
-        Msg.put("endpoint", "Java Examinee Client");
-            
+        JSONObject content = new JSONObject();
+        
         Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
 
-        String sendingName = Connector.getSender();
+        String sendingName = connector.getSender();
         String s = df.format(date);
         String sendingText = sendTextArea.getText();
-                    
-        Content.put("account", sendingName); 
-        Content.put("exam_pk", 3); // need to be modified
-        Content.put("system_time", s); 
-        Content.put("msg", sendingText);
-            
-        Msg.put("content", Content);
-        //Connector.setMessageContainer(Msg.toString());
+
+        //need to check with server the json api
+        QuestionDatabase database = QuestionDatabase.getInstance();
+        content.put("account", sendingName); 
+        content.put("exam_pk", database.getExamPk());
+        content.put("system_time", s); 
+        content.put("msg", sendingText);
+        System.out.println("\n\n HERE ALREADY \n\n");
+        connector.setAndSendMessageContainer("exam_chat", content);
         sendTextArea.clear();
         receiveTextArea.appendText(sendingName + ":(" + s + ")\n");
         receiveTextArea.appendText(sendingText + "\n");
