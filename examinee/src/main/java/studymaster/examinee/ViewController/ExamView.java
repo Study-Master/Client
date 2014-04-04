@@ -153,18 +153,7 @@ public class ExamView extends ViewController {
     										timer.setText("Time is up!");
     										AlertAction action = new AlertAction() {
                 								@Override public void ok(Stage stage) {
-                    								QuestionDatabase database = QuestionDatabase.getInstance();
-													JSONObject content = new JSONObject();
-													content.put("course_code", database.getCourseCode());
-                                                    content.put("exam_pk", database.getExamPk());
-													database.getFirstQuestion();
-													Set<JSONObject> question_set = new HashSet();
-													for (int i=0; i<(database.getQuestionSetSize()); i++) {
-														question_set.add(database.getCurrentQuestion());
-														database.getNextQuestion();
-													}
-													content.put("question_set", question_set);
-                                                    connector.setAndSendMessageContainer("exam_question_answer", content);
+                    								submitAnswer();
                     								stage.close();
                 								}
             								};
@@ -251,18 +240,7 @@ public class ExamView extends ViewController {
         	@Override public void handle(ActionEvent e) {
         		AlertAction action = new AlertAction() {
                 	@Override public void ok(Stage stage) {
-                    	QuestionDatabase database = QuestionDatabase.getInstance();
-                        JSONObject content = new JSONObject();
-                        content.put("course_code", database.getCourseCode());
-                        content.put("exam_pk", database.getExamPk());
-                        database.getFirstQuestion();
-                        Set<JSONObject> question_set = new HashSet();
-                        for (int i=0; i<(database.getQuestionSetSize()); i++) {
-                            question_set.add(database.getCurrentQuestion());
-                            database.getNextQuestion();
-                        }
-                        content.put("question_set", question_set);
-                        connector.setAndSendMessageContainer("exam_question_answer", content);
+                    	submitAnswer();
                     	stage.close();
                 	}
             	};
@@ -345,6 +323,21 @@ public class ExamView extends ViewController {
         sendTextArea.clear();
         receiveTextArea.appendText(sendingName + ":(" + s + ")\n");
         receiveTextArea.appendText(sendingText + "\n");
+    }
+
+    private void submitAnswer() {
+        QuestionDatabase database = QuestionDatabase.getInstance();
+        JSONObject content = new JSONObject();
+        content.put("course_code", database.getCourseCode());
+        content.put("exam_pk", database.getExamPk());
+        database.getFirstQuestion();
+        Set<JSONObject> question_set = new HashSet();
+        for (int i=0; i<(database.getQuestionSetSize()); i++) {
+            question_set.add(database.getCurrentQuestion());
+            database.getNextQuestion();
+        }
+        content.put("question_set", question_set);
+        connector.setAndSendMessageContainer("exam_question_answer", content);
     }
 }
 
