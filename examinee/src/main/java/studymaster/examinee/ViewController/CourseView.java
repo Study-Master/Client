@@ -121,7 +121,7 @@ public class CourseView extends HomeViewController {
                 }
             }
         }
-        Director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+        Director.pushStageWithFXML(getClass().getResource("/fxml/authView.fxml"));
         }
         catch (Exception e) {
             e.printStackTrace();
