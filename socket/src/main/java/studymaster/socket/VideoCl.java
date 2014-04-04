@@ -18,24 +18,26 @@ public class VideoCl extends WebSocketClient implements Sendable {
     private static String localServer = null;
     private static String localSender = "Default Sender";
     private static String localEndpoint = "Default VideoCl";
+    private String flag;
     private ImageView imgView = null;
     private VideoEventHandler handler;
 
-    private VideoCl(URI serverURI, VideoEventHandler handler) {
+    private VideoCl(URI serverURI, VideoEventHandler handler, String flag) {
         super(serverURI);
         localSender = Connector.getSender();
         localEndpoint = Connector.getEndpoint();
+        this.flag = flag;
         this.handler = handler;
     }
 
-    public static VideoCl getInstance(VideoEventHandler handler) {
+    public static VideoCl getInstance(VideoEventHandler handler, String flag) {
         if(localServer == null || handler == null) {
             throw new NullPointerException();
         }
         else {
             VideoCl instance = null;
             try { 
-                instance = new VideoCl(new URI(localServer), handler);
+                instance = new VideoCl(new URI(localServer), handler, flag);
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -84,7 +86,6 @@ public class VideoCl extends WebSocketClient implements Sendable {
         byte[] senderByte = localSender.getBytes(Charset.forName("UTF-8"));
         System.arraycopy(senderByte, 0, header, 0, senderByte.length);
 
-        String flag = "v";
         byte[] flagByte = flag.getBytes(Charset.forName("UTF-8"));
         System.arraycopy(flagByte, 0, header, 50, flagByte.length);
 
