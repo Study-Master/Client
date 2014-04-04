@@ -2,6 +2,7 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
+import studymaster.socket.VideoCl;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -35,9 +36,12 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     private Stage chatWindow2;
     ArrayList<Slot> slots;
 
+    private VideoCl videoCl;
+
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
         connector.retain(this);
+        videoCl = VideoCl.getInstance(this, "receiver");
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));

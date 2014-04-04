@@ -2,6 +2,8 @@ package studymaster.socket;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.HashMap;
 import org.json.JSONObject;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +21,8 @@ public class VideoCl extends WebSocketClient implements Sendable {
     private static String localSender = "Default Sender";
     private static String localEndpoint = "Default VideoCl";
     private String flag;
-    private ImageView imgView = null;
+    private Map<String, ImageView> videoImg;
+    private Map<String, ImageView> screenImg;
     private VideoEventHandler handler;
 
     private VideoCl(URI serverURI, VideoEventHandler handler, String flag) {
@@ -27,6 +30,8 @@ public class VideoCl extends WebSocketClient implements Sendable {
         localSender = Connector.getSender();
         localEndpoint = Connector.getEndpoint();
         this.flag = flag;
+        this.videoImg = new HashMap<String, ImageView>();
+        this.screenImg = new HashMap<String, ImageView>();
         this.handler = handler;
     }
 
@@ -49,8 +54,9 @@ public class VideoCl extends WebSocketClient implements Sendable {
         localServer = server;
     }
 
-    public void setImageView(ImageView imageView) {
-        imgView = imageView;
+    public void setImageView(String name, ImageView video, ImageView screen) {
+        videoImg.put(name, video);
+        screenImg.put(name, screen);      
     }
 
     @Override public void onOpen(ServerHandshake handshakedata) {
@@ -64,15 +70,42 @@ public class VideoCl extends WebSocketClient implements Sendable {
     @Override public void onError(Exception ex) {}
 
     @Override public void onMessage(ByteBuffer message) {
-        if(imgView==null) {
-            System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
-        }
-        else {
-            Image image = ImgUtil.byteBufferToImage(message);
-            if(image!=null) {
-                imgView.setImage(image);
+        try {
+            byte[] info = message.array();
+            byte[] sender = new byte[50];
+            byte[] type = new byte[50];
+            byte[] img = new byte[info.length - 100];
+
+            System.arraycopy(info, 0, sender, 0, 50);
+            System.arraycopy(info, 50, type, 0, 50);
+            System.arraycopy(info, 100, img, 0, info.length-100);
+            
+            String senderName = "yes";
+            String typeFlag = "video";
+            
+            ImageView imgView;
+            if(typeFlag.equals("video")) {
+                imgView = videoImg.get(senderName);
             }
-            else {}
+            else if(typeFlag.equals("screen")) {
+                imgView = screenImg.get(senderName);
+            }
+            else {
+                imgView = null;
+            }
+
+            if(imgView==null) {
+                System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
+            }
+            else {
+                Image image = ImgUtil.byteToImage(img);
+                if(image!=null) {
+                    imgView.setImage(image);
+                }
+                else {}
+            }
+        } catch(Exception e) {
+            //Ignore
         }
     }
 
