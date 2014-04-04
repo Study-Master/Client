@@ -43,6 +43,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         super.initialize(location, resources);
         connector.retain(this);
         videoCl = VideoCl.getInstance(this, "receiver");
+        videoCl.connect();
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
@@ -108,6 +109,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 for(int i=0; i<3; i++) {
                     if( videoCl.containsImageView(slots.get(i).imgView) || videoCl.containsImageView(slots.get(i).screenView)) {}
                     else {
+                        slots.get(i).name = name;
                         videoCl.setImageView(name, slots.get(i).imgView, slots.get(i).screenView);
                     }
                 }
@@ -124,6 +126,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
 }
 
 class Slot {
+    protected String name;
     protected ImageView imgView;
     protected ImageView screenView;
     protected Button button;
