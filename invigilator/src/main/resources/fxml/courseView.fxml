@@ -20,7 +20,7 @@
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Label fx:id="titleLabel" layoutX="75.0" layoutY="100.0" text="Course" />
+    <Label fx:id="titleLabel" layoutX="75.0" layoutY="55.0" text="Task" />
     <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="62.0" layoutY="184.0" prefHeight="504.0" prefWidth="921.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
       <content>
         <AnchorPane id="ap" maxHeight="1.7976931348623157E308" opacity="1.0" prefHeight="489.0" prefWidth="919.0000999999975" style="" visible="true">
@@ -34,7 +34,7 @@
       <graphic>
         <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" x="721.0" y="33.0">
           <image>
-            <Image url="@../image/testing.png" backgroundLoading="true" />
+            <Image url="@../image/testing.png" backgroundLoading="false" />
           </image>
         </ImageView>
       </graphic>
@@ -48,6 +48,7 @@
         </ImageView>
       </graphic>
     </Button>
+    <Label fx:id="copyrightLabel" layoutX="427.0" layoutY="714.0" text="©Copyright 2014 Studymaster" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/courseView.css" />

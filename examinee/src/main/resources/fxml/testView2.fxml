@@ -23,18 +23,17 @@
         </Label>
       </labelFor>
     </Label>
-    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Label alignment="CENTER" layoutX="382.0" layoutY="606.0" prefHeight="44.0" prefWidth="262.0" style="-fx-font-size: 15;" text="©Copyright 2014 Studymaster" />
     <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="220.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <Label alignment="CENTER" layoutX="218.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" style="-fx-font-size: 15;&#10;" text="*Press start to open webcam. If you can see yourself up here, you are all set!">
+    <Label alignment="CENTER" layoutX="219.0" layoutY="506.0" prefHeight="42.0" prefWidth="586.0" style="-fx-font-size: 15;&#10;" text="If you can see yourself up here, you are all set!">
       <font>
         <Font size="15.0" />
       </font>
@@ -44,12 +43,13 @@
         <Image url="@../image/User.png" />
       </image>
     </ImageView>
-    <Button id="ExitButton" fx:id="FinishiButton" layoutX="837.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="FINISH">
+    <Button id="ExitButton" fx:id="FinishiButton" layoutX="519.0" layoutY="586.0" mnemonicParsing="false" onAction="#nextAction" text="FINISH">
       <font>
         <Font size="20.0" fx:id="x1" />
       </font>
     </Button>
-    <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="703.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
+    <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="385.0" layoutY="586.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
+    <Label fx:id="copyrightLabel" layoutX="422.0" layoutY="680.0" text="©Copyright 2014 Studymaster" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/testView.css" />
