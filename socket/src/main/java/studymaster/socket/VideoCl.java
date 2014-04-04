@@ -59,6 +59,10 @@ public class VideoCl extends WebSocketClient implements Sendable {
         screenImg.put(name, screen);      
     }
 
+    public boolean containsImageView(ImageView imageView) {
+        return (videoImg.containsValue(imageView) || screenImg.containsValue(imageView));
+    }
+
     @Override public void onOpen(ServerHandshake handshakedata) {
         handler.onVideoClientOpen();
     }
