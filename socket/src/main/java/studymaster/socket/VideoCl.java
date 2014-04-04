@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import studymaster.media.ImgUtil;
 import studymaster.media.Sendable;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.awt.image.BufferedImage;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -61,7 +62,9 @@ public class VideoCl extends WebSocketClient implements Sendable {
     @Override public void onError(Exception ex) {}
 
     @Override public void onMessage(ByteBuffer message) {
-        if(imgView==null) {}
+        if(imgView==null) {
+            System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
+        }
         else {
             Image image = ImgUtil.byteBufferToImage(message);
             if(image!=null) {
@@ -76,6 +79,12 @@ public class VideoCl extends WebSocketClient implements Sendable {
     }
 
     @Override public void sendMedia(byte[] media) {
-        send(media);
+        byte[] header = new byte[100];
+        byte[] sender = localSender.getBytes(Charset.forName("UTF-8"));
+        System.arraycopy(sender, 0, header, 0, sender.length);
+        byte[] info = new byte[media.length + header.length];
+        System.arraycopy(header, 0, info, 0, header.length);
+        System.arraycopy(media, 0, info, header.length, media.length);
+        send(info);
     }
 }
