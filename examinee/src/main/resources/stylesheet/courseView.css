@@ -10,6 +10,12 @@
     -fx-text-fill: rgba(0, 102, 153, 1);
 }
 
+#copyrightLabel {
+        -fx-font-family: 'HelveticaNeue LT 45 Light';
+        -fx-font-size: 12;
+        -fx-text-fill: rgba(0, 0, 0, 1);
+}
+
 .button {
     -fx-font-family: 'HelveticaNeue LT 45 Light';
     -fx-font-size: 25;

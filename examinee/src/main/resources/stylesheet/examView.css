@@ -4,6 +4,12 @@
 	-fx-font-size: 45;
 }
 
+#copyrightLabel {
+		-fx-font-family: 'HelveticaNeue LT 45 Light';
+		-fx-font-size: 12;
+		-fx-text-fill: rgba(0, 0, 0, 1);
+}
+
 #timer {
 	-fx-font-family: 'HelveticaNeue LT 25 Light';
 	-fx-font-size: 45;

@@ -21,7 +21,7 @@
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Label fx:id="titleLabel" layoutX="75.0" layoutY="38.0" text="EE8086: 20questions" wrapText="true" />
+    <Label fx:id="titleLabel" layoutX="75.0" layoutY="38.0" text="CZ2006 Online Exam" wrapText="true" />
     <Button fx:id="nextQuestion" layoutX="512.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;" />
     <Button fx:id="previousQuestion" layoutX="427.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;" />
     <Button fx:id="firstQuestion" layoutX="342.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;&lt;" />
