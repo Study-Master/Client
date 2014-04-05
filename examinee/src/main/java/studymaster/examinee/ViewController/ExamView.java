@@ -60,7 +60,7 @@ public class ExamView extends ViewController {
     @FXML protected Button sendTextButton;
     private boolean created = false;
     private boolean status = false;
-	private Integer duration = 7200;//time duration of the exam in minutes
+	private Integer duration = 7200;//time duration of the exam in seconds
 	private Timeline timeline;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -101,7 +101,7 @@ public class ExamView extends ViewController {
                                     new EventHandler<ActionEvent>() {
                                     public void handle(ActionEvent event) {     
                                         duration--;
-                                        if (duration <= 10) {
+                                        if (duration <= 600) {
                                             timer.setTextFill(Color.RED);
                                         }
                                         if (duration == 0) {
@@ -219,7 +219,7 @@ public class ExamView extends ViewController {
                 	stage.close();
             	}
         	};
-        	director.invokeOneButtonAlert("Successful!", "Your submission is successful", action);
+        	director.invokeOneButtonAlert("Successful", "Your submission is successful!", action);
     	}
     }
 
