@@ -57,7 +57,5 @@ public class AuthView extends ViewController implements VideoEventHandler {
         }
     }
 
-    @Override public void onVideoClientOpen() {
-        System.out.println("[info] (" + getClass().getSimpleName() + " onVideoClientOpen)");
-    }
+    public void onVideoClientClose(int code, String reason, boolean remote){}
 }

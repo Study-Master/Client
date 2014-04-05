@@ -2,6 +2,6 @@ package studymaster.socket;
 
 public interface VideoEventHandler {
 
-    public void onVideoClientOpen();
+    public void onVideoClientClose(int code, String reason, boolean remote);
 
 }

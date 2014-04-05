@@ -53,11 +53,11 @@ public class VideoCl extends WebSocketClient implements Sendable {
         return videoImg.containsValue(imageView);
     }
 
-    @Override public void onOpen(ServerHandshake handshakedata) {
-        handler.onVideoClientOpen();
-    }
+    @Override public void onOpen(ServerHandshake handshakedata) {}
 
-    @Override public void onClose(int code, String reason, boolean remote) {}
+    @Override public void onClose(int code, String reason, boolean remote) {
+        handler.onVideoClientClose(code, reason, remote);        
+    }
 
     @Override public void onMessage(String message) {}
 

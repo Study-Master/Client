@@ -130,7 +130,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         }
     }
 
-    @Override public void onVideoClientOpen() {}
+    @Override public void onVideoClientClose(int code, String reason, boolean remote){}
 
     @Override public void onAudioClientOpen() {}
 
