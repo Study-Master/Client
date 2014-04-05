@@ -33,6 +33,25 @@ public class ChatView extends ViewController implements AudioEventHandler {
 
     @Override public void onMessage(String message) {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+        try {
+            JSONObject msg = new JSONObject(message);
+            String event = msg.getString("event");
+            String endpoint = msg.getString("endpoint");
+            final JSONObject content = msg.getJSONObject("content");
+
+            if(event.equals("exam_chat")) {
+                Slots data = Slots.getInstance();
+                String name = content.getString("account");
+                if(name.equals(data.getName(label))) {
+                    String time = content.getString("system_time");
+                    String m = content.getString("msg");
+                    m = name + ": " + time + "\n" + m + "\n";
+                    histroyArea.appendText(m);
+                }
+            }
+        } catch(Exception e) {
+            System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+        }
     }
 
     @FXML public final void sendAction() {
@@ -41,11 +60,10 @@ public class ChatView extends ViewController implements AudioEventHandler {
         String time = df.format(date);
         
         String message = sendArea.getText();
-        String m = time + "\n" + connector.getSender() + ": " + message + "\n\n";
+        String m = connector.getSender() + ": " + time + "\n" + message + "\n";
         histroyArea.appendText(m);
         sendArea.clear();
         Slots data = Slots.getInstance();
-        System.out.println("label: " + label);
         String name = data.getName(label);
         int exam_pk = data.getExam(label);
         JSONObject content = new JSONObject();
