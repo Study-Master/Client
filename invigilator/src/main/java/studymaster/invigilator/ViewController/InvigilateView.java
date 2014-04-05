@@ -73,8 +73,9 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 @Override public void handle(ActionEvent e) {
                     AlertAction action = new AlertAction() {
                         @Override public void ok(Stage stage) {
-                            //TODO: Send message that auth successfully
-                            
+                            JSONObject content = new JSONObject();
+                            content.put("name", slots.get(id).name);
+                            connector.setAndSendMessageContainer("auth_successful", content); 
                             button.setText("Chat");
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
@@ -116,6 +117,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
             if (event.equals("examinee_come_in")) {
                 String type = content.getString("type");
                 String name = content.getString("name");
+                if(clients.size() == 3 )
+                    return;
                 clients.add(name);
 
                 if(type.equals("video")) {
@@ -124,6 +127,9 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 else if (type.equals("screen")) {
                     screenCl.setImageView(name, slots.get(clients.size()-1).screenView);
                 }
+                slots.get(clients.size()-1).name = name;
+                slots.get(clients.size()-1).button.setDisable(false);
+                slots.get(clients.size()-1).terminate.setDisable(false);
             }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");

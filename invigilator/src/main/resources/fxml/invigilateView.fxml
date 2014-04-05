@@ -30,13 +30,13 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button fx:id="terminateButton0" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <Button fx:id="terminateButton0" disable="true" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
         <ImageView fx:id="screenView0" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="chatButton0" fx:id="button0" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
+        <Button id="chatButton0" fx:id="button0" disable="true" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
       </children>
     </Group>
     <Group id="Group" layoutX="424.0" layoutY="138.0">
@@ -46,13 +46,13 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="terminateButton0" fx:id="terminateButton1" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <Button id="terminateButton0" fx:id="terminateButton1" disable="true" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
         <ImageView id="screenView0" fx:id="screenView1" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="chatButton0" fx:id="button1" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
+        <Button id="chatButton0" fx:id="button1" disable="true" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
       </children>
     </Group>
     <Group id="Group" layoutX="690.0" layoutY="138.0">
@@ -62,13 +62,13 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="terminateButton0" fx:id="terminateButton2" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
+        <Button id="terminateButton0" fx:id="terminateButton2" disable="true" layoutX="89.0" layoutY="219.0" mnemonicParsing="false" prefWidth="110.0" text="Terminate" />
         <ImageView id="screenView0" fx:id="screenView2" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="chatButton0" fx:id="button2" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
+        <Button id="chatButton0" fx:id="button2" disable="true" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
       </children>
     </Group>
   </children>
