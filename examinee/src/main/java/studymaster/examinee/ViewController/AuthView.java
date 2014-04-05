@@ -34,6 +34,10 @@ public class AuthView extends ViewController implements VideoEventHandler {
         screenCl = VideoCl.getInstance(Configure.SERVER, this);
         videoCl.connect();
         screenCl.connect();
+        Webcamera camera = Webcamera.getInstance();
+        camera.startStreaming(imgView, videoCl);
+        ScreenCapture sc = ScreenCapture.getInstance();
+        sc.captureStreaming(null, screenCl);
         startButton.setDisable(true);
     }
     
@@ -55,9 +59,5 @@ public class AuthView extends ViewController implements VideoEventHandler {
 
     @Override public void onVideoClientOpen() {
         System.out.println("[info] (" + getClass().getSimpleName() + " onVideoClientOpen)");
-        Webcamera camera = Webcamera.getInstance();
-        camera.startStreaming(imgView, videoCl);
-        ScreenCapture sc = ScreenCapture.getInstance();
-        sc.captureStreaming(null, screenCl);
     }
 }

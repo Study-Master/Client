@@ -110,20 +110,22 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
 
             if (event.equals("examinee_come_in")) {
                 String name = content.getString("name");
-                for(int i=0; i<3; i++) {
-                    if(videoCl.containsImageView(slots.get(i).imgView)) {
-                        continue;
-                    }
-                    else if(screenCl.containsImageView(slots.get(i).screenView)) {
-                        continue;
-                    }
-                    else {
-                        slots.get(i).name = name;
-                        videoCl.setImageView(name, slots.get(i).imgView);
-                        screenCl.setImageView(name, slots.get(i).screenView);
-                        break;
-                    }
-                }
+                //for(int i=0; i<3; i++) {
+                //    if(videoCl.containsImageView(slots.get(i).imgView)) {
+                //        continue;
+                //    }
+                //    else if(screenCl.containsImageView(slots.get(i).screenView)) {
+                //        continue;
+                //    }
+                //    else {
+                //        slots.get(i).name = name;
+                //        videoCl.setImageView(name, slots.get(i).imgView);
+                //        screenCl.setImageView(name, slots.get(i).screenView);
+                //        break;
+                //    }
+                //}
+                //videoCl.setImageView(name, slots.get(1).imgView);
+                screenCl.setImageView(name, slots.get(1).screenView);
             }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
