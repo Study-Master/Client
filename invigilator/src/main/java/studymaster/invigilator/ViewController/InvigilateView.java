@@ -5,8 +5,8 @@ import studymaster.all.ViewController.AlertAction;
 import studymaster.invigilator.Configure;
 import studymaster.socket.VideoCl;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -43,7 +43,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     private VideoCl videoCl;
     private VideoCl screenCl;
 
-    private Set<String> clients;
+    //private Set<String> clients;
+    private Map<String, Slot> clients;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
@@ -103,7 +104,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 }
             });
         }
-        clients = new HashSet();
+        clients = new HashMap();
     }
 
     @Override public void onMessage(String message){
@@ -117,19 +118,39 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
             if (event.equals("examinee_come_in")) {
                 String type = content.getString("type");
                 String name = content.getString("name");
-                if(clients.size() == 3 )
+                int exam_pk = content.getInt("exam_pk");
+                Slot emptySlot = null;
+                for(int i=0; i<3; i++) {
+                    if (slots.get(i).name.equals(name)) {
+                        emptySlot = slots.get(i);
+                        break;
+                    }
+                }
+                if(emptySlot == null ) {
+                    for(int i=0;i<3; i++) {
+                        if(slots.get(i).name.equals("")) {
+                            emptySlot = slots.get(i);
+                            break;
+                        }
+                    }
+                }
+
+                if (emptySlot==null) {
+                    System.out.println("[info] no slot.");
                     return;
-                clients.add(name);
+                }
+                clients.put(name, emptySlot);
 
                 if(type.equals("video")) {
-                    videoCl.setImageView(name, slots.get(clients.size()-1).imgView);
+                    videoCl.setImageView(name, clients.get(name).imgView);
                 }
                 else if (type.equals("screen")) {
-                    screenCl.setImageView(name, slots.get(clients.size()-1).screenView);
+                    screenCl.setImageView(name, clients.get(name).screenView);
                 }
-                slots.get(clients.size()-1).name = name;
-                slots.get(clients.size()-1).button.setDisable(false);
-                slots.get(clients.size()-1).terminate.setDisable(false);
+                clients.get(name).name = name;
+                clients.get(name).exam_pk = exam_pk;
+                clients.get(name).button.setDisable(false);
+                clients.get(name).terminate.setDisable(false);
             }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
@@ -144,6 +165,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
 
 class Slot {
     protected String name;
+    protected int exam_pk;
     protected ImageView imgView;
     protected ImageView screenView;
     protected Button button;
@@ -151,6 +173,8 @@ class Slot {
     protected Stage chatWindow;
 
     protected Slot(ImageView imgView, ImageView screenView, Button button, Button terminate, Stage chatWindow) {
+        this.name = "";
+        this.exam_pk = 0;
         this.imgView = imgView;
         this.screenView = screenView;
         this.button = button;
