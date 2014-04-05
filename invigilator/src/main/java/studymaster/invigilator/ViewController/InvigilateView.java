@@ -42,7 +42,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
         connector.retain(this);
-        videoCl = VideoCl.getInstance(this, "receiver");
+        videoCl = VideoCl.getInstance(this);
         videoCl.connect();
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));

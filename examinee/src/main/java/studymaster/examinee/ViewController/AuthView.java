@@ -4,6 +4,7 @@ import studymaster.all.ViewController.ViewController;
 import studymaster.socket.VideoCl;
 import studymaster.socket.VideoEventHandler;
 import studymaster.media.Webcamera;
+import studymaster.media.ScreenCapture;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ public class AuthView extends ViewController implements VideoEventHandler {
         startButton.setVisible(false);
         label1.setText("Please keep facing the webcam.");
         label2.setText("Authentication takes about one minute.");
-        videoCl = VideoCl.getInstance(this, "video");
+        videoCl = VideoCl.getInstance(this);
         videoCl.connect();
         startButton.setDisable(true);
     }
@@ -52,5 +53,7 @@ public class AuthView extends ViewController implements VideoEventHandler {
         System.out.println("[info] (" + getClass().getSimpleName() + " onVideoClientOpen)");
         Webcamera camera = Webcamera.getInstance();
         camera.startStreaming(imgView, videoCl);
+        ScreenCapture sc = ScreenCapture.getInstance();
+        sc.captureStreaming(null, videoCl);
     }
 }

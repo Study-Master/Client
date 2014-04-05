@@ -9,11 +9,14 @@ import javafx.scene.image.ImageView;
 
 public class ScreenCapture {
     private static ScreenCapture instance = null;
+    private static volatile boolean isStreaming; 
     private static class CaptureThread extends Thread {
-        ImageView view;
+        private ImageView view;
+        private Sendable videoCl;
 
-        public CaptureThread(ImageView view) {
+        public CaptureThread(ImageView view, Sendable videoCl) {
             this.view = view;
+            this.videoCl = videoCl;
         }
 
         public void setImageView(ImageView view) {
@@ -21,10 +24,17 @@ public class ScreenCapture {
         }
 
         @Override public void run() {
-            while(true) {
+            while(isStreaming) {
                 try {
-                    Image image = createScreenShot();
-                    view.setImage(image);
+                    BufferedImage bufferedImage = createScreenShot();
+                    Image image = ImgUtil.createImage(bufferedImage);
+                    byte[] byteImage = ImgUtil.toByte(bufferedImage);
+                    if(videoCl.isConnected()) {
+                        videoCl.sendMedia(byteImage, "screen");
+                    }
+                    if(view!=null) {
+                        view.setImage(image);
+                    }
                     sleep(200);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -34,7 +44,9 @@ public class ScreenCapture {
     }
     private CaptureThread ct;
 
-    private ScreenCapture(){}
+    private ScreenCapture(){
+        isStreaming = false;
+    }
 
     public static ScreenCapture getInstance() {
         if (instance==null) {
@@ -44,31 +56,30 @@ public class ScreenCapture {
         return instance;
     }
 
-    public static Image createScreenShot() {
-        Image newImg = null;
+    public static BufferedImage createScreenShot() {
+        BufferedImage screenShot = null;
         try{
             System.setProperty("java.awt.headless", "false");
             Robot robot = new Robot();
-            BufferedImage screenShot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-            newImg = ImgUtil.createImage(screenShot);
+            screenShot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
         }catch(Exception e){
             System.out.println("[info] (" + ScreenCapture.class.getSimpleName() + " createScreenShot)");
             e.printStackTrace();
         }
-        return newImg;
+        return screenShot;
     }
 
     public void stop() {
-        ct.yield();
-        ct = null;
+        isStreaming = false;
     }
 
-    public void capture(ImageView imageView) {
-        if (ct!=null) {
+    public void captureStreaming(ImageView imageView, Sendable client) {
+        if(isStreaming) {
             ct.setImageView(imageView);
         }
         else {
-            ct = new CaptureThread(imageView);
+            isStreaming = true;
+            ct = new CaptureThread(imageView, client);
             ct.start();
         }
     }

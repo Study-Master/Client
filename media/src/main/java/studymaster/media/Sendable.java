@@ -4,6 +4,6 @@ public interface Sendable {
 
     public boolean isConnected();
 
-    public void sendMedia(byte[] media);
+    public void sendMedia(byte[] media, String typeFlag);
 
 }

@@ -20,29 +20,27 @@ public class VideoCl extends WebSocketClient implements Sendable {
     private static String localServer = null;
     private static String localSender = "Default Sender";
     private static String localEndpoint = "Default VideoCl";
-    private String flag;
     private Map<String, ImageView> videoImg;
     private Map<String, ImageView> screenImg;
     private VideoEventHandler handler;
 
-    private VideoCl(URI serverURI, VideoEventHandler handler, String flag) {
+    private VideoCl(URI serverURI, VideoEventHandler handler) {
         super(serverURI);
         localSender = Connector.getSender();
         localEndpoint = Connector.getEndpoint();
-        this.flag = flag;
         this.videoImg = new HashMap<String, ImageView>();
         this.screenImg = new HashMap<String, ImageView>();
         this.handler = handler;
     }
 
-    public static VideoCl getInstance(VideoEventHandler handler, String flag) {
+    public static VideoCl getInstance(VideoEventHandler handler) {
         if(localServer == null || handler == null) {
             throw new NullPointerException();
         }
         else {
             VideoCl instance = null;
             try { 
-                instance = new VideoCl(new URI(localServer), handler, flag);
+                instance = new VideoCl(new URI(localServer), handler);
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -117,13 +115,13 @@ public class VideoCl extends WebSocketClient implements Sendable {
         return this.isOpen();
     }
 
-    @Override public void sendMedia(byte[] media) {
+    @Override public void sendMedia(byte[] media, String typeFlag) {
         byte[] header = new byte[100];
 
         byte[] senderByte = localSender.getBytes(Charset.forName("UTF-8"));
         System.arraycopy(senderByte, 0, header, 0, senderByte.length);
 
-        byte[] flagByte = flag.getBytes(Charset.forName("UTF-8"));
+        byte[] flagByte = typeFlag.getBytes(Charset.forName("UTF-8"));
         System.arraycopy(flagByte, 0, header, 50, flagByte.length);
 
         byte[] info = new byte[media.length + header.length];

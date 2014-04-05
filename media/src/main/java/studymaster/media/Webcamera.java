@@ -8,9 +8,9 @@ import javafx.scene.image.ImageView;
 public class Webcamera {
     private static Webcamera instance;
     private static Webcam webcam;
-    public static volatile boolean isStreaming;
-    public static volatile boolean isOpening;
-    public static volatile boolean isClosing;
+    private static volatile boolean isStreaming;
+    private static volatile boolean isOpening;
+    private static volatile boolean isClosing;
     private static class WebcamThread extends Thread {
         private ImageView view;
 
@@ -58,7 +58,7 @@ public class Webcamera {
                 Image image = ImgUtil.createImage(bufferedImage);
                 byte[] byteImage = ImgUtil.toByte(bufferedImage);
                 if(videoCl.isConnected()) {
-                    videoCl.sendMedia(byteImage);
+                    videoCl.sendMedia(byteImage, "video");
                 }
                 else{}
                 if(view!=null) {
@@ -139,7 +139,9 @@ public class Webcamera {
     }
 
     public void startStreaming(ImageView imageView, Sendable client) {
-       if (isStreaming) {}
+       if (isStreaming) {
+           wst.setImageView(imageView);
+       }
        else {
            isStreaming = true;
            wst = new WebcamStreamThread(imageView, client);
