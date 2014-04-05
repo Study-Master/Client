@@ -41,8 +41,12 @@ public class ChatView extends ViewController implements AudioEventHandler {
         System.out.println("label: " + label);
         String name = data.getName(label);
         int exam_pk = data.getExam(label);
-        System.out.println(name + " " + exam_pk);
-        //TODO: Send message to server.
+        JSONObject content = new JSONObject();
+        content.put("name", name);
+        content.put("exam_pk", exam_pk);
+        content.put("system_time", "");
+        content.put("msg", message);
+        connector.setAndSendMessageContainer("exam_chat", content);
     }
 
     @FXML public final void onVoiceMessagePressed() {
