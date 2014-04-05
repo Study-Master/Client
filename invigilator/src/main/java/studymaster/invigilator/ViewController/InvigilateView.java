@@ -5,6 +5,8 @@ import studymaster.all.ViewController.AlertAction;
 import studymaster.invigilator.Configure;
 import studymaster.socket.VideoCl;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -40,6 +42,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
 
     private VideoCl videoCl;
     private VideoCl screenCl;
+
+    private Set<String> clients;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
@@ -98,6 +102,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 }
             });
         }
+        clients = new HashSet();
     }
 
     @Override public void onMessage(String message){
@@ -109,23 +114,16 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
             final JSONObject content = msg.getJSONObject("content");
 
             if (event.equals("examinee_come_in")) {
+                String type = content.getString("type");
                 String name = content.getString("name");
-                //for(int i=0; i<3; i++) {
-                //    if(videoCl.containsImageView(slots.get(i).imgView)) {
-                //        continue;
-                //    }
-                //    else if(screenCl.containsImageView(slots.get(i).screenView)) {
-                //        continue;
-                //    }
-                //    else {
-                //        slots.get(i).name = name;
-                //        videoCl.setImageView(name, slots.get(i).imgView);
-                //        screenCl.setImageView(name, slots.get(i).screenView);
-                //        break;
-                //    }
-                //}
-                //videoCl.setImageView(name, slots.get(1).imgView);
-                screenCl.setImageView(name, slots.get(1).screenView);
+                clients.add(name);
+
+                if(type.equals("video")) {
+                    videoCl.setImageView(name, slots.get(clients.size()-1).imgView);
+                }
+                else if (type.equals("screen")) {
+                    screenCl.setImageView(name, slots.get(clients.size()-1).screenView);
+                }
             }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
