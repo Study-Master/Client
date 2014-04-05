@@ -94,8 +94,6 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 }
             });
         }
-        connector.setDelegate(this);
-        videoCl.testView = imgView0;
     }
 
     @Override public void onMessage(String message){

@@ -23,7 +23,6 @@ public class VideoCl extends WebSocketClient implements Sendable {
     private String flag;
     private Map<String, ImageView> videoImg;
     private Map<String, ImageView> screenImg;
-    public ImageView testView;
     private VideoEventHandler handler;
 
     private VideoCl(URI serverURI, VideoEventHandler handler, String flag) {
@@ -99,18 +98,16 @@ public class VideoCl extends WebSocketClient implements Sendable {
                 imgView = null;
             }
 
-            //if(imgView==null) {
-              //  System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
-            //}
-            //else {
+            if(imgView==null) {
+                System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
+            }
+            else {
                 Image image = ImgUtil.byteToImage(img);
                 if(image!=null) {
-                    System.out.println("Decode successfully.");
-                    //imgView.setImage(image);
-                    testView.setImage(image);
+                    imgView.setImage(image);
                 }
                 else {}
-            //}
+            }
         } catch(Exception e) {
             //Ignore
         }
