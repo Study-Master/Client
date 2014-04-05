@@ -36,17 +36,18 @@ public class ChatView extends ViewController implements AudioEventHandler {
     }
 
     @FXML public final void sendAction() {
+        Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String time = df.format(date);
+        
         String message = sendArea.getText();
-        message = connector.getSender() + ": " + message + "\n";
-        histroyArea.appendText(message);
+        String m = time + "\n" + connector.getSender() + ": " + message + "\n\n";
+        histroyArea.appendText(m);
         sendArea.clear();
         Slots data = Slots.getInstance();
         System.out.println("label: " + label);
         String name = data.getName(label);
         int exam_pk = data.getExam(label);
-        Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        String time = df.format(date);
         JSONObject content = new JSONObject();
         content.put("name", name);
         content.put("exam_pk", exam_pk);
