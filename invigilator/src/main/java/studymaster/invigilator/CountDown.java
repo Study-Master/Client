@@ -17,7 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-import studymaster.invigilator.ViewController.CourseView;
+import studymaster.invigilator.ViewController.TaskView;
 
 public class CountDown extends Label {
     int row;

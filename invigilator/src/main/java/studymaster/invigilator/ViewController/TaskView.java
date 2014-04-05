@@ -31,7 +31,7 @@ import javafx.stage.Modality;
 import org.json.JSONException;
 import studymaster.all.ViewController.AlertAction;
 
-public class CourseView extends HomeViewController {
+public class TaskView extends HomeViewController {
     protected static GridPane List;
 
     public static GridPane getList() {
@@ -105,7 +105,7 @@ public class CourseView extends HomeViewController {
             javafx.application.Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    ObservableList<Node> childrens = CourseView.getList().getChildren();
+                    ObservableList<Node> childrens = TaskView.getList().getChildren();
                     CountDown label = null;
                     for (Node node : childrens) {
                         if (node instanceof CountDown) {
