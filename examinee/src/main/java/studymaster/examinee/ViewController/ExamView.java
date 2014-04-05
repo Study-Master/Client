@@ -60,7 +60,7 @@ public class ExamView extends ViewController {
     @FXML protected Button sendTextButton;
     private boolean created = false;
     private boolean status = false;
-	private Integer duration = 120;//time duration of the exam in minutes
+	private Integer duration = 7200;//time duration of the exam in minutes
 	private Timeline timeline;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -97,7 +97,7 @@ public class ExamView extends ViewController {
         formatCountdown(duration);
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.minutes(1),
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
                                     new EventHandler<ActionEvent>() {
                                     public void handle(ActionEvent event) {     
                                         duration--;
@@ -210,8 +210,6 @@ public class ExamView extends ViewController {
 
     	JSONObject msg = new JSONObject(message);
     	String event = msg.getString("event");
-    	String endpoint = msg.getString("endpoint");
-    	JSONObject content = msg.getJSONObject("content");
 
     	//if submission is successful, pop up a window, then jump to course view
     	if (event.equals("submission_successful")) {
@@ -222,8 +220,6 @@ public class ExamView extends ViewController {
             	}
         	};
         	director.invokeOneButtonAlert("Successful!", "Your submission is successful", action);
-    	}
-        else {
     	}
     }
 
@@ -269,20 +265,25 @@ public class ExamView extends ViewController {
 	}
 
 	private void formatCountdown(int duration){
-        if (duration >= 120) {
-            timer.setText("02:00");
+        Integer hr = duration / 3600;
+        Integer min = (duration - 3600 * hr) / 60;
+        Integer sec = duration - 3600 * hr - 60 * min;
+        String hour=hr.toString();
+        String minute=min.toString();
+        String second=sec.toString();
+
+
+        if (hr < 10) {
+            hour = "0" + hour;
         }
-		else if (duration >= 60) {
-			timer.setText("01:" + (duration-60));
-		}
-		else if (duration < 60 && duration >= 10) {
-			timer.setText("00:" + duration);
-		}
-        else if (duration < 10) {
-            timer.setText("00:0" + duration);
+        if (min < 10) {
+            minute = "0" + minute;
         }
-		else {
-		}
+        if (sec < 10) {
+            second = "0" + second;
+        }
+        
+        timer.setText(hour + ":" + minute + ":" + second);
 	}
 
     private void setAttribute() {

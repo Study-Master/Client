@@ -27,7 +27,7 @@
     <Button fx:id="firstQuestion" layoutX="342.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;&lt;" />
     <Button fx:id="lastQuestion" layoutX="597.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;&gt;" />
     <Button fx:id="submit" layoutX="857.0" layoutY="670.0" mnemonicParsing="false" prefWidth="105.0" text="Submit" />
-    <Label fx:id="timer" alignment="CENTER" layoutX="552.0" layoutY="38.0" prefHeight="53.0" prefWidth="267.0" text="Timer" wrapText="true" />
+    <Label fx:id="timer" alignment="CENTER" layoutX="552.0" layoutY="38.0" prefHeight="53.0" prefWidth="267.0" text="02:22:22" wrapText="true" />
     <GridPane fx:id="gridPane" alignment="CENTER" layoutX="75.0" layoutY="91.0" maxHeight="540.0" maxWidth="850.0" minHeight="520.0" minWidth="850.0" prefHeight="496.0" prefWidth="850.0">
       <children>
         <Label id="question_description" fx:id="questionDescription" maxWidth="850.0" minWidth="850.0" prefHeight="130.0" prefWidth="0.0" text="Align is a problm!!What is the mass of the sun?What is the mass of the sun?" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
