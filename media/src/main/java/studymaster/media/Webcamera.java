@@ -55,6 +55,10 @@ public class Webcamera {
             while (isClosing);
             while (isStreaming) {
                 BufferedImage bufferedImage = createImage();
+                if(bufferedImage==null){
+                    System.out.println("Shittttttttttttt");
+                    continue;
+                }
                 Image image = ImgUtil.createImage(bufferedImage);
                 byte[] byteImage = ImgUtil.toByte(bufferedImage);
                 if(videoCl.isConnected()) {

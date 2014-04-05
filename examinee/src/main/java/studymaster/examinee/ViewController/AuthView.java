@@ -31,7 +31,7 @@ public class AuthView extends ViewController implements VideoEventHandler {
         label1.setText("Please keep facing the webcam.");
         label2.setText("Authentication takes about one minute.");
         videoCl = VideoCl.getInstance(Configure.VIDEOSERVER, this);
-        screenCl = VideoCl.getInstance(Configure.SERVER, this);
+        screenCl = VideoCl.getInstance(Configure.SCREENSERVER, this);
         videoCl.connect();
         screenCl.connect();
         Webcamera camera = Webcamera.getInstance();

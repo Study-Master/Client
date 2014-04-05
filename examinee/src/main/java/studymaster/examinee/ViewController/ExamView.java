@@ -214,26 +214,16 @@ public class ExamView extends ViewController {
     	JSONObject content = msg.getJSONObject("content");
 
     	//if submission is successful, pop up a window, then jump to course view
-    	if (event.equals("submission_message")) {
-			if (content.getString("submission_status").equals("successful")) {
-				AlertAction action = new AlertAction() {
-                	@Override public void ok(Stage stage) {
-                    	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
-                    	stage.close();
-                	}
-            	};
-            	director.invokeOneButtonAlert("Successful!", "Your submission is successful", action);
-			}
-			else {
-				AlertAction action = new AlertAction() {
-                	@Override public void ok(Stage stage) {
-                    	stage.close();
-                	}
-            	};
-            	director.invokeOneButtonAlert("Submission message", "Unfortunately, your submission failed", action);
-			}
+    	if (event.equals("submission_successful")) {
+			AlertAction action = new AlertAction() {
+            	@Override public void ok(Stage stage) {
+                	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                	stage.close();
+            	}
+        	};
+        	director.invokeOneButtonAlert("Successful!", "Your submission is successful", action);
     	}
-    	else {
+        else {
     	}
     }
 
