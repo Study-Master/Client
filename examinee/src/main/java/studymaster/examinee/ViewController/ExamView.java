@@ -210,6 +210,7 @@ public class ExamView extends ViewController {
 
     	JSONObject msg = new JSONObject(message);
     	String event = msg.getString("event");
+        JSONObject content = msg.getJSONObject("content");
 
     	//if submission is successful, pop up a window, then jump to course view
     	if (event.equals("submission_successful")) {
@@ -221,6 +222,10 @@ public class ExamView extends ViewController {
         	};
         	director.invokeOneButtonAlert("Successful", "Your submission is successful!", action);
     	}
+        else if (event.equals("exam_chat")) {
+            String invigilatorMessage = content.getString("msg");
+            receiveTextAction(invigilatorMessage);
+        }
     }
 
     @FXML protected void textAction() {
@@ -272,7 +277,6 @@ public class ExamView extends ViewController {
         String minute=min.toString();
         String second=sec.toString();
 
-
         if (hr < 10) {
             hour = "0" + hour;
         }
@@ -290,28 +294,34 @@ public class ExamView extends ViewController {
         receiveTextArea.setEditable(false);
     }
 
-    private void sendTextAction() {
+    @FXML 
+    public void sendTextAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " sendtextAction): sending text...");
         JSONObject content = new JSONObject();
         
         Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
-
         String sendingName = connector.getSender();
         String s = df.format(date);
         String sendingText = sendTextArea.getText();
-
-        //need to check with server the json api
         QuestionDatabase database = QuestionDatabase.getInstance();
         content.put("account", sendingName); 
         content.put("exam_pk", database.getExamPk());
         content.put("system_time", s); 
         content.put("msg", sendingText);
-        System.out.println("\n\n HERE ALREADY \n\n");
+
         connector.setAndSendMessageContainer("exam_chat", content);
         sendTextArea.clear();
         receiveTextArea.appendText(sendingName + ":(" + s + ")\n");
         receiveTextArea.appendText(sendingText + "\n");
+    }
+
+    private void receiveTextAction(String msg) {
+        Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String s = df.format(date);
+        receiveTextArea.appendText("Invigilator(" + s + "):\n");
+        receiveTextArea.appendText(msg + "\n");
     }
 
     private void submitAnswer() {
