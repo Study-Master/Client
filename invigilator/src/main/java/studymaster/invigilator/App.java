@@ -9,7 +9,6 @@ public class App extends Client {
     public static void main(String[] args) throws Exception {
         Connector.setServer(Configure.SERVER);
         Connector.setEndpoint(Configure.ENDPOINT);
-        VideoCl.setServer(Configure.VIDEOSERVER);
 
         launch(args);
     }

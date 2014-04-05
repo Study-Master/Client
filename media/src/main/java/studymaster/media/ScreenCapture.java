@@ -30,7 +30,7 @@ public class ScreenCapture {
                     Image image = ImgUtil.createImage(bufferedImage);
                     byte[] byteImage = ImgUtil.toByte(bufferedImage);
                     if(videoCl.isConnected()) {
-                        videoCl.sendMedia(byteImage, "screen");
+                        videoCl.sendMedia(byteImage);
                     }
                     if(view!=null) {
                         view.setImage(image);

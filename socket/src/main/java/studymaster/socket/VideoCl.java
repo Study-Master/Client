@@ -17,8 +17,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.nio.channels.NotYetConnectedException;
 
 public class VideoCl extends WebSocketClient implements Sendable {
-    private static String localServer = null;
-    private static String localSender = "Default Sender";
+    private String localSender = "Default Sender";
     private static String localEndpoint = "Default VideoCl";
     private Map<String, ImageView> videoImg;
     private Map<String, ImageView> screenImg;
@@ -33,14 +32,14 @@ public class VideoCl extends WebSocketClient implements Sendable {
         this.handler = handler;
     }
 
-    public static VideoCl getInstance(VideoEventHandler handler) {
-        if(localServer == null || handler == null) {
+    public static VideoCl getInstance(String server, VideoEventHandler handler) {
+        if(server == null || handler == null) {
             throw new NullPointerException();
         }
         else {
             VideoCl instance = null;
             try { 
-                instance = new VideoCl(new URI(localServer), handler);
+                instance = new VideoCl(new URI(server), handler);
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -48,17 +47,12 @@ public class VideoCl extends WebSocketClient implements Sendable {
         }
     }
 
-    public static void setServer(String server) {
-        localServer = server;
-    }
-
-    public void setImageView(String name, ImageView video, ImageView screen) {
+    public void setImageView(String name, ImageView video) {
         videoImg.put(name, video);
-        screenImg.put(name, screen);      
     }
 
     public boolean containsImageView(ImageView imageView) {
-        return (videoImg.containsValue(imageView) || screenImg.containsValue(imageView));
+        return videoImg.containsValue(imageView);
     }
 
     @Override public void onOpen(ServerHandshake handshakedata) {
@@ -75,27 +69,15 @@ public class VideoCl extends WebSocketClient implements Sendable {
         try {
             byte[] info = message.array();
             byte[] sender = new byte[50];
-            byte[] type = new byte[50];
-            byte[] img = new byte[info.length - 100];
+            byte[] img = new byte[info.length - 50];
 
             System.arraycopy(info, 0, sender, 0, 50);
-            System.arraycopy(info, 50, type, 0, 50);
-            System.arraycopy(info, 100, img, 0, info.length-100);
+            System.arraycopy(info, 50, img, 0, info.length-500);
            
             String senderName = new String(sender, "UTF-8").trim();
-            String typeFlag = new String(type, "UTF-8").trim();
             
             ImageView imgView;
-            if(typeFlag.equals("video")) {
-                imgView = videoImg.get(senderName);
-            }
-            else if(typeFlag.equals("screen")) {
-                imgView = screenImg.get(senderName);
-            }
-            else {
-                imgView = null;
-            }
-
+            imgView = videoImg.get(senderName);
             if(imgView==null) {
                 System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
             }
@@ -115,14 +97,11 @@ public class VideoCl extends WebSocketClient implements Sendable {
         return this.isOpen();
     }
 
-    @Override public void sendMedia(byte[] media, String typeFlag) {
-        byte[] header = new byte[100];
+    @Override public void sendMedia(byte[] media) {
+        byte[] header = new byte[50];
 
         byte[] senderByte = localSender.getBytes(Charset.forName("UTF-8"));
         System.arraycopy(senderByte, 0, header, 0, senderByte.length);
-
-        byte[] flagByte = typeFlag.getBytes(Charset.forName("UTF-8"));
-        System.arraycopy(flagByte, 0, header, 50, flagByte.length);
 
         byte[] info = new byte[media.length + header.length];
         System.arraycopy(header, 0, info, 0, header.length);

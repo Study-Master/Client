@@ -1,6 +1,7 @@
 package studymaster.examinee.ViewController;
 
 import studymaster.all.ViewController.ViewController;
+import studymaster.examinee.Configure;
 import studymaster.socket.VideoCl;
 import studymaster.socket.VideoEventHandler;
 import studymaster.media.Webcamera;
@@ -29,8 +30,8 @@ public class AuthView extends ViewController implements VideoEventHandler {
         startButton.setVisible(false);
         label1.setText("Please keep facing the webcam.");
         label2.setText("Authentication takes about one minute.");
-        videoCl = VideoCl.getInstance(this);
-        screenCl = VideoCl.getInstance(this);
+        videoCl = VideoCl.getInstance(Configure.VIDEOSERVER, this);
+        screenCl = VideoCl.getInstance(Configure.SERVER, this);
         videoCl.connect();
         screenCl.connect();
         startButton.setDisable(true);

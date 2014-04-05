@@ -2,6 +2,7 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
+import studymaster.invigilator.Configure;
 import studymaster.socket.VideoCl;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
@@ -38,12 +39,15 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     ArrayList<Slot> slots;
 
     private VideoCl videoCl;
+    private VideoCl screenCl;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
         connector.retain(this);
-        videoCl = VideoCl.getInstance(this);
+        videoCl = VideoCl.getInstance(Configure.VIDEOSERVER, this);
         videoCl.connect();
+        screenCl = VideoCl.getInstance(Configure.SCREENSERVER, this);
+        screenCl.connect();
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
@@ -107,10 +111,11 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
             if (event.equals("examinee_come_in")) {
                 String name = content.getString("name");
                 for(int i=0; i<3; i++) {
-                    if( videoCl.containsImageView(slots.get(i).imgView) || videoCl.containsImageView(slots.get(i).screenView)) {}
+                    if( videoCl.containsImageView(slots.get(i).imgView) || screenCl.containsImageView(slots.get(i).screenView)) {}
                     else {
                         slots.get(i).name = name;
-                        videoCl.setImageView(name, slots.get(i).imgView, slots.get(i).screenView);
+                        videoCl.setImageView(name, slots.get(i).imgView);
+                        screenCl.setImageView(name, slots.get(i).screenView);
                     }
                 }
             }
