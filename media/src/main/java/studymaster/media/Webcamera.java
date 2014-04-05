@@ -32,6 +32,9 @@ public class Webcamera {
                 }
                 else {}
                 isOpening = false;
+                try {
+                    Thread.sleep(50);
+                } catch(Exception e) {}
             }
         }
     }
@@ -63,6 +66,10 @@ public class Webcamera {
                 }
                 else {}
                 isOpening = false;
+                try {
+                    Thread.sleep(50);
+                } catch(Exception e) {}
+
             }
         }
     }
