@@ -22,6 +22,7 @@ public class AuthView extends ViewController implements VideoEventHandler {
     @FXML private Label label1;
     @FXML private Label label2;
     private VideoCl videoCl;
+    private VideoCl screenCl;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
@@ -29,7 +30,9 @@ public class AuthView extends ViewController implements VideoEventHandler {
         label1.setText("Please keep facing the webcam.");
         label2.setText("Authentication takes about one minute.");
         videoCl = VideoCl.getInstance(this);
+        screenCl = VideoCl.getInstance(this);
         videoCl.connect();
+        screenCl.connect();
         startButton.setDisable(true);
     }
     
@@ -54,6 +57,6 @@ public class AuthView extends ViewController implements VideoEventHandler {
         Webcamera camera = Webcamera.getInstance();
         camera.startStreaming(imgView, videoCl);
         ScreenCapture sc = ScreenCapture.getInstance();
-        sc.captureStreaming(null, videoCl);
+        sc.captureStreaming(null, screenCl);
     }
 }
