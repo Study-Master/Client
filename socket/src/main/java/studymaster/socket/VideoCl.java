@@ -20,7 +20,6 @@ public class VideoCl extends WebSocketClient implements Sendable {
     private String localSender = "Default Sender";
     private static String localEndpoint = "Default VideoCl";
     private Map<String, ImageView> videoImg;
-    private Map<String, ImageView> screenImg;
     private VideoEventHandler handler;
 
     private VideoCl(URI serverURI, VideoEventHandler handler) {
@@ -28,7 +27,6 @@ public class VideoCl extends WebSocketClient implements Sendable {
         localSender = Connector.getSender();
         localEndpoint = Connector.getEndpoint();
         this.videoImg = new HashMap<String, ImageView>();
-        this.screenImg = new HashMap<String, ImageView>();
         this.handler = handler;
     }
 
@@ -72,7 +70,7 @@ public class VideoCl extends WebSocketClient implements Sendable {
             byte[] img = new byte[info.length - 50];
 
             System.arraycopy(info, 0, sender, 0, 50);
-            System.arraycopy(info, 50, img, 0, info.length-500);
+            System.arraycopy(info, 50, img, 0, info.length-50);
            
             String senderName = new String(sender, "UTF-8").trim();
             
