@@ -327,6 +327,7 @@ public class ExamView extends ViewController {
         }
         content.put("question_set", question_set);
         connector.setAndSendMessageContainer("exam_question_answer", content);
+        database.emptyDatabase();
     }
 }
 
