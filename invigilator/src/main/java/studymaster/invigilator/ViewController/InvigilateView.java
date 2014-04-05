@@ -111,11 +111,17 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
             if (event.equals("examinee_come_in")) {
                 String name = content.getString("name");
                 for(int i=0; i<3; i++) {
-                    if( videoCl.containsImageView(slots.get(i).imgView) || screenCl.containsImageView(slots.get(i).screenView)) {}
+                    if(videoCl.containsImageView(slots.get(i).imgView)) {
+                        continue;
+                    }
+                    else if(screenCl.containsImageView(slots.get(i).screenView)) {
+                        continue;
+                    }
                     else {
                         slots.get(i).name = name;
                         videoCl.setImageView(name, slots.get(i).imgView);
                         screenCl.setImageView(name, slots.get(i).screenView);
+                        break;
                     }
                 }
             }
