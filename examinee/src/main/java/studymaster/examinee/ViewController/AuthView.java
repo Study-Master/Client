@@ -45,13 +45,17 @@ public class AuthView extends ViewController implements VideoEventHandler {
         JSONObject msg = new JSONObject(message);
         String event = msg.getString("event");
         if (event.equals("auth_successful")) {
-            label1.setText("");
-            label2.setText("You may click the \"Start\" button to start exam now.");
-            startButton.setVisible(true);    
-            startButton.setDisable(false);
-            startButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+            javafx.application.Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    label1.setText("");
+                    label2.setText("You may click the \"Start\" button to start exam now.");
+                    startButton.setVisible(true);
+                    startButton.setDisable(false);  
+                    startButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override public void handle(ActionEvent e) {
+                            director.pushStageWithFXML(getClass().getResource("/fxml/examView.fxml"));
+                        }
+                    });
                 }
             });
         }
