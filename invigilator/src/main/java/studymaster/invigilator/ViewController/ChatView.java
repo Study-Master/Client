@@ -8,6 +8,9 @@ import org.json.JSONObject;
 import javafx.scene.control.Button;
 import studymaster.socket.AudioEventHandler;
 import studymaster.socket.AudioCl;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ChatView extends ViewController implements AudioEventHandler {
 
@@ -41,10 +44,13 @@ public class ChatView extends ViewController implements AudioEventHandler {
         System.out.println("label: " + label);
         String name = data.getName(label);
         int exam_pk = data.getExam(label);
+        Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String time = df.format(date);
         JSONObject content = new JSONObject();
         content.put("name", name);
         content.put("exam_pk", exam_pk);
-        content.put("system_time", "");
+        content.put("system_time", time);
         content.put("msg", message);
         connector.setAndSendMessageContainer("exam_chat", content);
     }
