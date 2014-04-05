@@ -4,6 +4,7 @@ import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
 import studymaster.invigilator.Configure;
 import studymaster.socket.VideoCl;
+import studymaster.invigilator.Slots;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -109,7 +110,9 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
 
     @Override public void onMessage(String message){
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+        Slots data = Slots.getInstance();
         try {
+            int position = -1;
             JSONObject msg = new JSONObject(message);
             String event = msg.getString("event");
             String endpoint = msg.getString("endpoint");
@@ -123,6 +126,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 for(int i=0; i<3; i++) {
                     if (slots.get(i).name.equals(name)) {
                         emptySlot = slots.get(i);
+                        position = i;
                         break;
                     }
                 }
@@ -130,6 +134,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                     for(int i=0;i<3; i++) {
                         if(slots.get(i).name.equals("")) {
                             emptySlot = slots.get(i);
+                            position = i;
                             break;
                         }
                     }
@@ -151,6 +156,11 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 clients.get(name).exam_pk = exam_pk;
                 clients.get(name).button.setDisable(false);
                 clients.get(name).terminate.setDisable(false);
+                if(position!=-1) {
+                    System.out.println("[info] (" + getClass().getSimpleName() + " onMessage) Set slot on " + position + " as name=" + name + ", exam_pk=" + exam_pk);
+                    data.setName(position, name);
+                    data.setExam(position, exam_pk);
+                }
             }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");

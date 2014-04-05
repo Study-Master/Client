@@ -2,6 +2,7 @@ package studymaster.invigilator.ViewController;
 
 import javafx.scene.control.TextArea;
 import studymaster.all.ViewController.ViewController;
+import studymaster.invigilator.Slots;
 import javafx.fxml.FXML;
 import org.json.JSONObject;
 import javafx.scene.control.Button;
@@ -10,14 +11,18 @@ import studymaster.socket.AudioCl;
 
 public class ChatView extends ViewController implements AudioEventHandler {
 
+    private static int counter = 0;
     @FXML private TextArea histroyArea;
     @FXML private TextArea sendArea;
     @FXML private Button sendButton;
     @FXML private Button voiceMessageButton;
     @FXML private Button playButton;
+    private int label;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
+        label = counter;
+        counter++;
         connector.retain(this);
         voiceMessageButton.setDisable(true);
         playButton.setDisable(true);
@@ -32,7 +37,11 @@ public class ChatView extends ViewController implements AudioEventHandler {
         message = connector.getSender() + ": " + message + "\n";
         histroyArea.appendText(message);
         sendArea.clear();
-
+        Slots data = Slots.getInstance();
+        System.out.println("label: " + label);
+        String name = data.getName(label);
+        int exam_pk = data.getExam(label);
+        System.out.println(name + " " + exam_pk);
         //TODO: Send message to server.
     }
 
