@@ -207,9 +207,17 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
     }
 
     public void backView() {
-        director.pushStageWithFXML(getClass().getResource("/fxml/taskView.fxml"));
-    }
-
+        AlertAction action = new AlertAction() {
+            @Override public void ok(Stage stage) {
+                for (int i=0; i<3; i++) {
+                slots.get(i).chatWindow.close();
+                }
+                director.pushStageWithFXML(getClass().getResource("/fxml/taskView.fxml"));
+                stage.close();
+            }
+        };
+        director.invokeTwoButtonAlert("Go back?", "Confirm to quit invigilation?", action);
+    }   
 }
 
 class Slot {

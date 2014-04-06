@@ -23,7 +23,7 @@
         <Image url="@../image/divider_down.png" />
       </image>
     </ImageView>
-    <Group id="Group" layoutX="159.0" layoutY="138.0">
+    <Group id="Group" layoutX="129.0" layoutY="138.0" scaleX="1.0" scaleY="1.0">
       <children>
         <ImageView fx:id="imgView0" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
           <image>
@@ -39,7 +39,7 @@
         <Button id="chatButton0" fx:id="button0" disable="true" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
       </children>
     </Group>
-    <Group id="Group" layoutX="424.0" layoutY="138.0">
+    <Group id="Group" layoutX="409.0" layoutY="138.0">
       <children>
         <ImageView id="imgView0" fx:id="imgView1" fitHeight="207.0" fitWidth="207.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
           <image>
@@ -71,7 +71,7 @@
         <Button id="chatButton0" fx:id="button2" disable="true" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
       </children>
     </Group>
-    <Button layoutX="97.0" layoutY="35.0" mnemonicParsing="false" onAction="#backView" text="Back" />
+    <Button id="back" layoutX="482.0" layoutY="623.0" mnemonicParsing="false" onAction="#backView" text="Back" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/invigilatorView.css" />

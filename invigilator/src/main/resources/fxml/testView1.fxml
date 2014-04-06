@@ -39,12 +39,7 @@
         <Image url="@../image/Audio.png" />
       </image>
     </ImageView>
-    <Button fx:id="AudioTestButton" contentDisplay="CENTER" layoutX="424.0" layoutY="436.0" mnemonicParsing="false" onMousePressed="#testAction" onMouseReleased="#aftertestAction" text="Hold to Talk" />
-    <Label alignment="CENTER" layoutX="219.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" style="-fx-font-size: 15;" text="*Press begin to start recording.Your voice will be replayed after the recording stops">
-      <font>
-        <Font size="15.0" />
-      </font>
-    </Label>
+    <Button id="AudioTestButton" fx:id="audioTestButton" contentDisplay="CENTER" layoutX="400.0" layoutY="436.0" maxWidth="224.0" minWidth="224.0" mnemonicParsing="false" onMousePressed="#testAction" onMouseReleased="#aftertestAction" prefWidth="224.0" text="Hold to Talk" />
     <Button id="ExitButton" fx:id="NextButton" layoutX="816.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="NEXT">
       <font>
         <Font size="20.0" fx:id="x1" />
