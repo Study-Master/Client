@@ -212,7 +212,7 @@ public class TaskView extends HomeViewController {
                             }
                             else if (status.equals("finished")) {
                                 //Finish label
-                                Label label = new Label("Finished");
+                                Label label = new Label("Finished       ");
                                 examList.add(label, 3, i);
                             }
                             else if (status.equals("invigilate")) {
