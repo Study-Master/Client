@@ -141,7 +141,7 @@ public class CourseView extends HomeViewController {
                     stage.close();
                 }
             };
-            Director.invokeOneButtonAlert("Exam canceling", "Congratulations! Your " + content.getString("code") + "exam booking has been successfully canceled!", action);
+            Director.invokeOneButtonAlert("Booking canceled", content.getString("code") + " exam booking has been canceled!", action);
             try{
                 final String examStartTime = cancelInfo.getString("start_time");
                 final String courseCode = cancelInfo.getString("code");
