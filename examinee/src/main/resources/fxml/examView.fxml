@@ -12,14 +12,14 @@
 <image>
 <Image url="@../image/red.jpg" />
 </image></ImageView>
-    <Label fx:id="titleLabel" layoutX="75.0" layoutY="38.0" text="CZ2006 Online Exam" wrapText="true" />
+    <Label fx:id="titleLabel" layoutX="75.0" layoutY="51.0" text="CZ2006 Online Exam" wrapText="true" />
     <Button fx:id="nextQuestion" layoutX="527.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;" />
     <Button fx:id="previousQuestion" layoutX="439.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;" />
     <Button fx:id="firstQuestion" layoutX="351.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;&lt;" />
     <Button fx:id="lastQuestion" layoutX="615.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;&gt;" />
-    <Button fx:id="submit" layoutX="857.0" layoutY="670.0" mnemonicParsing="false" prefWidth="105.0" text="Submit" />
-    <Label fx:id="timer" alignment="CENTER" layoutX="552.0" layoutY="38.0" prefHeight="53.0" prefWidth="267.0" text="02:22:22" wrapText="true" />
-    <GridPane fx:id="gridPane" alignment="CENTER" layoutX="106.0" layoutY="180.0" maxHeight="540.0" maxWidth="850.0" minHeight="449.0" minWidth="823.0" prefHeight="449.0" prefWidth="824.0">
+    <Button fx:id="submit" layoutX="797.0" layoutY="670.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="165.0" text="Submit" />
+    <Label fx:id="timer" alignment="CENTER" layoutX="552.0" layoutY="51.0" prefHeight="53.0" prefWidth="267.0" text="02:22:22" wrapText="true" />
+    <GridPane fx:id="gridPane" alignment="CENTER" layoutX="79.0" layoutY="176.0" maxHeight="540.0" maxWidth="850.0" minHeight="449.0" minWidth="823.0" prefHeight="449.0" prefWidth="824.0">
       <children>
         <Label id="question_description" fx:id="questionDescription" maxWidth="850.0" minWidth="850.0" prefHeight="100.0" prefWidth="850.0" text="Align is a problm!!What is the mass of the sun?What is the mass of the sun?" wrapText="true" GridPane.columnIndex="1" />
         <RadioButton id="choice_a" fx:id="choiceA" maxWidth="850.0" minWidth="850.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="850.0" style="-fx-padding: 20;" text="Do you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffff" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -43,8 +43,8 @@
         <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
-    <Button fx:id="TextButton" layoutX="859.0" layoutY="43.0" mnemonicParsing="false" onAction="#textAction" text="Chat" />
-    <AnchorPane fx:id="msgArea" layoutX="657.0" layoutY="157.0" opacity="0.8" prefHeight="433.0" prefWidth="364.0" style="-fx-background-color: transparent;" visible="true">
+    <Button fx:id="TextButton" layoutX="849.0" layoutY="56.0" mnemonicParsing="false" onAction="#textAction" prefHeight="47.0" prefWidth="141.0" text="Chat" />
+    <AnchorPane fx:id="msgArea" layoutX="674.0" layoutY="143.0" opacity="0.8" prefHeight="433.0" prefWidth="364.0" style="-fx-background-color: transparent;" visible="true">
       <children>
         <Button id="sendText" fx:id="sendTextButton" layoutX="17.0" layoutY="280.0" minHeight="29.0" mnemonicParsing="false" onAction="#sendTextAction" prefHeight="45.0" prefWidth="84.0" styleClass="chatButton" text="Send" />
         <TextArea fx:id="receiveTextArea" layoutX="17.0" layoutY="14.0" prefHeight="266.0" prefWidth="333.0" wrapText="true" />

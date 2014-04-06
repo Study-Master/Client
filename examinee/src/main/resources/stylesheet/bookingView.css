@@ -32,8 +32,8 @@
 }
 
 .button:pressed, .button:hover {
-    -fx-border-color: rgba(245, 104, 97, 1);
-    -fx-background-color: rgba(245, 104, 97, 1);
+    -fx-border-color: rgba(255, 214, 90, 1);
+    -fx-background-color: rgba(255, 214, 90, 1);
     -fx-text-fill: rgba(244, 244, 242, 1);
 }
 
