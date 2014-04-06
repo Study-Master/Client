@@ -239,7 +239,7 @@ public class TaskView extends HomeViewController {
                 @Override
                 public void run() {
                     final InvigilateButton button = new InvigilateButton(examCode, examStartTime, row);
-                    button.setPrefWidth(150);
+                    button.setPrefWidth(180);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override public void handle(ActionEvent e) {
                                 button.setText("");
