@@ -52,14 +52,14 @@
         <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
-    <Button id="Text" fx:id="TextButton" layoutX="828.0" layoutY="57.0" mnemonicParsing="false" onAction="#textAction" text="Text Chat" />
+    <Button fx:id="TextButton" layoutX="828.0" layoutY="57.0" mnemonicParsing="false" onAction="#textAction" text="Chat" />
     <AnchorPane fx:id="msgArea" layoutX="609.0" layoutY="91.0" opacity="0.8" prefHeight="433.0" prefWidth="350.0" visible="true">
       <children>
-        <Button id="sendText" fx:id="sendTextButton" layoutX="17.0" layoutY="287.0" minHeight="29.0" mnemonicParsing="false" onAction="#sendTextAction" prefHeight="34.0" prefWidth="93.0" text="SEND" />
+        <Button id="sendText" fx:id="sendTextButton" layoutX="17.0" layoutY="287.0" minHeight="29.0" mnemonicParsing="false" onAction="#sendTextAction" prefHeight="34.0" prefWidth="76.00009999999747" text="Send" />
         <TextArea fx:id="sendTextArea" layoutX="17.0" layoutY="329.0" prefHeight="92.0" prefWidth="316.0" wrapText="true" />
         <TextArea fx:id="receiveTextArea" layoutX="17.0" layoutY="14.0" prefHeight="266.0" prefWidth="316.0" wrapText="true" />
-        <Button fx:id="audioButton" layoutX="126.0" layoutY="287.0" mnemonicParsing="false" onMousePressed="#onVoiceMessagePressed" onMouseReleased="#onVoiceMessageReleased" prefWidth="93.0" text="Hold To Talk" />
-        <Button layoutX="233.0" layoutY="287.0" mnemonicParsing="false" onAction="#onPlayAction" text="AUDIO" />
+        <Button fx:id="audioButton" layoutX="104.0" layoutY="287.0" mnemonicParsing="false" onMousePressed="#onVoiceMessagePressed" onMouseReleased="#onVoiceMessageReleased" prefHeight="34.0" prefWidth="152.0" text="Hold To Talk" />
+        <Button layoutX="266.0" layoutY="287.0" mnemonicParsing="false" onAction="#onPlayAction" prefHeight="34.0" text="Play" />
       </children>
     </AnchorPane>
     <Label fx:id="copyrightLabel" layoutX="416.0" layoutY="721.0" minHeight="16.0" prefHeight="16.0" prefWidth="193.0" style="-fx-font-family: 'HelveticaNeue LT 45 Light';" text="©Copyright 2014 Studymaster" />
