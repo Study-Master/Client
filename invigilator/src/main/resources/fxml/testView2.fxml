@@ -2,16 +2,17 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
-<?import java.util.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.TestView2">
-  <children>
-    <Label fx:id="titleLabel" alignment="CENTER" layoutX="358.0" layoutY="63.0" prefHeight="86.0" prefWidth="309.0" text="Test 2/2" textOverrun="CENTER_WORD_ELLIPSIS">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studymaster.examinee.ViewController.TestView2">
+  <children><ImageView fitHeight="213.0" fitWidth="1027.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true">
+<image>
+<Image url="@../image/yellow.jpg" />
+</image></ImageView>
+    <Label fx:id="titleLabel" alignment="CENTER" layoutX="358.0" layoutY="63.0" prefHeight="86.0" prefWidth="309.0" text="TEST 2/2" textOverrun="CENTER_WORD_ELLIPSIS">
       <font>
         <Font size="60.0" />
       </font>
@@ -23,33 +24,23 @@
         </Label>
       </labelFor>
     </Label>
-    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="212.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/divider_down.png" />
-      </image>
-    </ImageView>
-    <Label alignment="CENTER" layoutX="382.0" layoutY="606.0" prefHeight="44.0" prefWidth="262.0" style="-fx-font-size: 15;" text="©Copyright 2014 Studymaster" />
-    <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="220.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/divider_up.png" />
-      </image>
-    </ImageView>
-    <Label alignment="CENTER" layoutX="218.0" layoutY="504.0" prefHeight="44.0" prefWidth="586.0" style="-fx-font-size: 15;&#10;" text="*Press start to open webcam. If you can see yourself up here, you are all set!">
+    <Label alignment="CENTER" layoutX="219.0" layoutY="521.0" prefHeight="42.0" prefWidth="586.0" style="-fx-font-size: 15;&#10;" text="If you can see yourself up here, you are all set!">
       <font>
         <Font size="15.0" />
       </font>
     </Label>
-    <ImageView fx:id="imageView" fitHeight="262.0" fitWidth="262.0" layoutX="381.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="imageView" fitHeight="262.0" fitWidth="262.0" layoutX="381.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/User.png" />
       </image>
     </ImageView>
-    <Button id="ExitButton" fx:id="FinishiButton" layoutX="837.0" layoutY="686.0" mnemonicParsing="false" onAction="#nextAction" text="FINISH">
+    <Button id="ExitButton" fx:id="FinishiButton" layoutX="538.0" layoutY="586.0" mnemonicParsing="false" onAction="#nextAction" text="FINISH">
       <font>
         <Font size="20.0" fx:id="x1" />
       </font>
     </Button>
-    <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="703.0" layoutY="686.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
+    <Button id="ExitButton" fx:id="BackButton" font="$x1" layoutX="404.0" layoutY="586.0" mnemonicParsing="false" onAction="#backAction" text="BACK" />
+    <Label fx:id="copyrightLabel" layoutX="422.0" layoutY="680.0" text="©Copyright 2014 Studymaster" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/testView.css" />

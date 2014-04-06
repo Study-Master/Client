@@ -2,45 +2,33 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
-<?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.invigilator.ViewController.LoginView">
-    <children>
-        <Group id="Group" layoutX="212.0" layoutY="130.0">
-            <children>
-                <Group id="Group" layoutX="201.0" layoutY="208.0">
-                    <children>
-                        <TextField fx:id="accountField" alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" onAction="#onEnter" prefHeight="35.0" prefWidth="200.0" promptText="Account" />
-                        <PasswordField fx:id="passwordField" layoutX="0.0" layoutY="44.0" onAction="#onEnter" prefHeight="35.0" prefWidth="200.0" promptText="Password" />
-                        <Button fx:id="loginButton" layoutX="0.0" layoutY="98.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="30.0" prefWidth="90.0" text="Login" />
-                        <Button fx:id="exitButton" layoutX="110.0" layoutY="98.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="30.0" prefWidth="90.0" text="Exit" />
-                    </children>
-                </Group>
-                <Label fx:id="titleLabel" layoutX="100.0" layoutY="80.0" text="Study Master" />
-                <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/divider_up.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="150.0" fitWidth="600.0" layoutX="0.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/divider_down.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </Group>
-        <Label fx:id="copyrightLabel" layoutX="427.0" layoutY="537.0" text="©Copyright 2014 Studymaster" />
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studymaster.invigilator.ViewController.LoginView">
+    <children><ImageView fitHeight="391.0" fitWidth="1183.0" layoutX="-10.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+<image>
+<Image url="@../image/Logo.jpg" />
+</image></ImageView><ImageView fitHeight="351.0" fitWidth="1091.0" layoutX="57.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+<image>
+<Image url="@../image/triangle.png" />
+</image></ImageView>
+        <Label fx:id="copyrightLabel" layoutX="408.0" layoutY="687.0" text="©Copyright 2014 Studymaster" />
         <ImageView fx:id="loadingImgView" fitHeight="150.0" fitWidth="200.0" layoutX="437.0" layoutY="298.0" pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
                 <Image url="@../image/loading.gif" />
             </image>
         </ImageView>
+                <Group id="Group" layoutX="401.0" layoutY="472.0">
+                    <children>
+                        <TextField fx:id="accountField" alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" onAction="#onEnter" prefHeight="35.0" prefWidth="200.0" promptText="ACCOUNT" />
+                        <PasswordField fx:id="passwordField" layoutX="0.0" layoutY="44.0" onAction="#onEnter" prefHeight="35.0" prefWidth="200.0" promptText="PASSWORD" />
+                        <Button fx:id="loginButton" layoutX="0.0" layoutY="98.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="30.0" prefWidth="90.0" text="LOGIN" />
+                        <Button fx:id="exitButton" layoutX="110.0" layoutY="98.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="30.0" prefWidth="90.0" text="EXIT" />
+                    </children>
+                </Group>
     </children>
     <stylesheets>
         <URL value="@../stylesheet/loginView.css" />
