@@ -12,7 +12,7 @@ public class App extends Client {
         //Configure
         Connector.setServer(Configure.SERVER);
         Connector.setEndpoint(Configure.ENDPOINT);
-        AudioCl.setServer(Configure.SERVER);
+        AudioCl.setServer(Configure.AUDIOSERVER);
 
         //launch
         launch(args);
