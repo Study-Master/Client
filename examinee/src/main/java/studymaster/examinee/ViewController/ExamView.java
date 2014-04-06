@@ -2,11 +2,14 @@ package studymaster.examinee.ViewController;
 
 import studymaster.examinee.QuestionDatabase;
 import studymaster.socket.Connector;
+import studymaster.socket.AudioCl;
+import studymaster.socket.AudioEventHandler;
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.all.ViewController.AlertAction;
 import studymaster.examinee.App;
 import studymaster.media.Webcamera;
+import studymaster.media.SoundUtil;
 import studymaster.media.ScreenCapture;
 
 import org.json.JSONArray;
@@ -41,29 +44,33 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExamView extends ViewController {
-	@FXML protected Label titleLabel;
-	@FXML protected Label questionDescription;
-	@FXML protected Label timer;
+public class ExamView extends ViewController implements AudioEventHandler {
+    @FXML protected Label titleLabel;
+    @FXML protected Label questionDescription;
+    @FXML protected Label timer;
     @FXML protected Label numberOfQuestionsAnswered;
-	@FXML protected RadioButton choiceA;
-	@FXML protected RadioButton choiceB;
-	@FXML protected RadioButton choiceC;
-	@FXML protected RadioButton choiceD;
-	@FXML protected Button firstQuestion;
-	@FXML protected Button previousQuestion;
-	@FXML protected Button nextQuestion;
-	@FXML protected Button lastQuestion;
-	@FXML protected Button submit;
-	@FXML protected GridPane gridPane;
-	@FXML protected AnchorPane msgArea;
+    @FXML protected RadioButton choiceA;
+    @FXML protected RadioButton choiceB;
+    @FXML protected RadioButton choiceC;
+    @FXML protected RadioButton choiceD;
+    @FXML protected Button firstQuestion;
+    @FXML protected Button previousQuestion;
+    @FXML protected Button nextQuestion;
+    @FXML protected Button lastQuestion;
+    @FXML protected Button submit;
+    @FXML protected GridPane gridPane;
+    @FXML protected AnchorPane msgArea;
     @FXML protected TextArea receiveTextArea;
     @FXML protected TextArea sendTextArea;
     @FXML protected Button sendTextButton;
+    @FXML protected Button audioButton;
+    @FXML protected Button playButton;
     private boolean created = false;
     private boolean status = false;
-	private Integer duration = 7200;//time duration of the exam in seconds
-	private Timeline timeline;
+    private Integer duration = 7200;//time duration of the exam in seconds
+    private Timeline timeline;
+    private AudioCl audioCl;
+    private byte[] receiveAudio;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         System.out.println("[info] (" + getClass().getSimpleName() + " initializing page \n\n");
@@ -205,27 +212,31 @@ public class ExamView extends ViewController {
                 director.invokeTwoButtonAlert("Submit?", "Are you sure that you want to submit?", action);
             }
         });
+
+        audioCl = AudioCl.getInstance();
+        audioCl.addDelegate(this);
+        audioCl.connect();
     }
 
-  	@Override public void onMessage(String message) {
-	    System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message + "\n\n");
+    @Override public void onMessage(String message) {
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message + "\n\n");
 
-    	JSONObject msg = new JSONObject(message);
-    	String event = msg.getString("event");
+        JSONObject msg = new JSONObject(message);
+        String event = msg.getString("event");
         JSONObject content = msg.getJSONObject("content");
 
-    	//if submission is successful, pop up a window, then jump to course view
-    	if (event.equals("submission_successful")) {
-			AlertAction action = new AlertAction() {
-            	@Override public void ok(Stage stage) {
+        //if submission is successful, pop up a window, then jump to course view
+        if (event.equals("submission_successful")) {
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {
                     Webcamera.stop();
                     ScreenCapture.stop();
-                	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
-                	stage.close();
-            	}
-        	};
-        	director.invokeOneButtonAlert("Successful", "Your submission is successful!", action);
-    	}
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                    stage.close();
+                }
+            };
+            director.invokeOneButtonAlert("Successful", "Your submission is successful!", action);
+        }
         else if (event.equals("exam_chat")) {
             String invigilatorMessage = content.getString("msg");
             receiveTextAction(invigilatorMessage);
@@ -255,36 +266,36 @@ public class ExamView extends ViewController {
         }
     }
 
-	private void updataStage() {
-		System.out.println("[info] (" + getClass().getSimpleName() + " updataStage) reload content \n");
-		choiceA.setSelected(false);
-		choiceB.setSelected(false);
-		choiceC.setSelected(false);
-		choiceD.setSelected(false);
-		QuestionDatabase database = QuestionDatabase.getInstance();
-		questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
-		choiceA.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("a"));
-		choiceB.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("b"));
-		choiceC.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("c"));
-		choiceD.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("d"));
+    private void updataStage() {
+        System.out.println("[info] (" + getClass().getSimpleName() + " updataStage) reload content \n");
+        choiceA.setSelected(false);
+        choiceB.setSelected(false);
+        choiceC.setSelected(false);
+        choiceD.setSelected(false);
+        QuestionDatabase database = QuestionDatabase.getInstance();
+        questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
+        choiceA.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("a"));
+        choiceB.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("b"));
+        choiceC.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("c"));
+        choiceD.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("d"));
 
-		if (database.getAnswer() == "a") {
-			choiceA.setSelected(true);
-		} 
-		else if (database.getAnswer() == "b") {
-			choiceB.setSelected(true);
-		}
-		else if (database.getAnswer() == "c") {
-			choiceC.setSelected(true);
-		}
-		else if (database.getAnswer() == "d") {
-			choiceD.setSelected(true);
-		} 
-		else {
-		}
-	}
+        if (database.getAnswer() == "a") {
+            choiceA.setSelected(true);
+        } 
+        else if (database.getAnswer() == "b") {
+            choiceB.setSelected(true);
+        }
+        else if (database.getAnswer() == "c") {
+            choiceC.setSelected(true);
+        }
+        else if (database.getAnswer() == "d") {
+            choiceD.setSelected(true);
+        } 
+        else {
+        }
+    }
 
-	private void formatCountdown(int duration){
+    private void formatCountdown(int duration){
         Integer hr = duration / 3600;
         Integer min = (duration - 3600 * hr) / 60;
         Integer sec = duration - 3600 * hr - 60 * min;
@@ -303,7 +314,7 @@ public class ExamView extends ViewController {
         }
         
         timer.setText(hour + ":" + minute + ":" + second);
-	}
+    }
 
     private void setAttribute() {
         receiveTextArea.setEditable(false);
@@ -353,6 +364,30 @@ public class ExamView extends ViewController {
         content.put("question_set", question_set);
         connector.setAndSendMessageContainer("exam_question_answer", content);
         database.emptyDatabase();
+    }
+
+    @FXML public void onVoiceMessagePressed() {
+        SoundUtil.startRecord();
+        audioButton.setText("Send");
+    }
+
+    @FXML public void onVoiceMessageReleased() {
+        byte[] audio = SoundUtil.stopRecord();
+        if(audioCl.isConnected()) {
+            audioCl.sendMedia(audio);
+        }
+        audioButton.setText("Audio");
+    }
+
+    @FXML public void onPlayAction() {
+        if(receiveAudio!=null){
+            SoundUtil.playAudio(receiveAudio);
+        }
+    
+    }
+
+    @Override public void onAudioMessage(String name, byte[] receive) {
+        receiveAudio = receive;
     }
 }
 
