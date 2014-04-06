@@ -320,8 +320,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
         receiveTextArea.setEditable(false);
     }
 
-    @FXML
-    public void sendTextAction() {
+    @FXML public void sendTextAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " sendtextAction): sending text...");
         JSONObject content = new JSONObject();
 
