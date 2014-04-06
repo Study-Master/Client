@@ -80,7 +80,7 @@ public class CountDown extends Label {
                             remainingTime += ":0" + Long.toString(diffSeconds);
                         }
                     }
-                    setText(remainingTime);
+                    setText(remainingTime+ "     ");
                     if (remainingTime.contains(":")) {
                         setStyle("-fx-text-fill: red;");
                     }
