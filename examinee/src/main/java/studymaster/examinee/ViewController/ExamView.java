@@ -108,7 +108,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
                                     new EventHandler<ActionEvent>() {
-                                    public void handle(ActionEvent event) {     
+                                    public void handle(ActionEvent event) {
                                         duration--;
                                         if (duration <= 600) {
                                             timer.setTextFill(Color.RED);
@@ -257,7 +257,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
     @FXML protected void textAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " textAction): text chat with invigilator...");
         if (status == true) {
-            msgArea.setVisible(false);       
+            msgArea.setVisible(false);
             status = false;
         }
         else {
@@ -281,7 +281,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
 
         if (database.getAnswer() == "a") {
             choiceA.setSelected(true);
-        } 
+        }
         else if (database.getAnswer() == "b") {
             choiceB.setSelected(true);
         }
@@ -290,7 +290,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
         }
         else if (database.getAnswer() == "d") {
             choiceD.setSelected(true);
-        } 
+        }
         else {
         }
     }
@@ -312,7 +312,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
         if (sec < 10) {
             second = "0" + second;
         }
-        
+
         timer.setText(hour + ":" + minute + ":" + second);
     }
 
@@ -320,20 +320,20 @@ public class ExamView extends ViewController implements AudioEventHandler {
         receiveTextArea.setEditable(false);
     }
 
-    @FXML 
+    @FXML
     public void sendTextAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " sendtextAction): sending text...");
         JSONObject content = new JSONObject();
-        
+
         Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String sendingName = connector.getSender();
         String s = df.format(date);
         String sendingText = sendTextArea.getText();
         QuestionDatabase database = QuestionDatabase.getInstance();
-        content.put("account", sendingName); 
+        content.put("account", sendingName);
         content.put("exam_pk", database.getExamPk());
-        content.put("system_time", s); 
+        content.put("system_time", s);
         content.put("msg", sendingText);
 
         connector.setAndSendMessageContainer("exam_chat", content);
@@ -368,7 +368,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
 
     @FXML public void onVoiceMessagePressed() {
         SoundUtil.startRecord();
-        audioButton.setText("Send");
+        audioButton.setText("Release To Talk");
     }
 
     @FXML public void onVoiceMessageReleased() {
@@ -377,18 +377,17 @@ public class ExamView extends ViewController implements AudioEventHandler {
             System.out.println("[info] (ExamView send audio)");
             audioCl.sendMedia(audio);
         }
-        audioButton.setText("Audio");
+        audioButton.setText("Hold To Talk");
     }
 
     @FXML public void onPlayAction() {
         if(receiveAudio!=null){
             SoundUtil.playAudio(receiveAudio);
         }
-    
+
     }
 
     @Override public void onAudioMessage(String name, byte[] receive) {
         receiveAudio = receive;
     }
 }
-
