@@ -226,6 +226,15 @@ public class ExamView extends ViewController {
             String invigilatorMessage = content.getString("msg");
             receiveTextAction(invigilatorMessage);
         }
+        else if (event.equals("terminate")) {
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                    stage.close();
+                }
+            };
+            director.invokeOneButtonAlert("Exam terminated!", "Message from invigilator: \"" + content.getString("reason") + "\"", action);
+        }
     }
 
     @FXML protected void textAction() {
