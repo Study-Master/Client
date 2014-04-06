@@ -357,7 +357,7 @@ public class CourseView extends HomeViewController {
 
                             if (status.equals("closed")) {
                                 //Close label
-                                Label label = new Label("Closed");
+                                Label label = new Label("Closed    ");
                                 courseList.add(label, 2, i);
                             }
                             else if (status.equals("finished")) {
