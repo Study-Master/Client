@@ -15,7 +15,7 @@ public class AudioCl extends WebSocketClient implements Sendable {
     private static String localServer = null;
     private static String localSender = "Default Sender";
     private static String localEndpoint = "Default AudioCl";
-    private Set<AudioEventHandler> handlers;
+    private static Set<AudioEventHandler> handlers;
 
     private AudioCl(URI serverURI) {
         super(serverURI);
@@ -30,11 +30,12 @@ public class AudioCl extends WebSocketClient implements Sendable {
             throw new NullPointerException();
         }
         else {
-            AudioCl instance = null;
-            try {
-                instance = new AudioCl(new URI(localServer));
-            } catch(Exception e) {
-                e.printStackTrace();
+            if(instance == null) {
+                try {
+                    instance = new AudioCl(new URI(localServer));
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
             }
             return instance;
         }

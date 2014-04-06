@@ -102,10 +102,11 @@ public class ChatView extends ViewController implements AudioEventHandler {
     }
 
     @Override public void onAudioMessage(String name, byte[] receive) {
-        System.out.println("Receive message!!!!!!");
+
         Slots data = Slots.getInstance();
-        String thisName = data.getName(label);
-        if(thisName.equals(name)) {
+        String target = data.getName(label);
+        
+        if (target!=null && name.equals(target)) {
             receiveAudio = receive;
         }
     }
