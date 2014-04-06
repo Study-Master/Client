@@ -75,6 +75,7 @@ public class CountDown extends Label {
                         }
                     }
                     setText(remainingTime+"      ");
+                    set
                     if (remainingTime.contains(":")) {
                         setStyle("-fx-text-fill: red;");
                     }
