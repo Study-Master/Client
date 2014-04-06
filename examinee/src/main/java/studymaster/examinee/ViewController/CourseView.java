@@ -42,6 +42,11 @@ public class CourseView extends HomeViewController {
         return List;
     }
 
+    @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        super.initialize(location, resources);
+        connector.setAndSendMessageContainer("profile", null);
+    }
+
     @Override
     public void onMessage(String message) {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
@@ -72,7 +77,7 @@ public class CourseView extends HomeViewController {
             else if (event.equals("exam_disabled")) {
                 disableExam(content);
             }
-        } 
+        }
         catch (Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
         }
@@ -84,8 +89,8 @@ public class CourseView extends HomeViewController {
         if(status.equals("success")) {
             System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Login successfully.");
             AlertAction action = new AlertAction() {
-                @Override public void ok(Stage stage) {                        
-                    Director.pushStageWithFXML(getClass().getResource("/fxml/loginView.fxml")); 
+                @Override public void ok(Stage stage) {
+                    Director.pushStageWithFXML(getClass().getResource("/fxml/loginView.fxml"));
                     connector.renew();
                     stage.close();
                 }
@@ -159,10 +164,10 @@ public class CourseView extends HomeViewController {
             catch (Exception e) {
                 System.err.println("[err] Fail to change CancelButton to BookButton");
             }
-        }      
+        }
         else {
             System.out.println("[Info] Cancel failed");
-            //showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error")); 
+            //showAlert("Cancel Exam", "Can't cancel this exam. " + cancelInfo.getString("error"));
             AlertAction action = new AlertAction() {
                 @Override public void ok(Stage stage) {
                     stage.close();
@@ -175,7 +180,7 @@ public class CourseView extends HomeViewController {
             }
             else {
                 cancelButton.setId("");
-            }        
+            }
         }
     }
 
@@ -208,7 +213,7 @@ public class CourseView extends HomeViewController {
                         List.getChildren().remove(button);
                     }
                 }
-            });                        
+            });
         }
         catch (Exception e) {
             System.err.println("Error occurred in cancel_disabled");
@@ -319,7 +324,7 @@ public class CourseView extends HomeViewController {
                         Collections.sort(coursesArray, new Comparator<JSONObject>() {
                                 @Override public int compare(JSONObject course1, JSONObject course2)
                                 {
-                                    if ( ("closed".equals(course1.getString("status")) || "finished".equals(course1.getString("status"))) && 
+                                    if ( ("closed".equals(course1.getString("status")) || "finished".equals(course1.getString("status"))) &&
                                          ("closed".equals(course2.getString("status")) || "finished".equals(course2.getString("status"))) ) {
                                         return course1.getString("code").compareTo(course2.getString("code"));
                                     }
@@ -341,7 +346,7 @@ public class CourseView extends HomeViewController {
                             Label code = new Label(course.getString("code"));
                             code.setStyle("-fx-text-fill: black;");
                             Label name = new Label(course.getString("name"));
-                            name.setStyle("-fx-text-fill: black;");            
+                            name.setStyle("-fx-text-fill: black;");
 
                             courseList.add(code, 0, i);
                             courseList.add(name, 1, i);

@@ -15,7 +15,7 @@
         <Image url="@../image/divider_up.png" />
       </image>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="671.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>
@@ -44,6 +44,7 @@
         </ImageView>
       </graphic>
     </Button>
+    <Label fx:id="copyrightLabel" layoutX="400.0" layoutY="680.0" minHeight="16.0" prefHeight="16.0" prefWidth="193.0" style="-fx-font-family: 'HelveticaNeue LT 45 Light';" text="©Copyright 2014 Studymaster" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/courseView.css" />

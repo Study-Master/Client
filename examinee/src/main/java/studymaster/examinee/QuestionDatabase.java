@@ -9,7 +9,7 @@ public final class QuestionDatabase {
 	private static QuestionDatabase instance;
 	private static int index = 0;
     private static String course_code = null;
-    private static int exam_pk;
+    private static int exam_pk = 0;
 	private ArrayList<JSONObject> question_set = new ArrayList<JSONObject>();
 
 	public static QuestionDatabase getInstance() {
@@ -97,5 +97,12 @@ public final class QuestionDatabase {
 
     public int getTotalNumberOfQuestions() {
         return question_set.size();
+    }
+
+    public void emptyDatabase() {
+        index = 0;
+        course_code = null;
+        exam_pk = 0;
+        question_set.clear();
     }
 }

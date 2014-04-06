@@ -16,8 +16,8 @@
     <Button fx:id="submitButton" layoutX="318.0" layoutY="522.0" mnemonicParsing="false" onAction="#selectExamTime" prefHeight="42.0" prefWidth="130.0" text="Submit" />
     <Button fx:id="cancelButton" layoutX="573.0" layoutY="522.0" mnemonicParsing="false" onAction="#backView" prefHeight="42.0" prefWidth="130.0" text="Cancel" />
     <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="62.0" layoutY="65.0" prefWidth="901.0" style="" text="CZ2006" textAlignment="CENTER" />
-    <Label fx:id="copyrightLabel" layoutX="401.0" layoutY="648.0" style="-fx-font-size: 15&#10;" text="©Copyright 2014 Studymaster" />
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="84.0" layoutY="598.0" pickOnBounds="true" preserveRatio="true">
+    <Label fx:id="copyrightLabel" layoutX="401.0" layoutY="680.0" style="-fx-font-size: 15&#10;" text="©Copyright 2014 Studymaster" />
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="84.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../image/divider_down.png" />
       </image>

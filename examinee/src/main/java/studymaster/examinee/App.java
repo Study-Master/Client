@@ -11,7 +11,6 @@ public class App extends Client {
         //Configure
         Connector.setServer(Configure.SERVER);
         Connector.setEndpoint(Configure.ENDPOINT);
-        VideoCl.setServer(Configure.VIDEOSERVER);
 
         //launch
         launch(args);

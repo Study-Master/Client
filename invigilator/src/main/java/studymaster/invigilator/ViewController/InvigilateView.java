@@ -2,14 +2,19 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
+import studymaster.invigilator.Configure;
 import studymaster.socket.VideoCl;
+import studymaster.invigilator.Slots;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import studymaster.socket.VideoEventHandler;
 import studymaster.socket.AudioEventHandler;
+import org.json.JSONObject; 
 import java.nio.ByteBuffer;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
@@ -37,11 +42,18 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     ArrayList<Slot> slots;
 
     private VideoCl videoCl;
+    private VideoCl screenCl;
+
+    //private Set<String> clients;
+    private Map<String, Slot> clients;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
         connector.retain(this);
-        videoCl = VideoCl.getInstance(this, "receiver");
+        videoCl = VideoCl.getInstance(Configure.VIDEOSERVER, this);
+        videoCl.connect();
+        screenCl = VideoCl.getInstance(Configure.SCREENSERVER, this);
+        screenCl.connect();
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
@@ -63,8 +75,9 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 @Override public void handle(ActionEvent e) {
                     AlertAction action = new AlertAction() {
                         @Override public void ok(Stage stage) {
-                            //TODO: Send message that auth successfully
-                            
+                            JSONObject content = new JSONObject();
+                            content.put("name", slots.get(id).name);
+                            connector.setAndSendMessageContainer("auth_successful", content); 
                             button.setText("Chat");
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
@@ -75,7 +88,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             stage.close();
                         }
                     };
-                    director.invokeTwoButtonAlert("Auth", "Confirm to auth", action);
+                    director.invokeTwoButtonAlert("Authentication", "Confirm to authentication?", action);
                 }
             });
             terminateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -84,7 +97,11 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                     AlertAction action = new AlertAction() {
                         @Override public void ok(Stage stage, TextArea textarea) {
                             System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " reason" + id + ") " + textarea.getText());
-                            //TODO: Send message that auth successfully
+                            JSONObject content = new JSONObject();
+                            content.put("name", slots.get(id).name);
+                            content.put("exam_pk", slots.get(id).exam_pk);
+                            content.put("reason", textarea.getText());
+                            connector.setAndSendMessageContainer("terminate", content);
                             stage.close();
                         }
                     };
@@ -92,17 +109,77 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                 }
             });
         }
+        clients = new HashMap();
     }
 
-    @Override public void onMessage(String message){}
+    @Override public void onMessage(String message){
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message);
+        Slots data = Slots.getInstance();
+        try {
+            int position = -1;
+            JSONObject msg = new JSONObject(message);
+            String event = msg.getString("event");
+            String endpoint = msg.getString("endpoint");
+            final JSONObject content = msg.getJSONObject("content");
 
-    @Override public void onVideoClientOpen() {}
+            if (event.equals("examinee_come_in")) {
+                String type = content.getString("type");
+                String name = content.getString("name");
+                int exam_pk = content.getInt("exam_pk");
+                Slot emptySlot = null;
+                for(int i=0; i<3; i++) {
+                    if (slots.get(i).name.equals(name)) {
+                        emptySlot = slots.get(i);
+                        position = i;
+                        break;
+                    }
+                }
+                if(emptySlot == null ) {
+                    for(int i=0;i<3; i++) {
+                        if(slots.get(i).name.equals("")) {
+                            emptySlot = slots.get(i);
+                            position = i;
+                            break;
+                        }
+                    }
+                }
+
+                if (emptySlot==null) {
+                    System.out.println("[info] no slot.");
+                    return;
+                }
+                clients.put(name, emptySlot);
+
+                if(type.equals("video")) {
+                    videoCl.setImageView(name, clients.get(name).imgView);
+                }
+                else if (type.equals("screen")) {
+                    screenCl.setImageView(name, clients.get(name).screenView);
+                }
+                clients.get(name).name = name;
+                clients.get(name).exam_pk = exam_pk;
+                clients.get(name).button.setDisable(false);
+                clients.get(name).terminate.setDisable(false);
+                if(position!=-1) {
+                    System.out.println("[info] (" + getClass().getSimpleName() + " onMessage) Set slot on " + position + " as name=" + name + ", exam_pk=" + exam_pk);
+                    data.setName(position, name);
+                    data.setExam(position, exam_pk);
+                }
+            }
+        } catch(Exception e) {
+            System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
+        }
+    }
+
+    @Override public void onVideoClientClose(int code, String reason, boolean remote){}
 
     @Override public void onAudioClientOpen() {}
 
 }
 
 class Slot {
+    protected String name;
+    protected int exam_pk;
     protected ImageView imgView;
     protected ImageView screenView;
     protected Button button;
@@ -110,6 +187,8 @@ class Slot {
     protected Stage chatWindow;
 
     protected Slot(ImageView imgView, ImageView screenView, Button button, Button terminate, Stage chatWindow) {
+        this.name = "";
+        this.exam_pk = 0;
         this.imgView = imgView;
         this.screenView = screenView;
         this.button = button;

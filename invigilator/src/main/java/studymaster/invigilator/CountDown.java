@@ -17,11 +17,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-import studymaster.invigilator.ViewController.CourseView;
+import studymaster.invigilator.ViewController.TaskView;
 
 public class CountDown extends Label {
     int row;
     String courseCode;
+    String examStartTime;
 
     public int getRow() {
         return row;
@@ -31,9 +32,14 @@ public class CountDown extends Label {
         return courseCode;
     }
 
-    public CountDown(String examStartTime, String courseCode, int row) {
+    public String getStartTime() {
+        return examStartTime;
+    }
+
+    public CountDown(String courseCode, String examStartTime, int row) {
         this.row = row;
         this.courseCode = courseCode;
+        this.examStartTime = examStartTime;
         bindToTime(examStartTime, courseCode, row);
         System.out.println("[Info] A CountDown Label created!");
     }

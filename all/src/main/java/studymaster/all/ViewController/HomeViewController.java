@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
 /**
- * LoginViewController class is the super class of both examinee 
+ * LoginViewController class is the super class of both examinee
  * view client login view controller and invigilator client login
  * view controller.
  */
@@ -15,11 +15,6 @@ public abstract class HomeViewController extends ViewController {
     	director.pushStageWithFXML(getClass().getResource("/fxml/testView1.fxml"));
     }
 
-	@Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-		super.initialize(location, resources);
-		connector.setAndSendMessageContainer("profile", null);
-	}
-        
     public final void onLogout() {
     connector.setAndSendMessageContainer("logout", null);
     }
