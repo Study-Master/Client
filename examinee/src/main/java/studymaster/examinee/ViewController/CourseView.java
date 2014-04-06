@@ -362,7 +362,7 @@ public class CourseView extends HomeViewController {
                             }
                             else if (status.equals("finished")) {
                                 //Finish label
-                                Label label = new Label("Finished");
+                                Label label = new Label("Finished   ");
                                 courseList.add(label, 2, i);
                             }
                             else if (status.equals("unbooked")) {

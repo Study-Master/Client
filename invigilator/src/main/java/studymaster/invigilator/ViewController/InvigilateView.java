@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import studymaster.socket.VideoEventHandler;
 import studymaster.socket.AudioEventHandler;
-import org.json.JSONObject; 
+import org.json.JSONObject;
 import java.nio.ByteBuffer;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
@@ -67,7 +67,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
         chatWindow0.setResizable(false);
         chatWindow1.setResizable(false);
         chatWindow2.setResizable(false);
-        
+
         slots.add(new Slot(imgView0, screenView0, button0, terminateButton0, chatWindow0));
         slots.add(new Slot(imgView1, screenView1, button1, terminateButton1, chatWindow1));
         slots.add(new Slot(imgView2, screenView2, button2, terminateButton2, chatWindow2));
@@ -83,7 +83,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
                         @Override public void ok(Stage stage) {
                             JSONObject content = new JSONObject();
                             content.put("name", slots.get(id).name);
-                            connector.setAndSendMessageContainer("auth_successful", content); 
+                            connector.setAndSendMessageContainer("auth_successful", content);
                             button.setText("Chat");
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
@@ -180,7 +180,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
 
             else if (event.equals("submission_successful")) {
                 String name = content.getString("name");
-                examineeOut(name);                
+                examineeOut(name);
             }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
@@ -199,6 +199,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
             out.name = "disabled";
             out.exam_pk = 0;
             Image defaultPhoto = new Image(getClass().getResourceAsStream("/image/user.png"));
+            out.screenView.setImage(defaultPhoto);
             out.imgView.setImage(defaultPhoto);
             out.screenView.setImage(defaultPhoto);
             out.button.setDisable(true);
@@ -217,7 +218,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
             }
         };
         director.invokeTwoButtonAlert("Go back?", "Confirm to quit invigilation?", action);
-    }   
+    }
 }
 
 class Slot {
