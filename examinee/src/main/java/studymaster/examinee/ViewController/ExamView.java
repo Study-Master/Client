@@ -2,11 +2,16 @@ package studymaster.examinee.ViewController;
 
 import studymaster.examinee.QuestionDatabase;
 import studymaster.socket.Connector;
+import studymaster.socket.AudioCl;
+import studymaster.socket.AudioEventHandler;
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.all.ViewController.AlertAction;
-
 import studymaster.examinee.App;
+import studymaster.media.Webcamera;
+import studymaster.media.SoundUtil;
+import studymaster.media.ScreenCapture;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashSet;
@@ -39,29 +44,33 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExamView extends ViewController {
-	@FXML protected Label titleLabel;
-	@FXML protected Label questionDescription;
-	@FXML protected Label timer;
+public class ExamView extends ViewController implements AudioEventHandler {
+    @FXML protected Label titleLabel;
+    @FXML protected Label questionDescription;
+    @FXML protected Label timer;
     @FXML protected Label numberOfQuestionsAnswered;
-	@FXML protected RadioButton choiceA;
-	@FXML protected RadioButton choiceB;
-	@FXML protected RadioButton choiceC;
-	@FXML protected RadioButton choiceD;
-	@FXML protected Button firstQuestion;
-	@FXML protected Button previousQuestion;
-	@FXML protected Button nextQuestion;
-	@FXML protected Button lastQuestion;
-	@FXML protected Button submit;
-	@FXML protected GridPane gridPane;
-	@FXML protected AnchorPane msgArea;
+    @FXML protected RadioButton choiceA;
+    @FXML protected RadioButton choiceB;
+    @FXML protected RadioButton choiceC;
+    @FXML protected RadioButton choiceD;
+    @FXML protected Button firstQuestion;
+    @FXML protected Button previousQuestion;
+    @FXML protected Button nextQuestion;
+    @FXML protected Button lastQuestion;
+    @FXML protected Button submit;
+    @FXML protected GridPane gridPane;
+    @FXML protected AnchorPane msgArea;
     @FXML protected TextArea receiveTextArea;
     @FXML protected TextArea sendTextArea;
     @FXML protected Button sendTextButton;
+    @FXML protected Button audioButton;
+    @FXML protected Button playButton;
     private boolean created = false;
     private boolean status = false;
-	private Integer duration = 7200;//time duration of the exam in seconds
-	private Timeline timeline;
+    private Integer duration = 7200;//time duration of the exam in seconds
+    private Timeline timeline;
+    private AudioCl audioCl;
+    private byte[] receiveAudio;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         System.out.println("[info] (" + getClass().getSimpleName() + " initializing page \n\n");
@@ -99,7 +108,7 @@ public class ExamView extends ViewController {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
                                     new EventHandler<ActionEvent>() {
-                                    public void handle(ActionEvent event) {     
+                                    public void handle(ActionEvent event) {
                                         duration--;
                                         if (duration <= 600) {
                                             timer.setTextFill(Color.RED);
@@ -203,35 +212,52 @@ public class ExamView extends ViewController {
                 director.invokeTwoButtonAlert("Submit?", "Are you sure that you want to submit?", action);
             }
         });
+
+        audioCl = AudioCl.getInstance();
+        audioCl.addDelegate(this);
+        audioCl.connect();
     }
 
-  	@Override public void onMessage(String message) {
-	    System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message + "\n\n");
+    @Override public void onMessage(String message) {
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onMessage) Receive message: " + message + "\n\n");
 
-    	JSONObject msg = new JSONObject(message);
-    	String event = msg.getString("event");
+        JSONObject msg = new JSONObject(message);
+        String event = msg.getString("event");
         JSONObject content = msg.getJSONObject("content");
 
-    	//if submission is successful, pop up a window, then jump to course view
-    	if (event.equals("submission_successful")) {
-			AlertAction action = new AlertAction() {
-            	@Override public void ok(Stage stage) {
-                	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
-                	stage.close();
-            	}
-        	};
-        	director.invokeOneButtonAlert("Successful", "Your submission is successful!", action);
-    	}
+        //if submission is successful, pop up a window, then jump to course view
+        if (event.equals("submission_successful")) {
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {
+                    Webcamera.stop();
+                    ScreenCapture.stop();
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                    stage.close();
+                }
+            };
+            director.invokeOneButtonAlert("Successful", "Your submission is successful!", action);
+        }
         else if (event.equals("exam_chat")) {
             String invigilatorMessage = content.getString("msg");
             receiveTextAction(invigilatorMessage);
+        }
+        else if (event.equals("terminate")) {
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {
+                    Webcamera.stop();
+                    ScreenCapture.stop();
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                    stage.close();
+                }
+            };
+            director.invokeOneButtonAlert("Exam terminated!", "Message from invigilator: \"" + content.getString("reason") + "\"", action);
         }
     }
 
     @FXML protected void textAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " textAction): text chat with invigilator...");
         if (status == true) {
-            msgArea.setVisible(false);       
+            msgArea.setVisible(false);
             status = false;
         }
         else {
@@ -240,36 +266,36 @@ public class ExamView extends ViewController {
         }
     }
 
-	private void updataStage() {
-		System.out.println("[info] (" + getClass().getSimpleName() + " updataStage) reload content \n");
-		choiceA.setSelected(false);
-		choiceB.setSelected(false);
-		choiceC.setSelected(false);
-		choiceD.setSelected(false);
-		QuestionDatabase database = QuestionDatabase.getInstance();
-		questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
-		choiceA.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("a"));
-		choiceB.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("b"));
-		choiceC.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("c"));
-		choiceD.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("d"));
+    private void updataStage() {
+        System.out.println("[info] (" + getClass().getSimpleName() + " updataStage) reload content \n");
+        choiceA.setSelected(false);
+        choiceB.setSelected(false);
+        choiceC.setSelected(false);
+        choiceD.setSelected(false);
+        QuestionDatabase database = QuestionDatabase.getInstance();
+        questionDescription.setText(database.getQuestionNumber() + ". " + database.getQuestionDescription());
+        choiceA.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("a"));
+        choiceB.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("b"));
+        choiceC.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("c"));
+        choiceD.setText(database.getCurrentQuestion().getJSONObject("question_content").getJSONObject("choices").getString("d"));
 
-		if (database.getAnswer() == "a") {
-			choiceA.setSelected(true);
-		} 
-		else if (database.getAnswer() == "b") {
-			choiceB.setSelected(true);
-		}
-		else if (database.getAnswer() == "c") {
-			choiceC.setSelected(true);
-		}
-		else if (database.getAnswer() == "d") {
-			choiceD.setSelected(true);
-		} 
-		else {
-		}
-	}
+        if (database.getAnswer() == "a") {
+            choiceA.setSelected(true);
+        }
+        else if (database.getAnswer() == "b") {
+            choiceB.setSelected(true);
+        }
+        else if (database.getAnswer() == "c") {
+            choiceC.setSelected(true);
+        }
+        else if (database.getAnswer() == "d") {
+            choiceD.setSelected(true);
+        }
+        else {
+        }
+    }
 
-	private void formatCountdown(int duration){
+    private void formatCountdown(int duration){
         Integer hr = duration / 3600;
         Integer min = (duration - 3600 * hr) / 60;
         Integer sec = duration - 3600 * hr - 60 * min;
@@ -286,28 +312,28 @@ public class ExamView extends ViewController {
         if (sec < 10) {
             second = "0" + second;
         }
-        
+
         timer.setText(hour + ":" + minute + ":" + second);
-	}
+    }
 
     private void setAttribute() {
         receiveTextArea.setEditable(false);
     }
 
-    @FXML 
+    @FXML
     public void sendTextAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " sendtextAction): sending text...");
         JSONObject content = new JSONObject();
-        
+
         Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String sendingName = connector.getSender();
         String s = df.format(date);
         String sendingText = sendTextArea.getText();
         QuestionDatabase database = QuestionDatabase.getInstance();
-        content.put("account", sendingName); 
+        content.put("account", sendingName);
         content.put("exam_pk", database.getExamPk());
-        content.put("system_time", s); 
+        content.put("system_time", s);
         content.put("msg", sendingText);
 
         connector.setAndSendMessageContainer("exam_chat", content);
@@ -339,5 +365,29 @@ public class ExamView extends ViewController {
         connector.setAndSendMessageContainer("exam_question_answer", content);
         database.emptyDatabase();
     }
-}
 
+    @FXML public void onVoiceMessagePressed() {
+        SoundUtil.startRecord();
+        audioButton.setText("Release To Talk");
+    }
+
+    @FXML public void onVoiceMessageReleased() {
+        byte[] audio = SoundUtil.stopRecord();
+        if(audioCl.isConnected()) {
+            System.out.println("[info] (ExamView send audio)");
+            audioCl.sendMedia(audio);
+        }
+        audioButton.setText("Hold To Talk");
+    }
+
+    @FXML public void onPlayAction() {
+        if(receiveAudio!=null){
+            SoundUtil.playAudio(receiveAudio);
+        }
+
+    }
+
+    @Override public void onAudioMessage(String name, byte[] receive) {
+        receiveAudio = receive;
+    }
+}

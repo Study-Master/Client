@@ -71,6 +71,7 @@
         <Button id="chatButton0" fx:id="button2" disable="true" layoutX="8.0" layoutY="219.0" minWidth="31.0" mnemonicParsing="false" prefWidth="65.0" text="Pass" />
       </children>
     </Group>
+    <Button layoutX="97.0" layoutY="35.0" mnemonicParsing="false" onAction="#backView" text="Back" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/invigilatorView.css" />

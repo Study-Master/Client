@@ -2,6 +2,7 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
+import studymaster.socket.AudioCl;
 import studymaster.invigilator.Configure;
 import studymaster.socket.VideoCl;
 import studymaster.invigilator.Slots;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import studymaster.socket.VideoEventHandler;
@@ -20,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
-public class InvigilateView extends ViewController implements VideoEventHandler, AudioEventHandler {
+public class InvigilateView extends ViewController implements VideoEventHandler {
 
     @FXML private ImageView imgView0;
     @FXML private ImageView screenView0;
@@ -44,6 +46,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     private VideoCl videoCl;
     private VideoCl screenCl;
 
+    private AudioCl audioCl;
+
     //private Set<String> clients;
     private Map<String, Slot> clients;
 
@@ -54,6 +58,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         videoCl.connect();
         screenCl = VideoCl.getInstance(Configure.SCREENSERVER, this);
         screenCl.connect();
+        audioCl = AudioCl.getInstance();
+        audioCl.connect();
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
@@ -82,6 +88,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
                                     System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction" + id +")");
+                                    slots.get(id).button.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5)");
                                     director.toggleStage(alert);
                                 }
                             });
@@ -102,6 +109,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             content.put("exam_pk", slots.get(id).exam_pk);
                             content.put("reason", textarea.getText());
                             connector.setAndSendMessageContainer("terminate", content);
+                            examineeOut(slots.get(id).name);
                             stage.close();
                         }
                     };
@@ -149,13 +157,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                     return;
                 }
                 clients.put(name, emptySlot);
-
-                if(type.equals("video")) {
-                    videoCl.setImageView(name, clients.get(name).imgView);
-                }
-                else if (type.equals("screen")) {
-                    screenCl.setImageView(name, clients.get(name).screenView);
-                }
+                videoCl.setImageView(name, clients.get(name).imgView);
+                screenCl.setImageView(name, clients.get(name).screenView);
                 clients.get(name).name = name;
                 clients.get(name).exam_pk = exam_pk;
                 clients.get(name).button.setDisable(false);
@@ -166,6 +169,19 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                     data.setExam(position, exam_pk);
                 }
             }
+
+            else if (event.equals("exam_chat")) {
+                String name = content.getString("account");
+                Slot responce = clients.get(name);
+                if(!responce.chatWindow.isShowing()) {
+                    responce.button.setStyle("-fx-background-color: rgb(255, 0, 0, 1)");
+                }
+            }
+
+            else if (event.equals("submission_successful")) {
+                String name = content.getString("name");
+                examineeOut(name);                
+            }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
         }
@@ -173,7 +189,26 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
 
     @Override public void onVideoClientClose(int code, String reason, boolean remote){}
 
-    @Override public void onAudioClientOpen() {}
+    private void examineeOut(String name) {
+       Slot out = clients.get(name);
+        if(out!=null) {
+            System.out.println("[info] ("+getClass().getSimpleName() + " examineeOut) examinee " + name +" logout");
+            clients.remove(name);
+            videoCl.removeImageView(name);
+            screenCl.removeImageView(name);
+            out.name = "disabled";
+            out.exam_pk = 0;
+            Image defaultPhoto = new Image(getClass().getResourceAsStream("/image/user.png"));
+            out.imgView.setImage(defaultPhoto);
+            out.screenView.setImage(defaultPhoto);
+            out.button.setDisable(true);
+            out.terminate.setDisable(true);
+        }
+    }
+
+    public void backView() {
+        director.pushStageWithFXML(getClass().getResource("/fxml/taskView.fxml"));
+    }
 
 }
 

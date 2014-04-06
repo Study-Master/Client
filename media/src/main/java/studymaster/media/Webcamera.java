@@ -123,6 +123,9 @@ public class Webcamera {
     }
 
     public static void stop() {
+        if(instance==null) {
+            return;
+        }
         if (isStreaming) {
             isStreaming = false;
             wct = new WebcamCloseThread();

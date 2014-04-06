@@ -1,7 +1,11 @@
 package studymaster.examinee.ViewController;
 
+import studymaster.all.ViewController.AlertAction;
 import studymaster.all.ViewController.ViewController;
 import studymaster.examinee.Configure;
+import studymaster.media.Webcamera;
+import studymaster.media.ScreenCapture;
+
 import studymaster.socket.VideoCl;
 import studymaster.socket.VideoEventHandler;
 import studymaster.media.Webcamera;
@@ -13,6 +17,7 @@ import studymaster.examinee.Configure;
 import org.json.JSONObject;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 
@@ -42,6 +47,7 @@ public class AuthView extends ViewController implements VideoEventHandler {
     }
     
     @Override public void onMessage(String message) {
+        System.out.println(message);
         JSONObject msg = new JSONObject(message);
         String event = msg.getString("event");
         if (event.equals("auth_successful")) {
@@ -58,6 +64,18 @@ public class AuthView extends ViewController implements VideoEventHandler {
                     });
                 }
             });
+        }
+        else if (event.equals("terminate")) {
+            JSONObject content = msg.getJSONObject("content");
+            AlertAction action = new AlertAction() {
+                @Override public void ok(Stage stage) {
+                    Webcamera.stop();
+                    ScreenCapture.stop();
+                    director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+                    stage.close();
+                }
+            };
+            director.invokeOneButtonAlert("Exam terminated!", "Message from invigilator: \"" + content.getString("reason") + "\"", action);
         }
     }
 

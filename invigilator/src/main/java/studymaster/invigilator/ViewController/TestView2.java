@@ -23,7 +23,7 @@ public class TestView2 extends TestViewController {
         super.nextAction();
         Webcamera webcam = Webcamera.getInstance();
         webcam.stop();
-        director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+        director.pushStageWithFXML(getClass().getResource("/fxml/taskView.fxml"));
     }
      
     @FXML @Override public void backAction() {
