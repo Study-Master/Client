@@ -42,7 +42,7 @@ public class CountDown extends Label {
         EventHandler<ActionEvent> actionEvent = new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 try {
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss      ");
                     Date currentTime = new Date();
                     Date startTime = dateFormat.parse(examStartTime);
                     long diff = startTime.getTime() - currentTime.getTime();
@@ -52,7 +52,7 @@ public class CountDown extends Label {
                     long diffSeconds = diff / 1000 % 60;
                     String remainingTime = "";
                     if (diffDays>0) {
-                        remainingTime = Long.toString(diffDays) + " Days   " ;
+                        remainingTime = Long.toString(diffDays) + " Days           " ;
                     }
                     else {
                         if (diffHours>9) {
