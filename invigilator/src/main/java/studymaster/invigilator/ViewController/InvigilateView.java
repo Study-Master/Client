@@ -157,13 +157,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
                     return;
                 }
                 clients.put(name, emptySlot);
-
-                if(type.equals("video")) {
-                    videoCl.setImageView(name, clients.get(name).imgView);
-                }
-                else if (type.equals("screen")) {
-                    screenCl.setImageView(name, clients.get(name).screenView);
-                }
+                videoCl.setImageView(name, clients.get(name).imgView);
+                screenCl.setImageView(name, clients.get(name).screenView);
                 clients.get(name).name = name;
                 clients.get(name).exam_pk = exam_pk;
                 clients.get(name).button.setDisable(false);
