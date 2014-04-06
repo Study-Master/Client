@@ -97,7 +97,11 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                     AlertAction action = new AlertAction() {
                         @Override public void ok(Stage stage, TextArea textarea) {
                             System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " reason" + id + ") " + textarea.getText());
-                            //TODO: Send message that auth successfully
+                            JSONObject content = new JSONObject();
+                            content.put("name", slots.get(id).name);
+                            content.put("exam_pk", slots.get(id).exam_pk);
+                            content.put("reason", textarea.getText());
+                            connector.setAndSendMessageContainer("terminate", content);
                             stage.close();
                         }
                     };
