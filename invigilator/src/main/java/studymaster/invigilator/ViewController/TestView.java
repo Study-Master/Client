@@ -17,7 +17,7 @@ public class TestView extends TestViewController {
      
     @FXML @Override public void backAction() {
         super.backAction();
-        director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
+        director.pushStageWithFXML(getClass().getResource("/fxml/taskView.fxml"));
     }
 
      @FXML public final void testAction() {
