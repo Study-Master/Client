@@ -217,7 +217,8 @@ public class ExamView extends ViewController {
     	if (event.equals("submission_successful")) {
 			AlertAction action = new AlertAction() {
             	@Override public void ok(Stage stage) {
-                    Webcamera.renew();
+                    Webcamera.stop();
+                    System.out.println("\n\n webcam is renewed \n\n");
                 	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                 	stage.close();
             	}
@@ -231,7 +232,8 @@ public class ExamView extends ViewController {
         else if (event.equals("terminate")) {
             AlertAction action = new AlertAction() {
                 @Override public void ok(Stage stage) {
-                    Webcamera.renew();
+                    Webcamera.stop();
+                    System.out.println("\n\n webcam is renewed \n\n");
                     director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                     stage.close();
                 }

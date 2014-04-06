@@ -3,6 +3,7 @@ package studymaster.examinee.ViewController;
 import studymaster.all.ViewController.AlertAction;
 import studymaster.all.ViewController.ViewController;
 import studymaster.examinee.Configure;
+import studymaster.media.Webcamera;
 import studymaster.socket.VideoCl;
 import studymaster.socket.VideoEventHandler;
 import studymaster.media.Webcamera;
@@ -66,6 +67,8 @@ public class AuthView extends ViewController implements VideoEventHandler {
             JSONObject content = msg.getJSONObject("content");
             AlertAction action = new AlertAction() {
                 @Override public void ok(Stage stage) {
+                    Webcamera.stop();
+                    System.out.println("\n\n webcam is renewed \n\n");
                     director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                     stage.close();
                 }
