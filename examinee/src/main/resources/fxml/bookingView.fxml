@@ -8,21 +8,16 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.BookingView">
   <children>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="165.0" fitWidth="1025.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true">
       <image>
-        <Image url="@../image/divider_up.png" />
+        <Image url="@../image/red.jpg" />
       </image>
     </ImageView>
-    <Button fx:id="submitButton" layoutX="318.0" layoutY="522.0" mnemonicParsing="false" onAction="#selectExamTime" prefHeight="42.0" prefWidth="130.0" text="Submit" />
-    <Button fx:id="cancelButton" layoutX="573.0" layoutY="522.0" mnemonicParsing="false" onAction="#backView" prefHeight="42.0" prefWidth="130.0" text="Cancel" />
-    <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="62.0" layoutY="65.0" prefWidth="901.0" style="" text="CZ2006" textAlignment="CENTER" />
-    <Label fx:id="copyrightLabel" layoutX="401.0" layoutY="680.0" style="-fx-font-size: 15&#10;" text="©Copyright 2014 Studymaster" />
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="84.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/divider_down.png" />
-      </image>
-    </ImageView>
-    <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="334.0" layoutY="186.0" prefHeight="325.0" prefWidth="478.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
+    <Button fx:id="submitButton" layoutX="309.0" layoutY="634.0" mnemonicParsing="false" onAction="#selectExamTime" prefHeight="42.0" prefWidth="130.0" text="SUBMIT" />
+    <Button fx:id="cancelButton" layoutX="564.0" layoutY="634.0" mnemonicParsing="false" onAction="#backView" prefHeight="42.0" prefWidth="130.0" text="CANCEL" />
+    <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="41.0" layoutY="53.0" prefHeight="55.0" prefWidth="939.0" style="" text="CZ2006" />
+    <Label fx:id="copyrightLabel" layoutX="386.0" layoutY="725.0" style="-fx-font-size: 15&#10;" text="©Copyright 2014 Studymaster" />
+    <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="332.0" layoutY="222.0" prefHeight="325.0" prefWidth="478.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
       <content>
         <AnchorPane id="ap" maxHeight="1.7976931348623157E308" opacity="1.0" prefHeight="309.0" prefWidth="469.0" style="" visible="true" />
       </content>
