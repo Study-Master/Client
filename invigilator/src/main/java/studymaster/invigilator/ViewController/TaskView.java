@@ -194,7 +194,7 @@ public class TaskView extends HomeViewController {
                             code.setStyle("-fx-text-fill: black;");
                             Label name = new Label(exam.getString("name"));
                             name.setStyle("-fx-text-fill: black;");
-                            Label start_time = new Label("@" + exam.getString("start_time"));
+                            Label start_time = new Label(exam.getString("start_time"));
                             start_time.setStyle("-fx-text-fill: purple;-fx-font-size: 20;");
 
 

@@ -88,7 +88,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             stage.close();
                         }
                     };
-                    director.invokeTwoButtonAlert("Auth", "Confirm to auth", action);
+                    director.invokeTwoButtonAlert("Authentication", "Confirm to authentication?", action);
                 }
             });
             terminateButton.setOnAction(new EventHandler<ActionEvent>() {
