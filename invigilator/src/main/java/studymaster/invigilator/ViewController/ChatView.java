@@ -32,8 +32,6 @@ public class ChatView extends ViewController implements AudioEventHandler {
         label = counter;
         counter++;
         connector.retain(this);
-        voiceMessageButton.setDisable(true);
-        playButton.setDisable(true);
     }
 
     @Override public void onMessage(String message) {
@@ -104,6 +102,7 @@ public class ChatView extends ViewController implements AudioEventHandler {
     }
 
     @Override public void onAudioMessage(String name, byte[] receive) {
+        System.out.println("Receive message!!!!!!");
         Slots data = Slots.getInstance();
         String thisName = data.getName(label);
         if(thisName.equals(name)) {

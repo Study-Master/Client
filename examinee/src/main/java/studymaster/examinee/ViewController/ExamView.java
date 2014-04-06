@@ -374,6 +374,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
     @FXML public void onVoiceMessageReleased() {
         byte[] audio = SoundUtil.stopRecord();
         if(audioCl.isConnected()) {
+            System.out.println("[info] (ExamView send audio)");
             audioCl.sendMedia(audio);
         }
         audioButton.setText("Audio");
