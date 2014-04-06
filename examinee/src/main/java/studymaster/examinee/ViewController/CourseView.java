@@ -395,7 +395,7 @@ public class CourseView extends HomeViewController {
                 @Override
                 public void run() {
                     BookButton button = new BookButton(examStartTime, courseCode, row);
-                    button.setPrefWidth(120);
+                    button.setPrefWidth(140);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override public void handle(ActionEvent e) {
                                 setBookingMsg(courseCode);
@@ -417,7 +417,7 @@ public class CourseView extends HomeViewController {
                 @Override
                 public void run() {
                     final CancelButton button = new CancelButton(examStartTime, courseCode, row);
-                    button.setPrefWidth(150);
+                    button.setPrefWidth(140);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override public void handle(ActionEvent e) {
                                 button.setText("");
@@ -442,7 +442,7 @@ public class CourseView extends HomeViewController {
                 @Override
                 public void run() {
                     final ExamButton button = new ExamButton(examStartTime, courseCode, row);
-                    button.setPrefWidth(120);
+                    button.setPrefWidth(140);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override public void handle(ActionEvent e) {
                                 button.setText("");
