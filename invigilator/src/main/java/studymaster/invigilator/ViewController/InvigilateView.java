@@ -83,6 +83,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override public void handle(ActionEvent e) {
                                     System.out.println("[info] (" + InvigilateView.class.getSimpleName() + " chatAction" + id +")");
+                                    slots.get(id).button.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5)");
                                     director.toggleStage(alert);
                                 }
                             });
@@ -166,6 +167,14 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                     System.out.println("[info] (" + getClass().getSimpleName() + " onMessage) Set slot on " + position + " as name=" + name + ", exam_pk=" + exam_pk);
                     data.setName(position, name);
                     data.setExam(position, exam_pk);
+                }
+            }
+
+            else if (event.equals("exam_chat")) {
+                String name = content.getString("account");
+                Slot responce = clients.get(name);
+                if(!responce.chatWindow.isShowing()) {
+                    responce.button.setStyle("-fx-background-color: rgb(255, 0, 0, 1)");
                 }
             }
 
