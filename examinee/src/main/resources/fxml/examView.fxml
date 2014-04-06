@@ -2,35 +2,26 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
-<?import java.util.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.examinee.ViewController.ExamView">
-  <children>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/divider_up.png" />
-      </image>
-    </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="704.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/divider_down.png" />
-      </image>
-    </ImageView>
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studymaster.examinee.ViewController.ExamView">
+  <children><ImageView fitHeight="158.0" fitWidth="1036.0" layoutX="-6.0" layoutY="-1.0" pickOnBounds="true">
+<image>
+<Image url="@../image/red.jpg" />
+</image></ImageView>
     <Label fx:id="titleLabel" layoutX="75.0" layoutY="38.0" text="CZ2006 Online Exam" wrapText="true" />
-    <Button fx:id="nextQuestion" layoutX="512.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;" />
-    <Button fx:id="previousQuestion" layoutX="427.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;" />
-    <Button fx:id="firstQuestion" layoutX="342.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;&lt;" />
-    <Button fx:id="lastQuestion" layoutX="597.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;&gt;" />
+    <Button fx:id="nextQuestion" layoutX="527.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;" />
+    <Button fx:id="previousQuestion" layoutX="439.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;" />
+    <Button fx:id="firstQuestion" layoutX="351.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&lt;&lt;" />
+    <Button fx:id="lastQuestion" layoutX="615.0" layoutY="670.0" mnemonicParsing="false" prefWidth="85.0" text="&gt;&gt;" />
     <Button fx:id="submit" layoutX="857.0" layoutY="670.0" mnemonicParsing="false" prefWidth="105.0" text="Submit" />
     <Label fx:id="timer" alignment="CENTER" layoutX="552.0" layoutY="38.0" prefHeight="53.0" prefWidth="267.0" text="02:22:22" wrapText="true" />
-    <GridPane fx:id="gridPane" alignment="CENTER" layoutX="75.0" layoutY="91.0" maxHeight="540.0" maxWidth="850.0" minHeight="520.0" minWidth="850.0" prefHeight="496.0" prefWidth="850.0">
+    <GridPane fx:id="gridPane" alignment="CENTER" layoutX="106.0" layoutY="180.0" maxHeight="540.0" maxWidth="850.0" minHeight="449.0" minWidth="823.0" prefHeight="449.0" prefWidth="824.0">
       <children>
-        <Label id="question_description" fx:id="questionDescription" maxWidth="850.0" minWidth="850.0" prefHeight="130.0" prefWidth="0.0" text="Align is a problm!!What is the mass of the sun?What is the mass of the sun?" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label id="question_description" fx:id="questionDescription" maxWidth="850.0" minWidth="850.0" prefHeight="100.0" prefWidth="850.0" text="Align is a problm!!What is the mass of the sun?What is the mass of the sun?" wrapText="true" GridPane.columnIndex="1" />
         <RadioButton id="choice_a" fx:id="choiceA" maxWidth="850.0" minWidth="850.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="850.0" style="-fx-padding: 20;" text="Do you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffffDo you know?ffffffffffffffffffffffffffffffffffff" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
           <font>
             <Font size="25.0" fx:id="x1" />
@@ -53,13 +44,13 @@
       </rowConstraints>
     </GridPane>
     <Button fx:id="TextButton" layoutX="859.0" layoutY="43.0" mnemonicParsing="false" onAction="#textAction" text="Chat" />
-    <AnchorPane fx:id="msgArea" layoutX="595.0" layoutY="91.0" opacity="0.8" prefHeight="433.0" prefWidth="364.0" visible="true">
+    <AnchorPane fx:id="msgArea" layoutX="657.0" layoutY="157.0" opacity="0.8" prefHeight="433.0" prefWidth="364.0" style="-fx-background-color: transparent;" visible="true">
       <children>
-        <Button id="sendText" fx:id="sendTextButton" layoutX="17.0" layoutY="287.0" minHeight="29.0" mnemonicParsing="false" onAction="#sendTextAction" prefHeight="34.0" prefWidth="78.0" text="Send" />
-        <TextArea fx:id="sendTextArea" layoutX="17.0" layoutY="329.0" prefHeight="92.0" prefWidth="333.0" wrapText="true" />
+        <Button id="sendText" fx:id="sendTextButton" layoutX="17.0" layoutY="280.0" minHeight="29.0" mnemonicParsing="false" onAction="#sendTextAction" prefHeight="45.0" prefWidth="84.0" styleClass="chatButton" text="Send" />
         <TextArea fx:id="receiveTextArea" layoutX="17.0" layoutY="14.0" prefHeight="266.0" prefWidth="333.0" wrapText="true" />
-        <Button fx:id="audioButton" layoutX="102.0" layoutY="287.0" mnemonicParsing="false" onMousePressed="#onVoiceMessagePressed" onMouseReleased="#onVoiceMessageReleased" prefHeight="34.0" prefWidth="174.0" text="Release To Send" />
-        <Button layoutX="283.0" layoutY="287.0" mnemonicParsing="false" onAction="#onPlayAction" prefHeight="34.0" text="Play" />
+        <Button fx:id="audioButton" layoutX="102.0" layoutY="280.0" mnemonicParsing="false" onMousePressed="#onVoiceMessagePressed" onMouseReleased="#onVoiceMessageReleased" prefHeight="45.0" prefWidth="173.0" styleClass="chatButton" text="Hold To Talk" />
+        <Button layoutX="276.0" layoutY="280.0" mnemonicParsing="false" onAction="#onPlayAction" prefHeight="45.0" prefWidth="73.0" styleClass="chatButton" text="Play" />
+        <TextArea fx:id="sendTextArea" layoutX="17.0" layoutY="325.0" prefHeight="105.0" prefWidth="333.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       </children>
     </AnchorPane>
     <Label fx:id="copyrightLabel" layoutX="416.0" layoutY="721.0" minHeight="16.0" prefHeight="16.0" prefWidth="193.0" style="-fx-font-family: 'HelveticaNeue LT 45 Light';" text="©Copyright 2014 Studymaster" />
