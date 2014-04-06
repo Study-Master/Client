@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studymaster.invigilator.ViewController.InvigilateView">
-  <children><ImageView fitHeight="384.0" fitWidth="343.0" layoutY="383.0" pickOnBounds="true">
+  <children><ImageView fitHeight="385.0" fitWidth="343.0" layoutY="383.0" pickOnBounds="true">
 <image>
 <Image url="@../image/yellow.jpg" />
-</image></ImageView><ImageView fitHeight="384.0" fitWidth="341.0" layoutX="684.0" layoutY="383.0" pickOnBounds="true">
+</image></ImageView><ImageView fitHeight="385.0" fitWidth="341.0" layoutX="684.0" layoutY="383.0" pickOnBounds="true">
 <image>
 <Image url="@../image/red.jpg" />
 </image>
@@ -36,7 +36,6 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="terminateButton0" fx:id="terminateButton1" disable="true" layoutX="103.0" layoutY="246.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
         <ImageView id="screenView0" fx:id="screenView1" fitHeight="207.0" fitWidth="207.0" layoutX="1.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
@@ -51,10 +50,10 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="chatButton0" fx:id="button2" disable="true" layoutX="-6.0" layoutY="195.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
+        <Button id="chatButton0" fx:id="button2" disable="true" layoutX="-6.0" layoutY="201.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
       </children>
     </Group>
-    <Button id="back" layoutX="928.0" layoutY="5.0" mnemonicParsing="false" onAction="#backView" text="Back" />
+    <Button id="back" layoutX="909.0" layoutY="5.0" mnemonicParsing="false" onAction="#backView" text="Back" />
         <ImageView fx:id="imgView0" fitHeight="207.0" fitWidth="207.0" layoutX="66.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
@@ -65,10 +64,11 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="chatButton0" fx:id="button0" disable="true" layoutY="333.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
-        <Button fx:id="terminateButton0" disable="true" layoutX="171.0" layoutY="333.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
-        <Button id="chatButton0" fx:id="button1" disable="true" layoutX="342.1041259765625" layoutY="383.9949035644531" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
-        <Button id="terminateButton0" fx:id="terminateButton2" disable="true" layoutX="855.2947387695312" layoutY="332.80584716796875" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
+        <Button id="chatButton0" fx:id="button0" disable="true" layoutY="339.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
+        <Button fx:id="terminateButton0" disable="true" layoutX="171.0" layoutY="339.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
+        <Button id="chatButton0" fx:id="button1" disable="true" layoutX="343.0" layoutY="723.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
+        <Button id="terminateButton0" fx:id="terminateButton2" disable="true" layoutX="855.2947387695312" layoutY="339.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
+        <Button id="terminateButton0" fx:id="terminateButton1" disable="true" layoutX="514.5371704101562" layoutY="723.58056640625" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/invigilatorView.css" />
