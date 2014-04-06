@@ -2,6 +2,7 @@ package studymaster.invigilator.ViewController;
 
 import javafx.scene.control.TextArea;
 import studymaster.all.ViewController.ViewController;
+import studymaster.media.SoundUtil;
 import studymaster.invigilator.Slots;
 import javafx.fxml.FXML;
 import org.json.JSONObject;
@@ -20,10 +21,14 @@ public class ChatView extends ViewController implements AudioEventHandler {
     @FXML private Button sendButton;
     @FXML private Button voiceMessageButton;
     @FXML private Button playButton;
+    private AudioCl audioCl;
+    private byte[] receiveAudio;
     private int label;
 
     @Override public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         super.initialize(location, resources);
+        audioCl = AudioCl.getInstance();
+        audioCl.addDelegate(this);
         label = counter;
         counter++;
         connector.retain(this);
@@ -77,6 +82,7 @@ public class ChatView extends ViewController implements AudioEventHandler {
     @FXML public final void onVoiceMessagePressed() {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onVoiceMessagePressed)");
         //TODO: Record a voice message
+        SoundUtil.startRecord();
         voiceMessageButton.setText("Release To Send");
 
     }
@@ -84,15 +90,25 @@ public class ChatView extends ViewController implements AudioEventHandler {
     @FXML public final void onVoiceMessageReleased() {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onVoiceMessageReleased)");
         //TODO: Send a voice message
+        byte[] audio = SoundUtil.stopRecord();
+        if(audioCl.isConnected()) {
+            audioCl.sendMedia(audio);
+        }
         voiceMessageButton.setText("Hold To Talk");
     }
 
     @FXML public final void playMessage(){
-        //TODO: Play a voice message
+        if(receiveAudio!=null) {
+            SoundUtil.playAudio(receiveAudio);
+        }
     }
 
-    @Override public void onAudioClientOpen() {
-        voiceMessageButton.setDisable(false);
-        playButton.setDisable(false);
+    @Override public void onAudioMessage(String name, byte[] receive) {
+        Slots data = Slots.getInstance();
+        String thisName = data.getName(label);
+        if(thisName.equals(name)) {
+            receiveAudio = receive;
+        }
     }
+
 }

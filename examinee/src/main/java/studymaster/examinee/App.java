@@ -1,6 +1,7 @@
 package studymaster.examinee;
 
 import studymaster.socket.Connector;
+import studymaster.socket.AudioCl;
 import studymaster.socket.VideoCl;
 import studymaster.all.Model.Client;
 import studymaster.all.ViewController.Director;
@@ -11,6 +12,7 @@ public class App extends Client {
         //Configure
         Connector.setServer(Configure.SERVER);
         Connector.setEndpoint(Configure.ENDPOINT);
+        AudioCl.setServer(Configure.SERVER);
 
         //launch
         launch(args);

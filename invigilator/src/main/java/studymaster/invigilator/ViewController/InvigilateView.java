@@ -2,6 +2,7 @@ package studymaster.invigilator.ViewController;
 
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.AlertAction;
+import studymaster.socket.AudioCl;
 import studymaster.invigilator.Configure;
 import studymaster.socket.VideoCl;
 import studymaster.invigilator.Slots;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
-public class InvigilateView extends ViewController implements VideoEventHandler, AudioEventHandler {
+public class InvigilateView extends ViewController implements VideoEventHandler {
 
     @FXML private ImageView imgView0;
     @FXML private ImageView screenView0;
@@ -45,6 +46,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     private VideoCl videoCl;
     private VideoCl screenCl;
 
+    private AudioCl audioCl;
+
     //private Set<String> clients;
     private Map<String, Slot> clients;
 
@@ -55,6 +58,8 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
         videoCl.connect();
         screenCl = VideoCl.getInstance(Configure.SCREENSERVER, this);
         screenCl.connect();
+        audioCl = AudioCl.getInstance();
+        audioCl.connect();
         slots = new ArrayList();
         chatWindow0 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
         chatWindow1 = director.initStageWithFXML(getClass().getResource("/fxml/chatView.fxml"));
@@ -188,8 +193,6 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     }
 
     @Override public void onVideoClientClose(int code, String reason, boolean remote){}
-
-    @Override public void onAudioClientOpen() {}
 
     private void examineeOut(String name) {
        Slot out = clients.get(name);
