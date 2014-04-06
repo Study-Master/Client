@@ -5,8 +5,10 @@ import studymaster.socket.Connector;
 import studymaster.all.ViewController.ViewController;
 import studymaster.all.ViewController.Director;
 import studymaster.all.ViewController.AlertAction;
-
 import studymaster.examinee.App;
+import studymaster.media.Webcamera;
+import studymaster.media.ScreenCapture;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashSet;
@@ -38,7 +40,6 @@ import javafx.scene.layout.AnchorPane;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import studymaster.media.Webcamera;
 
 public class ExamView extends ViewController {
 	@FXML protected Label titleLabel;
@@ -218,7 +219,7 @@ public class ExamView extends ViewController {
 			AlertAction action = new AlertAction() {
             	@Override public void ok(Stage stage) {
                     Webcamera.stop();
-                    System.out.println("\n\n webcam is renewed \n\n");
+                    ScreenCapture.stop();
                 	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                 	stage.close();
             	}
@@ -233,7 +234,7 @@ public class ExamView extends ViewController {
             AlertAction action = new AlertAction() {
                 @Override public void ok(Stage stage) {
                     Webcamera.stop();
-                    System.out.println("\n\n webcam is renewed \n\n");
+                    ScreenCapture.stop();
                     director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                     stage.close();
                 }
