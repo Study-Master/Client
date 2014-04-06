@@ -49,6 +49,10 @@ public class VideoCl extends WebSocketClient implements Sendable {
         videoImg.put(name, video);
     }
 
+    public ImageView removeImageView(String name) {
+        return videoImg.remove(name);
+    }
+
     public boolean containsImageView(ImageView imageView) {
         return videoImg.containsValue(imageView);
     }

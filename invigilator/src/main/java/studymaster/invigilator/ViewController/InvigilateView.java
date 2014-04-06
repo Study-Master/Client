@@ -195,6 +195,9 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
        Slot out = clients.get(name);
         if(out!=null) {
             System.out.println("[info] ("+getClass().getSimpleName() + " examineeOut) examinee " + name +" logout");
+            clients.remove(name);
+            videoCl.removeImageView(name);
+            screenCl.removeImageView(name);
             out.name = "disabled";
             out.exam_pk = 0;
             Image defaultPhoto = new Image(getClass().getResourceAsStream("/image/user.png"));

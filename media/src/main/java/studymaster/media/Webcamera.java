@@ -107,18 +107,6 @@ public class Webcamera {
         return instance;
     }
 
-    public static void renew() {
-        if (instance == null) {
-            return;
-        }
-        else {
-            if(isStreaming) {
-                Webcamera.stop();
-            }
-            instance = new Webcamera();
-        }
-    }
-
     public static BufferedImage createImage() {
         if(webcam == null) {
             isOpening = true;
@@ -135,6 +123,9 @@ public class Webcamera {
     }
 
     public static void stop() {
+        if(instance==null) {
+            return;
+        }
         if (isStreaming) {
             isStreaming = false;
             wct = new WebcamCloseThread();
