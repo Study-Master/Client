@@ -29,6 +29,8 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Modality;
@@ -314,7 +316,7 @@ public class CourseView extends HomeViewController {
                         ColumnConstraints col3 = new ColumnConstraints();
                         col3.setPercentWidth(20);
                         courseList.getColumnConstraints().addAll(col1,col2,col3);
-                        courseList.setVgap(25);
+                        //courseList.setVgap(25);
                         col3.setHalignment(HPos.RIGHT);
                         //Add courses into an ArrayList
                         for (int i=0; i<courses.length(); i++) {
@@ -342,14 +344,24 @@ public class CourseView extends HomeViewController {
                         //Display the courses
                         for(int i=0; i<coursesArray.size(); i++) {
                             final JSONObject course = (JSONObject)coursesArray.get(i);
-                            //First 2 columns
+                            RowConstraints rowcons = new RowConstraints(70);
+                            Pane cell1 = new Pane();
+                            Pane cell2 = new Pane();
+                            Pane cell3 = new Pane();
+                            cell1.setStyle("-fx-background-color: red;");
+                            cell2.setStyle("-fx-background-color: red;");
+                            cell3.setStyle("-fx-background-color: red;");
+
                             Label code = new Label(course.getString("code"));
                             code.setStyle("-fx-text-fill: black;");
                             Label name = new Label(course.getString("name"));
                             name.setStyle("-fx-text-fill: black;");
+                            cell1.getChildren().add(code);
+                            cell2.getChildren().add(name);
+                            courseList.add(cell1, 0, i);
+                            courseList.add(cell2, 1, i);
+                            courseList.add(cell3, 2, i);
 
-                            courseList.add(code, 0, i);
-                            courseList.add(name, 1, i);
 
                             status = course.getString("status");
                             String examStartTime = course.getString("start_time");
@@ -381,6 +393,7 @@ public class CourseView extends HomeViewController {
                                 //Exam button
                                 createExamButton(examStartTime, courseCode, i);
                             }
+                            courseList.getRowConstraints().add(rowcons);
                         }
                         ap.getChildren().addAll(courseList);
                     } catch (JSONException e) {
