@@ -50,10 +50,10 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="chatButton0" fx:id="button2" disable="true" layoutX="-6.0" layoutY="201.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
+        <Button id="chatButton0" fx:id="button2" disable="true" layoutX="-6.0" layoutY="210.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
       </children>
     </Group>
-    <Button id="back" layoutX="909.0" layoutY="5.0" mnemonicParsing="false" onAction="#backView" text="Back" />
+    <Button id="back" layoutX="914.0" layoutY="5.0" mnemonicParsing="false" onAction="#backView" text="Back" />
         <ImageView fx:id="imgView0" fitHeight="207.0" fitWidth="207.0" layoutX="66.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@../image/user.png" />
@@ -64,11 +64,11 @@
             <Image url="@../image/user.png" />
           </image>
         </ImageView>
-        <Button id="chatButton0" fx:id="button0" disable="true" layoutY="339.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
-        <Button fx:id="terminateButton0" disable="true" layoutX="171.0" layoutY="339.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
-        <Button id="chatButton0" fx:id="button1" disable="true" layoutX="343.0" layoutY="723.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
-        <Button id="terminateButton0" fx:id="terminateButton2" disable="true" layoutX="855.2947387695312" layoutY="339.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
-        <Button id="terminateButton0" fx:id="terminateButton1" disable="true" layoutX="514.5371704101562" layoutY="723.58056640625" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
+        <Button id="chatButton0" fx:id="button0" disable="true" layoutY="348.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
+        <Button fx:id="terminateButton0" disable="true" layoutX="171.0" layoutY="348.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
+        <Button id="chatButton0" fx:id="button1" disable="true" layoutX="343.0" layoutY="733.0" minWidth="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Pass" />
+        <Button id="terminateButton0" fx:id="terminateButton2" disable="true" layoutX="855.2947387695312" layoutY="348.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
+        <Button id="terminateButton0" fx:id="terminateButton1" disable="true" layoutX="514.5371704101562" layoutY="733.58056640625" mnemonicParsing="false" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/invigilatorView.css" />

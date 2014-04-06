@@ -1,12 +1,12 @@
 .label {
     -fx-font-family: 'Apercu-Light';
-    -fx-font-size: 25;
+    -fx-font-size: 20;
     -fx-text-fill: rgba(12, 80, 165, 1);
 }
 
 .button {
     -fx-font-family: 'Apercu';
-    -fx-font-size: 25;
+    -fx-font-size: 20;
     -fx-border-radius: 0px;
     -fx-text-fill: rgba(244, 244, 242, 1);
     -fx-border-color: rgba(12, 80, 165, 1);
