@@ -42,7 +42,7 @@ public class ScreenCapture {
             }
         }
     }
-    private CaptureThread ct;
+    private static CaptureThread ct;
 
     private ScreenCapture(){
         isStreaming = false;
@@ -69,11 +69,11 @@ public class ScreenCapture {
         return screenShot;
     }
 
-    public void stop() {
+    public static void stop() {
         isStreaming = false;
     }
 
-    public void captureStreaming(ImageView imageView, Sendable client) {
+    public static void captureStreaming(ImageView imageView, Sendable client) {
         if(isStreaming) {
             ct.setImageView(imageView);
         }

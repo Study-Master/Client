@@ -81,7 +81,7 @@ public class VideoCl extends WebSocketClient implements Sendable {
             ImageView imgView;
             imgView = videoImg.get(senderName);
             if(imgView==null) {
-                System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
+                //System.out.println("[info] (VideoCl onMessage) Receive image but unset image view."); 
             }
             else {
                 Image image = ImgUtil.byteToImage(img);
