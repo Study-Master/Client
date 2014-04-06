@@ -38,6 +38,7 @@ import javafx.scene.layout.AnchorPane;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import studymaster.media.Webcamera;
 
 public class ExamView extends ViewController {
 	@FXML protected Label titleLabel;
@@ -216,6 +217,7 @@ public class ExamView extends ViewController {
     	if (event.equals("submission_successful")) {
 			AlertAction action = new AlertAction() {
             	@Override public void ok(Stage stage) {
+                    Webcamera.renew();
                 	director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                 	stage.close();
             	}
@@ -229,6 +231,7 @@ public class ExamView extends ViewController {
         else if (event.equals("terminate")) {
             AlertAction action = new AlertAction() {
                 @Override public void ok(Stage stage) {
+                    Webcamera.renew();
                     director.pushStageWithFXML(getClass().getResource("/fxml/courseView.fxml"));
                     stage.close();
                 }
