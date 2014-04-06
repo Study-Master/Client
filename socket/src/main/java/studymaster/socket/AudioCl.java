@@ -4,6 +4,7 @@ import java.net.URI;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import java.nio.ByteBuffer;
+import studymaster.media.SoundUtil;
 
 public class AudioCl extends WebSocketClient {
     private static String localServer = null;
