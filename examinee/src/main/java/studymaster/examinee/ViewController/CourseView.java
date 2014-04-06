@@ -417,7 +417,7 @@ public class CourseView extends HomeViewController {
                 @Override
                 public void run() {
                     final CancelButton button = new CancelButton(examStartTime, courseCode, row);
-                    button.setPrefWidth(120);
+                    button.setPrefWidth(150);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override public void handle(ActionEvent e) {
                                 button.setText("");

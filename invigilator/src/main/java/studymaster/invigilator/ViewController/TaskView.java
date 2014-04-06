@@ -148,8 +148,8 @@ public class TaskView extends HomeViewController {
                         GridPane examList = new GridPane();
                         List = examList;
                         AnchorPane.setTopAnchor(examList, 20.0);
-                        AnchorPane.setLeftAnchor(examList, 20.0);
-                        AnchorPane.setRightAnchor(examList, 10.0);
+                        AnchorPane.setLeftAnchor(examList, 60.0);
+                        AnchorPane.setRightAnchor(examList, 60.0);
                         AnchorPane.setBottomAnchor(examList, 25.0);
                         ColumnConstraints col1 = new ColumnConstraints();
                         col1.setPercentWidth(15);
@@ -161,7 +161,7 @@ public class TaskView extends HomeViewController {
                         col4.setPercentWidth(20);
                         examList.getColumnConstraints().addAll(col1,col2,col3,col4);
                         examList.setVgap(25);
-                        col3.setHalignment(HPos.LEFT);
+                        col4.setHalignment(HPos.RIGHT);
                         //Add exams into an ArrayList
                         for (int i=0; i<exams.length(); i++) {
                             examsArray.add(exams.getJSONObject(i));
@@ -195,7 +195,7 @@ public class TaskView extends HomeViewController {
                             Label name = new Label(exam.getString("name"));
                             name.setStyle("-fx-text-fill: black;");
                             Label start_time = new Label(exam.getString("start_time"));
-                            start_time.setStyle("-fx-text-fill: purple;-fx-font-size: 20;");
+                            start_time.setStyle("-fx-text-fill: rgba(255, 214, 90, 1);-fx-font-size: 20;");
 
 
                             examList.add(code, 0, i);
