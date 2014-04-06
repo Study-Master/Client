@@ -211,6 +211,10 @@ public class InvigilateView extends ViewController implements VideoEventHandler 
         }
     }
 
+    public void backView() {
+        director.pushStageWithFXML(getClass().getResource("/fxml/taskView.fxml"));
+    }
+
 }
 
 class Slot {
