@@ -26,7 +26,7 @@ public class AudioCl extends WebSocketClient implements Sendable {
 
 
     public static AudioCl getInstance() {
-        if(localServer == null || SoundUtil.getByteArray() == null){
+        if(localServer == null){
             throw new NullPointerException();
         }
         else {
