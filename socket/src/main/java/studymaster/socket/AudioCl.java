@@ -88,6 +88,18 @@ public class AudioCl extends WebSocketClient implements Sendable {
         send(info);
     }
 
+    public void sendMedia(byte[] media, String name) {
+        byte[] header = new byte[50];
+
+        byte[] senderByte = name.getBytes(Charset.forName("UTF-8"));
+        System.arraycopy(senderByte, 0, header, 0, senderByte.length);
+
+        byte[] info = new byte[media.length + header.length];
+        System.arraycopy(header, 0, info, 0, header.length);
+        System.arraycopy(media, 0, info, header.length, media.length);
+        send(info);
+    }
+
     @Override public boolean isConnected() {
         return this.isOpen();
     }

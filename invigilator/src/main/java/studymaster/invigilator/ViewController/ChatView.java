@@ -89,24 +89,29 @@ public class ChatView extends ViewController implements AudioEventHandler {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onVoiceMessageReleased)");
         //TODO: Send a voice message
         byte[] audio = SoundUtil.stopRecord();
+        Slots data = Slots.getInstance();
+        String name = data.getName(label);
         if(audioCl.isConnected()) {
-            audioCl.sendMedia(audio);
+            System.out.println("[info](ChatView Sending audio)");
+            audioCl.sendMedia(audio, name);
         }
         voiceMessageButton.setText("Hold To Talk");
     }
 
-    @FXML public final void playMessage(){
+    @FXML public final void playMessage(){        
+        System.out.println("[info] ("+ getClass().getSimpleName() +" playMessage)");
         if(receiveAudio!=null) {
             SoundUtil.playAudio(receiveAudio);
         }
     }
 
     @Override public void onAudioMessage(String name, byte[] receive) {
-
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onAudioMessage)");
         Slots data = Slots.getInstance();
         String target = data.getName(label);
         
         if (target!=null && name.equals(target)) {
+        System.out.println("[info] ("+ getClass().getSimpleName() +" onAudioMessage update)");
             receiveAudio = receive;
         }
     }
