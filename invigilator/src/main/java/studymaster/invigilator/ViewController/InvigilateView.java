@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import studymaster.socket.VideoEventHandler;
@@ -102,6 +103,7 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                             content.put("exam_pk", slots.get(id).exam_pk);
                             content.put("reason", textarea.getText());
                             connector.setAndSendMessageContainer("terminate", content);
+                            examineeOut(slots.get(id).name);
                             stage.close();
                         }
                     };
@@ -166,6 +168,11 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
                     data.setExam(position, exam_pk);
                 }
             }
+
+            else if (event.equals("submission_successful")) {
+                String name = content.getString("name");
+                examineeOut(name);                
+            }
         } catch(Exception e) {
             System.err.println("[err] ("+ getClass().getSimpleName() +" onMessage) Error when decoding JSON response string.");
         }
@@ -174,6 +181,20 @@ public class InvigilateView extends ViewController implements VideoEventHandler,
     @Override public void onVideoClientClose(int code, String reason, boolean remote){}
 
     @Override public void onAudioClientOpen() {}
+
+    private void examineeOut(String name) {
+       Slot out = clients.get(name);
+        if(out!=null) {
+            System.out.println("[info] ("+getClass().getSimpleName() + " examineeOut) examinee " + name +" logout");
+            out.name = "disabled";
+            out.exam_pk = 0;
+            Image defaultPhoto = new Image(getClass().getResourceAsStream("/image/user.png"));
+            out.imgView.setImage(defaultPhoto);
+            out.screenView.setImage(defaultPhoto);
+            out.button.setDisable(true);
+            out.terminate.setDisable(true);
+        }
+    }
 
 }
 
