@@ -66,9 +66,9 @@
         </ImageView>
         <Button id="chatButton0" fx:id="button0" disable="true" layoutY="348.0" minWidth="31.0" mnemonicParsing="false" opacity="0.68" prefHeight="35.0" prefWidth="171.5" text="Pass" />
         <Button fx:id="terminateButton0" disable="true" layoutX="171.0" layoutY="348.0" mnemonicParsing="false" opacity="0.68" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
-        <Button id="chatButton0" fx:id="button1" disable="true" layoutX="343.0" layoutY="733.0" minWidth="31.0" mnemonicParsing="false" opacity="0.68" prefHeight="35.0" prefWidth="171.5" text="Pass" />
+        <Button id="chatButton0" fx:id="button1" disable="true" layoutX="343.0" layoutY="731.0" minWidth="31.0" mnemonicParsing="false" opacity="0.68" prefHeight="35.0" prefWidth="171.5" text="Pass" />
         <Button id="terminateButton0" fx:id="terminateButton2" disable="true" layoutX="855.2947387695312" layoutY="348.0" mnemonicParsing="false" opacity="0.68" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
-        <Button id="terminateButton0" fx:id="terminateButton1" disable="true" layoutX="514.5371704101562" layoutY="733.58056640625" mnemonicParsing="false" opacity="0.68" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
+        <Button id="terminateButton0" fx:id="terminateButton1" disable="true" layoutX="514.5371704101562" layoutY="731.58056640625" mnemonicParsing="false" opacity="0.68" prefHeight="35.0" prefWidth="171.5" text="Terminate" />
   </children>
   <stylesheets>
     <URL value="@../stylesheet/invigilatorView.css" />
