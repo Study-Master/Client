@@ -5,6 +5,7 @@ import studymaster.socket.AudioCl;
 import studymaster.socket.VideoCl;
 import studymaster.all.Model.Client;
 import studymaster.all.ViewController.Director;
+import javafx.scene.image.Image;
 
 public class App extends Client {
 
@@ -20,7 +21,10 @@ public class App extends Client {
 
     @Override
     public void start(javafx.stage.Stage stage) throws Exception {
+        Image icon = new Image("/image/typo.jpg");
+        stage.getIcons().add(icon);
         stage.setTitle("Study Master");
+        stage.show();
         director.setStage(stage);
         director.pushStageWithFXML(App.class.getResource("/fxml/loginView.fxml"));
     }
