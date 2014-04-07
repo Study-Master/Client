@@ -61,7 +61,7 @@ public class ChatView extends ViewController implements AudioEventHandler {
         Format df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String time = df.format(date);
-        
+
         String message = sendArea.getText();
         String m = connector.getSender() + ": " + time + "\n" + message + "\n";
         histroyArea.appendText(m);
@@ -98,10 +98,11 @@ public class ChatView extends ViewController implements AudioEventHandler {
         voiceMessageButton.setText("Hold To Talk");
     }
 
-    @FXML public final void playMessage(){        
+    @FXML public final void playMessage(){
         System.out.println("[info] ("+ getClass().getSimpleName() +" playMessage)");
         if(receiveAudio!=null) {
             SoundUtil.playAudio(receiveAudio);
+            playButton.setStyle("-fx-background-color: rgb(245, 104, 97, 1)");
         }
     }
 
@@ -109,10 +110,11 @@ public class ChatView extends ViewController implements AudioEventHandler {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onAudioMessage)");
         Slots data = Slots.getInstance();
         String target = data.getName(label);
-        
+
         if (target!=null && name.equals(target)) {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onAudioMessage update)");
             receiveAudio = receive;
+            playButton.setStyle("-fx-background-color: rgb(255, 0, 0, 1)");
         }
     }
 
