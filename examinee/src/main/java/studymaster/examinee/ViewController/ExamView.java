@@ -67,7 +67,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
     @FXML protected Button playButton;
     private boolean created = false;
     private boolean status = false;
-    private Integer duration = 7200;//time duration of the exam in seconds
+    private Integer duration = 20;//time duration of the exam in seconds
     private Timeline timeline;
     private AudioCl audioCl;
     private byte[] receiveAudio;
