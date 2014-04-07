@@ -320,8 +320,7 @@ public class ExamView extends ViewController implements AudioEventHandler {
         receiveTextArea.setEditable(false);
     }
 
-    @FXML
-    public void sendTextAction() {
+    @FXML public void sendTextAction() {
         System.out.println("[info] (" + getClass().getSimpleName() + " sendtextAction): sending text...");
         JSONObject content = new JSONObject();
 
@@ -383,11 +382,13 @@ public class ExamView extends ViewController implements AudioEventHandler {
     @FXML public void onPlayAction() {
         if(receiveAudio!=null){
             SoundUtil.playAudio(receiveAudio);
+            playButton.setStyle("-fx-text-fill: rgba(12,80,165,1);");
         }
 
     }
 
     @Override public void onAudioMessage(String name, byte[] receive) {
         receiveAudio = receive;
+        playButton.setStyle("-fx-text-fill: rgba(255,214,90,1);");
     }
 }

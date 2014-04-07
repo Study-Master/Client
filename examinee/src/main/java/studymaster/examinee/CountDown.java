@@ -21,7 +21,7 @@ import studymaster.examinee.ViewController.CourseView;
 
 public class CountDown extends Label {
     int row;
-    String courseCode; 
+    String courseCode;
 
     public int getRow() {
         return row;
@@ -29,7 +29,7 @@ public class CountDown extends Label {
 
     public String getCourseCode() {
         return courseCode;
-    }    
+    }
 
     public CountDown(String examStartTime, String courseCode, int row) {
         this.row = row;
@@ -39,7 +39,7 @@ public class CountDown extends Label {
     }
 
     private void bindToTime(final String examStartTime, final String courseCode, final int row) {
-        EventHandler<ActionEvent> actionEvent = new EventHandler<ActionEvent>() {     
+        EventHandler<ActionEvent> actionEvent = new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 try {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -74,10 +74,10 @@ public class CountDown extends Label {
                             remainingTime += ":0" + Long.toString(diffSeconds);
                         }
                     }
-                    setText(remainingTime);
+                    setText(remainingTime+"  ");
                     if (remainingTime.contains(":")) {
                         setStyle("-fx-text-fill: red;");
-                    }       
+                    }
                 } catch (ParseException ex) {
                     Logger.getLogger(CountDown.class.getName()).log(Level.SEVERE, null, ex);
                 }

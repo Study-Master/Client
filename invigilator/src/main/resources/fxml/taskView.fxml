@@ -2,44 +2,37 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
-<?import java.util.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="studymaster.invigilator.ViewController.TaskView">
   <children>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="185.0" fitWidth="1035.0" layoutX="-1.0" layoutY="-5.0" pickOnBounds="true">
       <image>
-        <Image url="@../image/divider_up.png" />
+        <Image url="@../image/blue.jpg" />
       </image>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="900.0" layoutX="62.0" layoutY="704.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../image/divider_down.png" />
-      </image>
-    </ImageView>
-    <Label fx:id="titleLabel" layoutX="75.0" layoutY="55.0" text="Task" />
-    <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="62.0" layoutY="184.0" prefHeight="504.0" prefWidth="921.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
+    <Label fx:id="titleLabel" layoutX="75.0" layoutY="63.0" text="TASK" />
+    <ScrollPane id="scrollpane" fx:id="sp" hbarPolicy="NEVER" layoutX="-1.0" layoutY="176.0" prefHeight="514.0" prefWidth="1025.0" style="-fx-border-color: transparent;&#10;-fx-background-color: transparent;">
       <content>
-        <AnchorPane id="ap" maxHeight="1.7976931348623157E308" opacity="1.0" prefHeight="489.0" prefWidth="919.0000999999975" style="" visible="true">
+        <AnchorPane id="ap" maxHeight="1.7976931348623157E308" opacity="1.0" prefHeight="489.0" prefWidth="1019.0" style="" visible="true">
           <stylesheets>
             <URL value="@../stylesheet/taskView.css" />
           </stylesheets>
         </AnchorPane>
       </content>
     </ScrollPane>
-    <Button contentDisplay="TOP" graphicTextGap="0.0" layoutX="808.0" layoutY="35.0" mnemonicParsing="false" onAction="#gotoTestAction" style="-fx-border-color: transparent;&#10;-fx-font-size: 15;" text="Testing" textAlignment="CENTER">
+    <Button contentDisplay="TOP" graphicTextGap="0.0" layoutX="808.0" layoutY="48.0" mnemonicParsing="false" onAction="#gotoTestAction" style="-fx-border-color: transparent;&#10;-fx-font-size: 15;" text="TESTING" textAlignment="CENTER">
       <graphic>
         <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" x="721.0" y="33.0">
           <image>
-            <Image url="@../image/testing.png" backgroundLoading="false" />
+            <Image url="@../image/test.png" />
           </image>
         </ImageView>
       </graphic>
     </Button>
-    <Button contentDisplay="TOP" graphicTextGap="2.0" layoutX="911.0" layoutY="35.0" mnemonicParsing="false" onAction="#onLogout" style="-fx-border-color: transparent;&#10;-fx-font-size: 15;" text="Quit" textAlignment="CENTER">
+    <Button contentDisplay="TOP" graphicTextGap="2.0" layoutX="911.0" layoutY="48.0" mnemonicParsing="false" onAction="#onLogout" style="-fx-border-color: transparent;&#10;-fx-font-size: 15;" text="LOGOUT" textAlignment="CENTER">
       <graphic>
         <ImageView fitHeight="50.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" x="824.0" y="33.0">
           <image>
