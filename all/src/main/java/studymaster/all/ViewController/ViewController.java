@@ -31,7 +31,7 @@ public abstract class ViewController implements Initializable, Callback {
 
     @Override public final void onClose(int code, String reason, boolean remote) {
         System.out.println("[info] ("+ getClass().getSimpleName() +" onClose) Socket's connection closed");
-        systemErrorAlert("Connection lost.");
+        //systemErrorAlert("Connection lost.");
     }
 
     @Override public final void onError(Exception ex) {
