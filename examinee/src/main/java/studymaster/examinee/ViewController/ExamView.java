@@ -389,6 +389,6 @@ public class ExamView extends ViewController implements AudioEventHandler {
 
     @Override public void onAudioMessage(String name, byte[] receive) {
         receiveAudio = receive;
-        playButton.setStyle("-fx-text-fill: rgba(255,214,90,1);");
+        playButton.setStyle("-fx-background-color: rgba(255, 0, 0, 1)");
     }
 }
