@@ -17,6 +17,7 @@ public class App extends Client {
 
         //launch
         launch(args);
+	System.out.println("aa");
     }
 
     @Override
